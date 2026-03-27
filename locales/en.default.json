@@ -353,6 +353,13 @@
     "custom_reviews": {
       "play_video": "Play video review",
       "star_rating": "5 star rating"
+    },
+    "custom_product_carousel": {
+      "brought_to_you_by": "brought to you by",
+      "add_to_cart": "ADD TO CART",
+      "view_all": "VIEW ALL",
+      "previous": "Previous products",
+      "next": "Next products"
     }
   },
   "products": {

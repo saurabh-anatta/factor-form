@@ -438,7 +438,11 @@
     "custom_header": "Header",
     "custom_footer": "Footer",
     "custom_reviews": "Reviews",
-    "review_item": "Review item"
+    "review_item": "Review item",
+    "custom_product_carousel": "Product Carousel",
+    "tab_item": "Tab",
+    "category_card_item": "Category Card",
+    "product_card_item": "Product Card"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1191,7 +1195,21 @@
     "policy_menu": "Policy menu",
     "quote": "Quote",
     "author": "Author",
-    "show_play_button": "Show play button"
+    "show_play_button": "Show play button",
+    "ticker_text": "Ticker text",
+    "ticker_color": "Ticker color",
+    "is_active": "Active",
+    "badge_1_text": "Badge 1 text",
+    "badge_1_color": "Badge 1 color",
+    "badge_2_text": "Badge 2 text",
+    "badge_2_color": "Badge 2 color",
+    "show_heart": "Show heart icon",
+    "cta_text": "Button text",
+    "mobile_cta_text": "Mobile button text",
+    "compare_price": "Compare price",
+    "price": "Price",
+    "description": "Description",
+    "subheading": "Subheading"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",

@@ -111,7 +111,111 @@
         }
       },
       "block_order": ["review-1", "review-2", "review-3", "review-4"]
+    },
+    "product-carousel": {
+      "type": "custom-product-carousel",
+      "settings": {
+        "subheading": "brought to you by",
+        "heading": "Built From Food, Designed for Results",
+        "ticker_text": "Grounded in Food Science | High Quality Ingredients | Flavorful Nutrition | Dietitian Approved | No Added Sugar | Keto Friendly",
+        "ticker_color": "#3F7057",
+        "background_color": "#F1F1EA",
+        "padding-block-start": 64,
+        "padding-block-end": 0
+      },
+      "blocks": {
+        "tab-1": {
+          "type": "tab",
+          "settings": {
+            "label": "Gut Health",
+            "is_active": true
+          }
+        },
+        "tab-2": {
+          "type": "tab",
+          "settings": {
+            "label": "Recovery",
+            "is_active": false
+          }
+        },
+        "tab-3": {
+          "type": "tab",
+          "settings": {
+            "label": "Immunity",
+            "is_active": false
+          }
+        },
+        "tab-4": {
+          "type": "tab",
+          "settings": {
+            "label": "Energy & Focus",
+            "is_active": false
+          }
+        },
+        "category-card-1": {
+          "type": "category-card",
+          "settings": {
+            "image": "shopify://shop_images/agile-support-1-desktop-112594627.png",
+            "title": "Gut Health",
+            "description": "Superfoods and nutrients for daily digestive support",
+            "cta_text": "VIEW ALL GUT HEALTH",
+            "mobile_cta_text": "VIEW ALL"
+          }
+        },
+        "product-card-1": {
+          "type": "product-card",
+          "settings": {
+            "image": "shopify://shop_images/image-desktop-112594636.png",
+            "title": "Daily Greens",
+            "description": "Drink your veggies on-the-go with a refreshing twist.",
+            "price": "$47.39",
+            "compare_price": "$78.99",
+            "cta_text": "ADD TO CART",
+            "badge_1_text": "FREE WELCOME KIT",
+            "badge_1_color": "#141414",
+            "badge_2_text": "40% OFF FIRST ORDER",
+            "badge_2_color": "#EC0606"
+          }
+        },
+        "product-card-2": {
+          "type": "product-card",
+          "settings": {
+            "image": "shopify://shop_images/image-desktop-112594700.png",
+            "title": "Starter Bundle",
+            "description": "Hydration and gut health to give you energy and crush your goals",
+            "price": "$56.39",
+            "compare_price": "$93.98",
+            "cta_text": "ADD TO CART"
+          }
+        },
+        "product-card-3": {
+          "type": "product-card",
+          "settings": {
+            "image": "shopify://shop_images/agile-support-1-desktop-112594812.png",
+            "title": "Greens & Gains Bundle",
+            "description": "Foundation nutrition plus protein to support muscle recovery and gut health",
+            "price": "$56.39",
+            "compare_price": "$93.98",
+            "cta_text": "ADD TO CART"
+          }
+        },
+        "product-card-4": {
+          "type": "product-card",
+          "settings": {
+            "image": "shopify://shop_images/image-desktop-112594752.png",
+            "title": "Immunity Bundle",
+            "description": "Daily defense with probiotics, immunity vitamins & minerals, and electrolytes.",
+            "price": "$56.39",
+            "compare_price": "$93.98",
+            "cta_text": "ADD TO CART",
+            "badge_1_text": "BESTSELLER",
+            "badge_1_color": "#FFFFFF",
+            "show_heart": true
+          }
+        }
+      },
+      "block_order": ["tab-1", "tab-2", "tab-3", "tab-4", "category-card-1", "product-card-1", "product-card-2", "product-card-3", "product-card-4"]
     }
   },
-  "order": ["hero", "reviews"]
+  "order": ["hero", "reviews", "product-carousel"]
 }
