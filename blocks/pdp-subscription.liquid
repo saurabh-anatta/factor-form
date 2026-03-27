@@ -1,0 +1,376 @@
+{% doc %}
+  Subscription/Frequency Selector Block
+
+  Renders subscribe-and-save vs one-time-purchase options when product has selling plan groups.
+
+  @example {% content_for 'block', type: 'pdp-subscription', id: 'subscription' %}
+{% enddoc %}
+
+{% liquid
+  assign product = closest.product
+  assign current_variant = product.selected_or_first_available_variant
+  assign selling_plan_groups = product.selling_plan_groups
+  assign has_selling_plans = false
+  if selling_plan_groups.size > 0
+    assign has_selling_plans = true
+  endif
+  assign popular_badge_text = block.settings.popular_badge_text | default: 'MOST POPULAR'
+  assign label_text = block.settings.label_text | default: 'Select Frequency:'
+%}
+
+{%- if has_selling_plans -%}
+  <div class="pdp-subscription" {{ block.shopify_attributes }}>
+    <div class="pdp-subscription__label">
+      <span class="pdp-subscription__label-text">{{ label_text | escape }}</span>
+    </div>
+
+    <div class="pdp-subscription__options">
+      {%- comment -%} Subscribe & Save option {%- endcomment -%}
+      {%- assign first_group = selling_plan_groups | first -%}
+      {%- assign first_plan = first_group.selling_plans | first -%}
+      {%- assign allocation = current_variant.selling_plan_allocations | where: 'selling_plan_id', first_plan.id | first -%}
+
+      <div
+        class="pdp-subscription__option pdp-subscription__option--selected"
+        data-subscription-type="subscribe"
+      >
+        {%- if popular_badge_text != blank -%}
+          <div class="pdp-subscription__badge">
+            <span class="pdp-subscription__badge-text">{{ popular_badge_text | escape }}</span>
+          </div>
+        {%- endif -%}
+
+        <div class="pdp-subscription__content">
+          <div class="pdp-subscription__left">
+            <div class="pdp-subscription__radio-row">
+              <span class="pdp-subscription__radio pdp-subscription__radio--selected" aria-hidden="true"></span>
+              <span class="pdp-subscription__heading">{{ block.settings.subscribe_heading | default: 'Subscribe & Save' | escape }}</span>
+            </div>
+
+            <div class="pdp-subscription__details">
+              {%- for plan in first_group.selling_plans -%}
+                {%- assign plan_allocation = current_variant.selling_plan_allocations | where: 'selling_plan_id', plan.id | first -%}
+                {%- if forloop.first -%}
+                  <ul class="pdp-subscription__benefits">
+                    <li>Reschedule or cancel anytime</li>
+                    <li>Free Shipping</li>
+                    {%- if badge_text != blank -%}
+                      <li>Free Welcome Kit (worth $36)</li>
+                    {%- else -%}
+                      <li>Free Welcome Kit (worth $36)</li>
+                    {%- endif -%}
+                  </ul>
+
+                  {%- comment -%} Delivery frequency {%- endcomment -%}
+                  <div class="pdp-subscription__frequency-label">
+                    <strong>Delivered every:</strong>
+                  </div>
+                  <div class="pdp-subscription__frequencies">
+                    {%- for fp in first_group.selling_plans -%}
+                      <button
+                        type="button"
+                        class="pdp-subscription__freq{% if forloop.first %} pdp-subscription__freq--selected{% endif %}"
+                        data-frequency-id="{{ fp.id }}"
+                        data-selling-plan-id="{{ fp.id }}"
+                      >
+                        {{ fp.name | remove: 'Delivered every ' | remove: 'Delivery every ' | escape }}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <div class="pdp-subscription__right">
+            {%- if allocation -%}
+              <span class="pdp-subscription__price" data-subscribe-price>{{ allocation.per_delivery_price | money }}</span>
+              {%- if current_variant.compare_at_price > allocation.per_delivery_price -%}
+                <span class="pdp-subscription__compare-price">
+                  <s>{{ current_variant.compare_at_price | money }}</s>
+                </span>
+              {%- elsif current_variant.price > allocation.per_delivery_price -%}
+                <span class="pdp-subscription__compare-price">
+                  <s>{{ current_variant.price | money }}</s>
+                </span>
+              {%- endif -%}
+              {%- assign savings = current_variant.price | minus: allocation.per_delivery_price -%}
+              {%- if savings > 0 -%}
+                <span class="pdp-subscription__savings">SAVE {{ savings | money }}</span>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} One-time purchase option {%- endcomment -%}
+      <div
+        class="pdp-subscription__option"
+        data-subscription-type="onetime"
+      >
+        <div class="pdp-subscription__content pdp-subscription__content--onetime">
+          <div class="pdp-subscription__left">
+            <div class="pdp-subscription__radio-row">
+              <span class="pdp-subscription__radio" aria-hidden="true"></span>
+              <span class="pdp-subscription__heading">{{ block.settings.onetime_heading | default: 'One-time Purchase' | escape }}</span>
+            </div>
+          </div>
+          <div class="pdp-subscription__right">
+            <span class="pdp-subscription__price" data-onetime-price>{{ current_variant.price | money }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- else -%}
+  <div {{ block.shopify_attributes }}></div>
+{%- endif -%}
+
+{% stylesheet %}
+.pdp-subscription {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pdp-subscription__label {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pdp-subscription__label-text {
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+}
+
+.pdp-subscription__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: center;
+}
+
+.pdp-subscription__option {
+  width: 100%;
+  border: 1px solid #D0D0BC;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.pdp-subscription__option--selected {
+  border-color: #141414;
+}
+
+.pdp-subscription__badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 12px;
+  background-color: #E1F0E2;
+}
+
+.pdp-subscription__badge-text {
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #141414;
+}
+
+.pdp-subscription__content {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: space-between;
+  padding: 12px;
+
+  @media screen and (max-width: 749px) {
+    padding: 12px 8px;
+  }
+}
+
+.pdp-subscription__content--onetime {
+  align-items: center;
+}
+
+.pdp-subscription__left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pdp-subscription__radio-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pdp-subscription__radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #D0D0BC;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.pdp-subscription__option--selected .pdp-subscription__radio {
+  border-color: #141414;
+}
+
+.pdp-subscription__option--selected .pdp-subscription__radio::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #141414;
+}
+
+.pdp-subscription__heading {
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+}
+
+.pdp-subscription__details {
+  padding-inline-start: 26px;
+}
+
+.pdp-subscription__benefits {
+  margin: 0 0 8px;
+  padding-inline-start: 18px;
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+}
+
+.pdp-subscription__benefits li {
+  margin-bottom: 2px;
+}
+
+.pdp-subscription__frequency-label {
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+  margin-bottom: 8px;
+}
+
+.pdp-subscription__frequencies {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pdp-subscription__freq {
+  padding: 6px 16px;
+  border: 1px solid #D0D0BC;
+  background: transparent;
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: #141414;
+  }
+}
+
+.pdp-subscription__freq--selected {
+  border-color: #141414;
+  font-weight: 600;
+}
+
+.pdp-subscription__right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.pdp-subscription__price {
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #141414;
+}
+
+.pdp-subscription__compare-price {
+  font-family: var(--font-heading--family), sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #80806F;
+}
+
+.pdp-subscription__compare-price s {
+  text-decoration: line-through;
+}
+
+.pdp-subscription__savings {
+  display: inline-flex;
+  padding: 2px 8px;
+  background-color: #EC0606;
+  color: #FFFFFF;
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.pdp_subscription",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "t:settings.label_text",
+      "default": "Select Frequency:"
+    },
+    {
+      "type": "text",
+      "id": "popular_badge_text",
+      "label": "t:settings.popular_badge_text",
+      "default": "MOST POPULAR"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_heading",
+      "label": "t:settings.subscribe_heading",
+      "default": "Subscribe & Save"
+    },
+    {
+      "type": "text",
+      "id": "onetime_heading",
+      "label": "t:settings.onetime_heading",
+      "default": "One-time Purchase"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.pdp_subscription"
+    }
+  ]
+}
+{% endschema %}

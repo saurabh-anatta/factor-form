@@ -1,0 +1,207 @@
+{% doc %}
+  Add to Cart CTA Block
+
+  Full-width add-to-cart button with USP guarantee icons below.
+
+  @example {% content_for 'block', type: 'pdp-buy-cta', id: 'buy-cta' %}
+{% enddoc %}
+
+{% liquid
+  assign product = closest.product
+  assign current_variant = product.selected_or_first_available_variant
+  assign button_text = block.settings.button_text | default: 'ADD TO CART'
+  assign sold_out_text = 'sections.custom_pdp.sold_out' | t
+  assign added_text = 'sections.custom_pdp.added_to_cart' | t
+%}
+
+<div class="pdp-buy-cta" {{ block.shopify_attributes }}>
+  <button
+    type="button"
+    class="pdp-buy-cta__btn"
+    data-add-to-cart
+    data-add-text="{{ button_text | escape }}"
+    data-sold-out-text="{{ sold_out_text | escape }}"
+    data-added-text="{{ added_text | escape }}"
+    {% unless current_variant.available %}disabled{% endunless %}
+  >
+    <span data-add-to-cart-text>
+      {%- if current_variant.available -%}
+        {{ button_text | escape }}
+      {%- else -%}
+        {{ sold_out_text | escape }}
+      {%- endif -%}
+    </span>
+  </button>
+
+  {%- if block.settings.show_usp -%}
+    <div class="pdp-buy-cta__usp">
+      {%- if block.settings.usp_1_text != blank -%}
+        <div class="pdp-buy-cta__usp-item">
+          <span class="pdp-buy-cta__usp-icon pdp-buy-cta__usp-icon--desktop">
+            <img src="{{ 'check-3.svg' | asset_url }}" alt="" width="20" height="20" loading="lazy" aria-hidden="true">
+          </span>
+          <span class="pdp-buy-cta__usp-icon pdp-buy-cta__usp-icon--mobile">
+            <img src="{{ 'check-2.svg' | asset_url }}" alt="" width="16" height="16" loading="lazy" aria-hidden="true">
+          </span>
+          <span class="pdp-buy-cta__usp-text">{{ block.settings.usp_1_text | escape }}</span>
+        </div>
+      {%- endif -%}
+      {%- if block.settings.usp_2_text != blank -%}
+        <div class="pdp-buy-cta__usp-item">
+          <span class="pdp-buy-cta__usp-icon pdp-buy-cta__usp-icon--desktop">
+            <img src="{{ 'check-3.svg' | asset_url }}" alt="" width="20" height="20" loading="lazy" aria-hidden="true">
+          </span>
+          <span class="pdp-buy-cta__usp-icon pdp-buy-cta__usp-icon--mobile">
+            <img src="{{ 'check-2.svg' | asset_url }}" alt="" width="16" height="16" loading="lazy" aria-hidden="true">
+          </span>
+          <span class="pdp-buy-cta__usp-text">{{ block.settings.usp_2_text | escape }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+.pdp-buy-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pdp-buy-cta__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 4px 32px;
+  min-height: 48px;
+  background-color: #141414;
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 24px;
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+
+  @media screen and (max-width: 749px) {
+    padding: 4px 24px;
+    min-height: 40px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.pdp-buy-cta__btn--loading {
+  opacity: 0.7;
+}
+
+.pdp-buy-cta__usp {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 749px) {
+    gap: 12px;
+  }
+}
+
+.pdp-buy-cta__usp-item {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+
+  @media screen and (max-width: 749px) {
+    gap: 6px;
+  }
+}
+
+.pdp-buy-cta__usp-icon--desktop {
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 749px) {
+    display: none;
+  }
+}
+
+.pdp-buy-cta__usp-icon--mobile {
+  display: none;
+  align-items: center;
+
+  @media screen and (max-width: 749px) {
+    display: flex;
+  }
+}
+
+.pdp-buy-cta__usp-text {
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #141414;
+  text-align: center;
+
+  @media screen and (max-width: 749px) {
+    font-size: 10px;
+    line-height: 12px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.pdp_buy_cta",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:settings.button_text",
+      "default": "ADD TO CART"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_usp",
+      "label": "t:settings.show_usp",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "usp_1_text",
+      "label": "t:settings.usp_1_text",
+      "default": "30-day money-back guarantee"
+    },
+    {
+      "type": "text",
+      "id": "usp_2_text",
+      "label": "t:settings.usp_2_text",
+      "default": "Delay or cancel anytime"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.pdp_buy_cta"
+    }
+  ]
+}
+{% endschema %}

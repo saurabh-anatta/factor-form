@@ -1,0 +1,295 @@
+{% doc %}
+  Upsell Products Block
+
+  Cross-sell product cards with image, title, rating, price, and ADD button.
+
+  @example {% content_for 'block', type: 'pdp-upsells', id: 'upsells' %}
+{% enddoc %}
+
+{% liquid
+  assign heading_text = block.settings.heading_text | default: 'You may also like'
+  assign product_1 = block.settings.product_1
+  assign product_2 = block.settings.product_2
+  assign product_3 = block.settings.product_3
+%}
+
+<div class="pdp-upsells" {{ block.shopify_attributes }}>
+  {%- if heading_text != blank -%}
+    <h3 class="pdp-upsells__heading">{{ heading_text | escape }}</h3>
+  {%- endif -%}
+
+  <div class="pdp-upsells__list">
+    {%- assign products_arr = '' | split: '' -%}
+    {%- if product_1 != blank -%}
+      {%- assign products_arr = products_arr | concat: product_1 | split: '|||NEVER|||' -%}
+    {%- endif -%}
+
+    {%- for i in (1..3) -%}
+      {%- liquid
+        case i
+          when 1
+            assign upsell_product = block.settings.product_1
+          when 2
+            assign upsell_product = block.settings.product_2
+          when 3
+            assign upsell_product = block.settings.product_3
+        endcase
+      -%}
+
+      {%- if upsell_product != blank -%}
+        {%- assign upsell_variant = upsell_product.selected_or_first_available_variant -%}
+        <div class="pdp-upsells__card">
+          <div class="pdp-upsells__card-left">
+            <div class="pdp-upsells__card-image-wrap">
+              {%- if upsell_product.featured_image -%}
+                <img
+                  class="pdp-upsells__card-image"
+                  src="{{ upsell_product.featured_image | image_url: width: 176 }}"
+                  alt="{{ upsell_product.featured_image.alt | default: upsell_product.title | escape }}"
+                  width="88"
+                  height="88"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+            <div class="pdp-upsells__card-info">
+              <div class="pdp-upsells__card-title-row">
+                <a href="{{ upsell_product.url }}" class="pdp-upsells__card-title">{{ upsell_product.title | escape }}</a>
+              </div>
+              <div class="pdp-upsells__card-rating">
+                <img src="{{ 'stars.svg' | asset_url }}" alt="{{ upsell_product.metafields.reviews.rating.value | default: '4.9' }} stars" width="66" height="10" loading="lazy">
+                <span class="pdp-upsells__card-rating-value">{{ upsell_product.metafields.reviews.rating.value | default: '4.9' }}</span>
+              </div>
+              <div class="pdp-upsells__card-price-row">
+                {%- if upsell_variant.compare_at_price > upsell_variant.price -%}
+                  <span class="pdp-upsells__card-sale-price">{{ upsell_variant.price | money }}</span>
+                  <span class="pdp-upsells__card-compare-price"><s>{{ upsell_variant.compare_at_price | money }}</s></span>
+                {%- else -%}
+                  <span class="pdp-upsells__card-sale-price">{{ upsell_variant.price | money }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+          <div class="pdp-upsells__card-right">
+            <button
+              type="button"
+              class="pdp-upsells__add-btn"
+              data-upsell-add="{{ upsell_variant.id }}"
+              {% unless upsell_variant.available %}disabled{% endunless %}
+            >
+              ADD
+            </button>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+.pdp-upsells {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pdp-upsells__heading {
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: #141414;
+  margin: 0;
+  text-align: start;
+}
+
+.pdp-upsells__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pdp-upsells__card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #D0D0BC;
+  padding-inline-end: 16px;
+}
+
+.pdp-upsells__card-left {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+
+  @media screen and (max-width: 749px) {
+    gap: 8px;
+  }
+}
+
+.pdp-upsells__card-image-wrap {
+  flex-shrink: 0;
+  width: 88px;
+  height: 88px;
+  border-inline-end: 1px solid #D0D0BC;
+  overflow: hidden;
+
+  @media screen and (max-width: 749px) {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.pdp-upsells__card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pdp-upsells__card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 0;
+}
+
+.pdp-upsells__card-title-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pdp-upsells__card-title {
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #141414;
+  text-decoration: none;
+
+  @media screen and (max-width: 749px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.pdp-upsells__card-rating {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.pdp-upsells__card-rating img {
+  display: block;
+}
+
+.pdp-upsells__card-rating-value {
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 12px;
+  color: #4A4A41;
+}
+
+.pdp-upsells__card-price-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pdp-upsells__card-sale-price {
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+}
+
+.pdp-upsells__card-compare-price {
+  font-family: var(--font-heading--family), sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #80806F;
+}
+
+.pdp-upsells__card-compare-price s {
+  text-decoration: line-through;
+}
+
+.pdp-upsells__card-right {
+  flex-shrink: 0;
+}
+
+.pdp-upsells__add-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 32px;
+  background-color: #141414;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 24px;
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.pdp_upsells",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "t:settings.heading_text",
+      "default": "You may also like"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "t:settings.product_1"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "t:settings.product_2"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "t:settings.product_3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.pdp_upsells"
+    }
+  ]
+}
+{% endschema %}

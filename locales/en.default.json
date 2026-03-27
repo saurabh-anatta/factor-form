@@ -360,6 +360,21 @@
       "view_all": "VIEW ALL",
       "previous": "Previous products",
       "next": "Next products"
+    },
+    "custom_pdp": {
+      "add_to_cart": "ADD TO CART",
+      "sold_out": "SOLD OUT",
+      "unavailable": "Unavailable",
+      "subscribe_save": "Subscribe & Save",
+      "one_time": "One-time purchase",
+      "most_popular": "MOST POPULAR",
+      "reviews_count": "({{ count }} Reviews)",
+      "supplement_facts": "Supplement Facts",
+      "you_may_also_like": "You may also like",
+      "select_prefix": "Select {{ option }}",
+      "money_back": "30-day money-back guarantee",
+      "cancel_anytime": "Delay or cancel anytime",
+      "added_to_cart": "Added to cart"
     }
   },
   "products": {

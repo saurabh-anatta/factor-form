@@ -1,0 +1,438 @@
+{% liquid
+  assign product = product
+  assign current_variant = product.selected_or_first_available_variant
+  assign media_position = section.settings.media_position | default: 'left'
+  assign gallery_columns = section.settings.gallery_columns | default: '2'
+  assign badge_text = section.settings.gallery_badge_text
+  assign badge_bg = section.settings.gallery_badge_bg | default: '#141414'
+  assign color_scheme = section.settings.color_scheme
+%}
+
+{%- comment -%} Product JSON-LD structured data {%- endcomment -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ request.origin | append: product.url | json }},
+    {% if product.featured_image %}
+      "image": [{{ product.featured_image | image_url: width: 1200 | json }}],
+    {% endif %}
+    "description": {{ product.description | strip_html | truncate: 500 | json }},
+    {% if current_variant.sku != blank %}
+      "sku": {{ current_variant.sku | json }},
+    {% endif %}
+    "brand": {
+      "@type": "Brand",
+      "name": {{ product.vendor | json }}
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": {{ request.origin | append: product.url | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ current_variant.price | divided_by: 100.0 | json }},
+      {% if current_variant.compare_at_price > current_variant.price %}
+        "discount": {{ current_variant.compare_at_price | minus: current_variant.price | divided_by: 100.0 | json }},
+      {% endif %}
+      "availability": "https://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}"
+    }
+  }
+</script>
+
+<custom-pdp-section
+  class="custom-pdp color-{{ color_scheme }}"
+  data-product-id="{{ product.id }}"
+  data-section-id="{{ section.id }}"
+  data-current-variant-id="{{ current_variant.id }}"
+  style="
+    --section-padding-top: {{ section.settings.padding-block-start }}px;
+    --section-padding-bottom: {{ section.settings.padding-block-end }}px;
+  "
+>
+  {%- comment -%} Product JSON for JS {%- endcomment -%}
+  <script type="application/json" data-product-json>
+    {{ product | json }}
+  </script>
+
+  <div class="custom-pdp__grid custom-pdp__grid--media-{{ media_position }}">
+    {%- comment -%} ===== Media Gallery Column ===== {%- endcomment -%}
+    <div class="custom-pdp__media">
+      {%- comment -%} Desktop: 2-column grid of images {%- endcomment -%}
+      <div class="custom-pdp__media-grid custom-pdp__media-grid--{{ gallery_columns }}col">
+        {%- for media in product.media -%}
+          <div class="custom-pdp__media-item" data-media-index="{{ forloop.index0 }}">
+            {%- if media.media_type == 'image' -%}
+              <img
+                class="custom-pdp__media-image"
+                src="{{ media | image_url: width: 800 }}"
+                alt="{{ media.alt | default: product.title | escape }}"
+                width="400"
+                height="400"
+                loading="{% if forloop.index <= 2 %}eager{% else %}lazy{% endif %}"
+              >
+            {%- elsif media.media_type == 'video' -%}
+              {{ media | video_tag: autoplay: false, loop: false, controls: true, class: 'custom-pdp__media-video' }}
+            {%- elsif media.media_type == 'external_video' -%}
+              {{ media | external_video_tag: class: 'custom-pdp__media-video' }}
+            {%- endif -%}
+
+            {%- if forloop.first and badge_text != blank -%}
+              <span
+                class="custom-pdp__media-badge"
+                style="background-color: {{ badge_bg }};"
+              >
+                {{ badge_text | escape }}
+              </span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Mobile: Main image + thumbnail strip {%- endcomment -%}
+      <div class="custom-pdp__media-mobile">
+        <div class="custom-pdp__media-main">
+          {%- if product.featured_image -%}
+            <img
+              class="custom-pdp__media-main-image"
+              src="{{ product.featured_image | image_url: width: 800 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              data-main-image
+              width="390"
+              height="390"
+              loading="eager"
+            >
+          {%- endif -%}
+          {%- if badge_text != blank -%}
+            <span
+              class="custom-pdp__media-badge"
+              style="background-color: {{ badge_bg }};"
+            >
+              {{ badge_text | escape }}
+            </span>
+          {%- endif -%}
+        </div>
+        <div class="custom-pdp__thumbnails">
+          {%- for media in product.media -%}
+            {%- if media.media_type == 'image' -%}
+              <button
+                type="button"
+                class="custom-pdp__thumbnail{% if forloop.first %} custom-pdp__thumbnail--active{% endif %}"
+                data-thumbnail-index="{{ forloop.index0 }}"
+                data-thumbnail-src="{{ media | image_url: width: 800 }}"
+                data-thumbnail-alt="{{ media.alt | default: product.title | escape }}"
+                aria-label="{{ product.title | escape }} - Image {{ forloop.index }}"
+              >
+                <img
+                  src="{{ media | image_url: width: 128 }}"
+                  alt="{{ media.alt | default: product.title | escape }}"
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                  class="custom-pdp__thumbnail-image"
+                >
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} ===== Details Column (blocks) ===== {%- endcomment -%}
+    <div class="custom-pdp__details">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</custom-pdp-section>
+
+<script src="{{ 'custom-pdp.js' | asset_url }}" type="module" defer></script>
+
+{% stylesheet %}
+.custom-pdp {
+  padding-top: var(--section-padding-top, 0px);
+  padding-bottom: var(--section-padding-bottom, 64px);
+  background-color: #FFFFFF;
+}
+
+.custom-pdp__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 1536px;
+  margin: 0 auto;
+  padding: 0 64px;
+
+  @media screen and (min-width: 750px) {
+    grid-template-columns: minmax(0, 57fr) minmax(0, 40fr);
+    gap: 64px;
+  }
+
+  @media screen and (max-width: 749px) {
+    padding: 0;
+  }
+}
+
+.custom-pdp__grid--media-right {
+  @media screen and (min-width: 750px) {
+    grid-template-columns: minmax(0, 40fr) minmax(0, 57fr);
+  }
+}
+
+.custom-pdp__grid--media-right .custom-pdp__media {
+  @media screen and (min-width: 750px) {
+    order: 2;
+  }
+}
+
+.custom-pdp__grid--media-right .custom-pdp__details {
+  @media screen and (min-width: 750px) {
+    order: 1;
+  }
+}
+
+/* Desktop media grid */
+.custom-pdp__media-grid {
+  display: none;
+
+  @media screen and (min-width: 750px) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.custom-pdp__media-grid--2col .custom-pdp__media-item {
+  width: calc(50% - 4px);
+  position: relative;
+}
+
+.custom-pdp__media-grid--1col .custom-pdp__media-item {
+  width: 100%;
+  position: relative;
+}
+
+.custom-pdp__media-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.custom-pdp__media-video {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.custom-pdp__media-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #FFFFFF;
+  z-index: 1;
+}
+
+/* Mobile media */
+.custom-pdp__media-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media screen and (min-width: 750px) {
+    display: none;
+  }
+}
+
+.custom-pdp__media-main {
+  position: relative;
+  width: 100%;
+}
+
+.custom-pdp__media-main-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.custom-pdp__thumbnails {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-inline-start: 16px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.custom-pdp__thumbnail {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 1px solid transparent;
+  background-color: #E7E6E2;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+
+.custom-pdp__thumbnail--active {
+  border-color: #141414;
+}
+
+.custom-pdp__thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Details column */
+.custom-pdp__details {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  @media screen and (max-width: 749px) {
+    padding: 0 16px;
+    gap: 24px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .custom-pdp__details {
+    gap: 56px;
+    max-width: 568px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_pdp",
+  "tag": "section",
+  "blocks": [
+    { "type": "pdp-hero-card" },
+    { "type": "pdp-variant-picker" },
+    { "type": "pdp-subscription" },
+    { "type": "pdp-buy-cta" },
+    { "type": "pdp-accordion" },
+    { "type": "pdp-upsells" },
+    { "type": "@app" },
+    { "type": "@theme" },
+    { "type": "text" },
+    { "type": "spacer" },
+    { "type": "_divider" }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "t:settings.media_position",
+      "options": [
+        { "value": "left", "label": "t:options.left" },
+        { "value": "right", "label": "t:options.right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "gallery_columns",
+      "label": "t:settings.gallery_columns",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "text",
+      "id": "gallery_badge_text",
+      "label": "t:settings.gallery_badge_text",
+      "default": "FREE WELCOME KIT"
+    },
+    {
+      "type": "color",
+      "id": "gallery_badge_bg",
+      "label": "t:settings.gallery_badge_bg",
+      "default": "#141414"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 64,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_pdp",
+      "blocks": [
+        {
+          "type": "pdp-hero-card"
+        },
+        {
+          "type": "pdp-variant-picker"
+        },
+        {
+          "type": "pdp-subscription"
+        },
+        {
+          "type": "pdp-buy-cta"
+        },
+        {
+          "type": "pdp-accordion"
+        },
+        {
+          "type": "pdp-upsells"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

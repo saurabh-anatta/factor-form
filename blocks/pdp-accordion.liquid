@@ -1,0 +1,226 @@
+{% doc %}
+  Product Accordion Block
+
+  Renders up to 5 expandable/collapsible rows with headings and richtext content.
+
+  @example {% content_for 'block', type: 'pdp-accordion', id: 'accordion' %}
+{% enddoc %}
+
+<div class="pdp-accordion" {{ block.shopify_attributes }}>
+  {%- for i in (1..5) -%}
+    {%- liquid
+      case i
+        when 1
+          assign heading = block.settings.heading_1
+          assign content = block.settings.content_1
+        when 2
+          assign heading = block.settings.heading_2
+          assign content = block.settings.content_2
+        when 3
+          assign heading = block.settings.heading_3
+          assign content = block.settings.content_3
+        when 4
+          assign heading = block.settings.heading_4
+          assign content = block.settings.content_4
+        when 5
+          assign heading = block.settings.heading_5
+          assign content = block.settings.content_5
+      endcase
+    -%}
+
+    {%- if heading != blank -%}
+      <div
+        class="pdp-accordion__row{% if forloop.first %} pdp-accordion__row--open{% endif %}"
+        data-accordion-row
+      >
+        <button
+          type="button"
+          class="pdp-accordion__header"
+          data-accordion-header
+          aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+        >
+          <span class="pdp-accordion__heading">{{ heading | escape }}</span>
+          <span class="pdp-accordion__icon{% if forloop.first %} pdp-accordion__icon--open{% endif %}" data-accordion-icon aria-hidden="true">
+            <img
+              class="pdp-accordion__chevron-down"
+              src="{{ 'chevron-down.svg' | asset_url }}"
+              alt=""
+              width="24"
+              height="24"
+              loading="lazy"
+            >
+            <img
+              class="pdp-accordion__chevron-up"
+              src="{{ 'chevron-up-3.svg' | asset_url }}"
+              alt=""
+              width="24"
+              height="24"
+              loading="lazy"
+            >
+          </span>
+        </button>
+        <div
+          class="pdp-accordion__content"
+          data-accordion-content
+          style="{% unless forloop.first %}display:none;{% endunless %}"
+        >
+          {%- if content != blank -%}
+            <div class="pdp-accordion__text">{{ content }}</div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{% stylesheet %}
+.pdp-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pdp-accordion__row {
+  border-bottom: 1px solid #D0D0BC;
+  padding: 20px 0;
+
+  @media screen and (max-width: 749px) {
+    padding: 0 0 20px;
+    margin-top: 16px;
+  }
+}
+
+.pdp-accordion__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: start;
+}
+
+.pdp-accordion__heading {
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  color: #141414;
+}
+
+.pdp-accordion__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pdp-accordion__chevron-down {
+  display: block;
+}
+
+.pdp-accordion__chevron-up {
+  display: none;
+}
+
+.pdp-accordion__icon--open .pdp-accordion__chevron-down {
+  display: none;
+}
+
+.pdp-accordion__icon--open .pdp-accordion__chevron-up {
+  display: block;
+}
+
+.pdp-accordion__content {
+  padding-top: 12px;
+}
+
+.pdp-accordion__text {
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #4A4A41;
+}
+
+.pdp-accordion__text p {
+  margin: 0 0 8px;
+}
+
+.pdp-accordion__text p:last-child {
+  margin-bottom: 0;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.pdp_accordion",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "t:settings.heading_1",
+      "default": "Description"
+    },
+    {
+      "type": "richtext",
+      "id": "content_1",
+      "label": "t:settings.content_1"
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "t:settings.heading_2",
+      "default": "Benefits"
+    },
+    {
+      "type": "richtext",
+      "id": "content_2",
+      "label": "t:settings.content_2",
+      "visible_if": "{{ heading_2 }}"
+    },
+    {
+      "type": "text",
+      "id": "heading_3",
+      "label": "t:settings.heading_3",
+      "default": "How to use"
+    },
+    {
+      "type": "richtext",
+      "id": "content_3",
+      "label": "t:settings.content_3",
+      "visible_if": "{{ heading_3 }}"
+    },
+    {
+      "type": "text",
+      "id": "heading_4",
+      "label": "t:settings.heading_4"
+    },
+    {
+      "type": "richtext",
+      "id": "content_4",
+      "label": "t:settings.content_4",
+      "visible_if": "{{ heading_4 }}"
+    },
+    {
+      "type": "text",
+      "id": "heading_5",
+      "label": "t:settings.heading_5"
+    },
+    {
+      "type": "richtext",
+      "id": "content_5",
+      "label": "t:settings.content_5",
+      "visible_if": "{{ heading_5 }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.pdp_accordion"
+    }
+  ]
+}
+{% endschema %}
