@@ -1,0 +1,345 @@
+<script
+  type="module"
+  src="{{ 'custom-header.js' | asset_url }}"
+  fetchpriority="low"
+></script>
+
+{% liquid
+  assign center_menu = linklists[section.settings.center_menu]
+  assign right_menu = linklists[section.settings.right_menu]
+  assign color_scheme = section.settings.color_scheme
+  assign sticky = section.settings.enable_sticky_header
+%}
+
+<custom-header-component
+  class="custom-header color-{{ color_scheme }}"
+  {% if sticky %}data-sticky{% endif %}
+  style="--custom-header-height: 64px;"
+>
+  <header class="custom-header__inner" role="banner">
+    <nav class="custom-header__nav" aria-label="{{ 'accessibility.header_navigation_label' | t }}">
+      {%- comment -%} Mobile: hamburger + logo on left {%- endcomment -%}
+      <div class="custom-header__mobile-left">
+        <button
+          type="button"
+          class="custom-header__hamburger"
+          data-hamburger
+          aria-label="{{ 'sections.custom_header.menu_label' | t }}"
+          aria-haspopup="dialog"
+        >
+          <img
+            src="{{ 'list.svg' | asset_url }}"
+            alt=""
+            width="24"
+            height="24"
+            aria-hidden="true"
+          >
+        </button>
+        <a href="{{ routes.root_url }}" class="custom-header__logo custom-header__logo--mobile">
+          <img
+            src="{{ 'factorform-logo-primary-black-1-2.svg' | asset_url }}"
+            alt="{{ shop.name | escape }}"
+            width="140"
+            height="28"
+            loading="eager"
+          >
+        </a>
+      </div>
+
+      {%- comment -%} Desktop: logo on left {%- endcomment -%}
+      <div class="custom-header__left">
+        <a href="{{ routes.root_url }}" class="custom-header__logo custom-header__logo--desktop">
+          <img
+            src="{{ 'factorform-logo-primary-black-1.svg' | asset_url }}"
+            alt="{{ shop.name | escape }}"
+            width="161"
+            height="32"
+            loading="eager"
+          >
+        </a>
+      </div>
+
+      {%- comment -%} Desktop: center navigation links {%- endcomment -%}
+      <div class="custom-header__center">
+        {% if center_menu != blank %}
+          <ul class="custom-header__links" role="list">
+            {% for link in center_menu.links %}
+              <li class="custom-header__link-item">
+                <a
+                  href="{{ link.url }}"
+                  class="custom-header__link"
+                  {% if link.current %}aria-current="page"{% endif %}
+                >
+                  <span>{{ link.title | escape }}</span>
+                  {% if link.links.size > 0 %}
+                    <svg class="custom-header__chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  {% endif %}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Desktop: right navigation + actions {%- endcomment -%}
+      <div class="custom-header__right">
+        {% if right_menu != blank %}
+          <ul class="custom-header__links custom-header__links--right" role="list">
+            {% for link in right_menu.links %}
+              <li class="custom-header__link-item">
+                <a
+                  href="{{ link.url }}"
+                  class="custom-header__link"
+                  {% if link.current %}aria-current="page"{% endif %}
+                >
+                  <span>{{ link.title | escape }}</span>
+                  {% if link.links.size > 0 %}
+                    <svg class="custom-header__chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  {% endif %}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        <div class="custom-header__actions">
+          {% render 'header-actions', display_style: 'icon' %}
+        </div>
+      </div>
+
+      {%- comment -%} Mobile: actions on right {%- endcomment -%}
+      <div class="custom-header__mobile-right">
+        <div class="custom-header__actions">
+          {% render 'header-actions', display_style: 'icon' %}
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  {%- comment -%} Mobile drawer {%- endcomment -%}
+  {% render 'custom-header-drawer',
+    center_menu: center_menu,
+    right_menu: right_menu,
+    color_scheme: color_scheme
+  %}
+</custom-header-component>
+
+{% stylesheet %}
+  custom-header-component {
+    display: block;
+  }
+
+  custom-header-component[data-sticky] {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .custom-header__inner {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  .custom-header__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 16px;
+    padding-inline: 16px;
+    min-height: 60px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .custom-header__nav {
+      padding-block: 16px;
+      padding-inline: 64px;
+      min-height: 64px;
+    }
+  }
+
+  /* Mobile layout */
+  .custom-header__mobile-left {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .custom-header__mobile-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-header__left,
+  .custom-header__center,
+  .custom-header__right {
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .custom-header__mobile-left,
+    .custom-header__mobile-right {
+      display: none;
+    }
+
+    .custom-header__left,
+    .custom-header__center,
+    .custom-header__right {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  /* Logo */
+  .custom-header__logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .custom-header__logo img {
+    display: block;
+    height: auto;
+  }
+
+  .custom-header__logo--desktop img {
+    width: 161px;
+  }
+
+  .custom-header__logo--mobile img {
+    width: 140px;
+  }
+
+  /* Hamburger */
+  .custom-header__hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: var(--color-foreground);
+    cursor: pointer;
+  }
+
+  .custom-header__hamburger img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+  }
+
+  @media screen and (min-width: 750px) {
+    .custom-header__hamburger {
+      display: none;
+    }
+  }
+
+  /* Navigation links */
+  .custom-header__links {
+    display: flex;
+    align-items: center;
+    gap: 44px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .custom-header__links--right {
+    gap: 32px;
+  }
+
+  .custom-header__link-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-header__link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-body--family);
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--color-foreground);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+  }
+
+  .custom-header__link:hover {
+    opacity: 0.7;
+  }
+
+  .custom-header__chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Right zone */
+  .custom-header__right {
+    gap: 32px;
+    justify-content: flex-end;
+  }
+
+  .custom-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .custom-header__actions {
+      gap: 16px;
+    }
+  }
+
+  .custom-header__actions header-actions {
+    gap: var(--gap-md);
+  }
+
+  @media screen and (max-width: 749px) {
+    .custom-header__actions header-actions {
+      gap: var(--gap-sm);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_header",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "center_menu",
+      "label": "t:settings.center_menu"
+    },
+    {
+      "type": "link_list",
+      "id": "right_menu",
+      "label": "t:settings.right_menu"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-5"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "label": "t:settings.enable_sticky_header",
+      "default": true
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

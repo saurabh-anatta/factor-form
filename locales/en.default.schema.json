@@ -434,7 +434,9 @@
     "video_section": "Video",
     "view_all_button": "View all",
     "pills": "Pills",
-    "comparison_slider": "Comparison slider"
+    "comparison_slider": "Comparison slider",
+    "custom_header": "Header",
+    "custom_footer": "Footer"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1174,7 +1176,17 @@
     "cs_slider_inner_color": "Slider inner color",
     "text_on_images": "Text on images",
     "x_position": "Horizontal position",
-    "y_position": "Vertical position"
+    "y_position": "Vertical position",
+    "center_menu": "Center menu",
+    "right_menu": "Right menu",
+    "enable_sticky_header": "Sticky header",
+    "newsletter_heading": "Newsletter heading",
+    "newsletter_description": "Newsletter description",
+    "shop_menu": "Shop menu",
+    "learn_menu": "Learn menu",
+    "facebook_url": "Facebook URL",
+    "instagram_url": "Instagram URL",
+    "policy_menu": "Policy menu"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",
