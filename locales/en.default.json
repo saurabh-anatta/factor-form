@@ -349,6 +349,10 @@
     "custom_header": {
       "menu_label": "Menu",
       "close_menu": "Close menu"
+    },
+    "custom_reviews": {
+      "play_video": "Play video review",
+      "star_rating": "5 star rating"
     }
   },
   "products": {

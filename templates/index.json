@@ -63,7 +63,55 @@
         }
       },
       "block_order": ["heading", "description", "button"]
+    },
+    "reviews": {
+      "type": "custom-reviews",
+      "settings": {
+        "heading": "Over 5,000 5-stars reviews on Trustpilot",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "review-1": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524516.png",
+            "quote": "\"The taste is a lot better than the greens powder I'm usually taking\"",
+            "author": "Nicole B.  |  Paid review†",
+            "show_play_button": true
+          }
+        },
+        "review-2": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524524.png",
+            "quote": "\"It's delivered right to your door, for a very fair price, so I highly recommend it\"",
+            "author": "Brian L.  |  Paid review†",
+            "show_play_button": true
+          }
+        },
+        "review-3": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524532.png",
+            "quote": "\"I feel like I have more energy and ability to focus\"",
+            "author": "Omni P.  |  Paid review†",
+            "show_play_button": true
+          }
+        },
+        "review-4": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524540.png",
+            "quote": "\"The ritual of having it first thing in the morning has been a positive\"",
+            "author": "Zack S. | Paid review†",
+            "show_play_button": true
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3", "review-4"]
     }
   },
-  "order": ["hero"]
+  "order": ["hero", "reviews"]
 }

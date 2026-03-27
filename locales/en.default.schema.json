@@ -436,7 +436,9 @@
     "pills": "Pills",
     "comparison_slider": "Comparison slider",
     "custom_header": "Header",
-    "custom_footer": "Footer"
+    "custom_footer": "Footer",
+    "custom_reviews": "Reviews",
+    "review_item": "Review item"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1186,7 +1188,10 @@
     "learn_menu": "Learn menu",
     "facebook_url": "Facebook URL",
     "instagram_url": "Instagram URL",
-    "policy_menu": "Policy menu"
+    "policy_menu": "Policy menu",
+    "quote": "Quote",
+    "author": "Author",
+    "show_play_button": "Show play button"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",
