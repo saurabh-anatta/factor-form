@@ -215,7 +215,59 @@
         }
       },
       "block_order": ["tab-1", "tab-2", "tab-3", "tab-4", "category-card-1", "product-card-1", "product-card-2", "product-card-3", "product-card-4"]
+    },
+    "benefits": {
+      "type": "custom-benefits",
+      "settings": {
+        "heading": "Why Factor Form",
+        "background_color": "#E1F0E2",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "benefit-1": {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Flexibility",
+            "description": "Build a personalized wellness routine with targeted formulas for gut health, immunity, recovery, and more",
+            "description_mobile": "Create your perfect routine with targeted wellness products",
+            "icon_desktop": "icon-1-nutrition-all-in-one-place-2.svg",
+            "icon_mobile": "icon-1-nutrition-all-in-one-place.svg"
+          }
+        },
+        "benefit-2": {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Quality",
+            "description": "Made with no added sugar, our products are keto-friendly and free of unnecessary ingredients",
+            "description_mobile": "No added sugar\u2014keto-friendly and free of unnecessary ingredients",
+            "icon_desktop": "icon-2-quality-ingredients-2.svg",
+            "icon_mobile": "icon-2-quality-ingredients.svg"
+          }
+        },
+        "benefit-3": {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Nutrition",
+            "description": "Enjoy dietitian-approved formulas packed with premium, nutritional ingredients.",
+            "description_mobile": "Dietitian-approved formulas made with premium, nutrient-rich ingredients",
+            "icon_desktop": "icon-3-b-food-first-nutrition-2.svg",
+            "icon_mobile": "icon-3-b-food-first-nutrition.svg"
+          }
+        },
+        "benefit-4": {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Convenience",
+            "description": "Take your life on the go with our single-serving packets you can tuck in your bag, car, or suitcase.",
+            "description_mobile": "Grab-and-go packets designed for life on the move",
+            "icon_desktop": "icon-4-designed-for-on-the-go-2.svg",
+            "icon_mobile": "icon-4-designed-for-on-the-go.svg"
+          }
+        }
+      },
+      "block_order": ["benefit-1", "benefit-2", "benefit-3", "benefit-4"]
     }
   },
-  "order": ["hero", "reviews", "product-carousel"]
+  "order": ["hero", "reviews", "product-carousel", "benefits"]
 }

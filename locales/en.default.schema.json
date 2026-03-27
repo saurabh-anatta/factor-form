@@ -449,7 +449,9 @@
     "pdp_subscription": "Subscription Selector",
     "pdp_buy_cta": "Buy Button",
     "pdp_accordion": "Product Accordion",
-    "pdp_upsells": "Upsell Products"
+    "pdp_upsells": "Upsell Products",
+    "custom_benefits": "Benefits",
+    "benefit_item": "Benefit item"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1256,7 +1258,10 @@
     "gallery_badge_text": "Badge text",
     "gallery_badge_bg": "Badge background",
     "padding_top": "Top padding",
-    "padding_bottom": "Bottom padding"
+    "padding_bottom": "Bottom padding",
+    "description_mobile": "Mobile description",
+    "icon_desktop": "Desktop icon",
+    "icon_mobile": "Mobile icon"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",
