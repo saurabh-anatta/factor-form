@@ -1,0 +1,47 @@
+{% comment %}
+  Custom Font Loading — Simplon Norm (FactorForm brand font)
+
+  IMPORTANT: For Simplon Norm to display, the following commercial font files
+  must be purchased from Swiss Typefaces, licensed, and uploaded to the theme's
+  assets/ directory:
+
+    - simplon-norm-light.woff2    (weight 300)
+    - simplon-norm-medium.woff2   (weight 500)
+    - simplon-norm-bold.woff2     (weight 700)
+
+  Until those files are present, the theme will gracefully fall back to
+  Work Sans (set via Shopify font_picker in settings_data.json).
+{% endcomment %}
+
+<style>
+  @font-face {
+    font-family: 'Simplon Norm';
+    src: url('{{ "simplon-norm-light.woff2" | asset_url }}') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Simplon Norm';
+    src: url('{{ "simplon-norm-medium.woff2" | asset_url }}') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Simplon Norm';
+    src: url('{{ "simplon-norm-bold.woff2" | asset_url }}') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --font-heading--family: 'Simplon Norm', var(--font-heading--family-fallback, sans-serif);
+    --font-heading--weight: 300;
+    --font-accent--family: 'Simplon Norm', var(--font-accent--family-fallback, sans-serif);
+    --font-accent--weight: 700;
+  }
+</style>
