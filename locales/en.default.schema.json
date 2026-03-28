@@ -451,7 +451,9 @@
     "pdp_accordion": "Product Accordion",
     "pdp_upsells": "Upsell Products",
     "custom_benefits": "Benefits",
-    "benefit_item": "Benefit item"
+    "benefit_item": "Benefit item",
+    "custom_certified": "Certified",
+    "certified_item": "Certified item"
   },
   "options": {
     "above_carousel": "Above carousel",

@@ -267,7 +267,43 @@
         }
       },
       "block_order": ["benefit-1", "benefit-2", "benefit-3", "benefit-4"]
+    },
+    "certified": {
+      "type": "custom-certified",
+      "settings": {
+        "heading": "The Factor Standard",
+        "background_color": "#FFFFFF",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "certified-1": {
+          "type": "certified-item",
+          "settings": {
+            "image": "shopify://shop_images/image-59-desktop-110864992.png",
+            "heading": "Pure Ingredients",
+            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
+          }
+        },
+        "certified-2": {
+          "type": "certified-item",
+          "settings": {
+            "image": "shopify://shop_images/image-58-desktop-110864999.png",
+            "heading": "Expert-Crafted Blends",
+            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
+          }
+        },
+        "certified-3": {
+          "type": "certified-item",
+          "settings": {
+            "image": "shopify://shop_images/image-60-desktop-110865006.png",
+            "heading": "Transparent and Clean Labels",
+            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
+          }
+        }
+      },
+      "block_order": ["certified-1", "certified-2", "certified-3"]
     }
   },
-  "order": ["hero", "reviews", "product-carousel", "benefits"]
+  "order": ["hero", "reviews", "product-carousel", "benefits", "certified"]
 }
