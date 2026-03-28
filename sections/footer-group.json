@@ -179,7 +179,7 @@
               "settings": {
                 "inverse": false,
                 "font": "heading",
-                "unit": "percent",
+                "unit": "pixel",
                 "percent_width": 100,
                 "pixel_height": 48,
                 "custom_mobile_size": false,
@@ -242,7 +242,7 @@
               "type": "group",
               "settings": {
                 "content_direction": "row",
-                "vertical_on_mobile": true,
+                "vertical_on_mobile": false,
                 "horizontal_alignment": "flex-start",
                 "vertical_alignment": "center",
                 "align_baseline": false,
@@ -365,8 +365,8 @@
                 "social-links": {
                   "type": "social-links",
                   "settings": {
-                    "facebook_url": "https://www.facebook.com",
-                    "instagram_url": "https://www.instagram.com",
+                    "facebook_url": "https://www.facebook.com/factorform",
+                    "instagram_url": "https://www.instagram.com/factorform",
                     "youtube_url": "",
                     "tiktok_url": "",
                     "twitter_url": "",
@@ -419,7 +419,7 @@
         "right-group"
       ],
       "settings": {
-        "section_width": "full-width",
+        "section_width": "page-width",
         "gap": 48,
         "color_scheme": "scheme-5",
         "padding-block-start": 56,

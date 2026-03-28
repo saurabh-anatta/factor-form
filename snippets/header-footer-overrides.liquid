@@ -8,26 +8,48 @@
     }
   }
 
-  /* Footer: Policy menu links displayed horizontally */
-  .footer-content .menu:last-of-type .list-unstyled {
+  /* Footer: Policy menu (no heading) links displayed horizontally */
+  .footer-content .menu:has(.menu__heading--empty) .list-unstyled {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
   }
 
   @media screen and (min-width: 750px) {
-    .footer-content .menu:last-of-type .list-unstyled {
+    .footer-content .menu:has(.menu__heading--empty) .list-unstyled {
       gap: 24px;
     }
   }
 
-  .footer-content .menu:last-of-type .menu__item {
+  .footer-content .menu:has(.menu__heading--empty) .menu__item {
     margin-block-start: 0;
   }
 
-  .footer-content .menu:last-of-type .menu__item a {
+  .footer-content .menu:has(.menu__heading--empty) .menu__item a {
     text-decoration: underline;
     color: #F1F1EA;
+  }
+
+  /* Footer: Hide empty heading summary for policy menu */
+  .footer-content .menu__heading--empty .menu__heading__default {
+    display: none;
+  }
+
+  /* Footer: Policy links centered on mobile */
+  @media screen and (max-width: 749px) {
+    .footer-content .menu:has(.menu__heading--empty) .list-unstyled {
+      justify-content: center;
+    }
+  }
+
+  /* Footer: Compact email input to match Figma */
+  .footer-content .email-signup__input,
+  .footer-content .email-signup__button--text {
+    padding: 12px 20px;
+  }
+
+  .footer-content .email-signup__input-group--integrated {
+    max-width: 420px;
   }
 
   /* Footer: Social icons gap */
@@ -205,4 +227,138 @@
     line-height: 20px;
     color: #141414;
   }
+  /* Hero Desktop: Constrain content to left half, add padding */
+  @media screen and (min-width: 750px) {
+    .hero .hero__content-wrapper {
+      max-width: 50%;
+      padding-inline-start: 64px;
+    }
+  }
+
+  /* Hero Mobile: Stack images, center text over bottom image */
+  @media screen and (max-width: 749px) {
+    .hero--stack-mobile {
+      --hero-min-height: 1084px;
+    }
+
+    .hero--stack-mobile .hero__content-wrapper.layout-panel-flex--column {
+      align-items: center;
+      justify-content: flex-end;
+      padding-block-end: 40px;
+    }
+
+    .hero--stack-mobile .hero__content-wrapper.layout-panel-flex--column::before {
+      content: '';
+      flex: 0 0 542px;
+    }
+
+    .hero--stack-mobile .hero__content-wrapper .text-block > *,
+    .hero--stack-mobile .hero__content-wrapper .text-block * {
+      text-align: center !important; /* Override inline --text-align on mobile */
+    }
+
+    .hero--stack-mobile .hero__content-wrapper .button {
+      width: 100%;
+      max-width: 340px;
+    }
+  }
+
+  /* Header: Keep account and cart as icons even in text mode */
+  @media screen and (min-width: 750px) {
+    /* Hide account text, show account icon */
+    .account-button--text .account-button__text.mobile\:hidden {
+      display: none !important;
+    }
+
+    .account-button--text shopify-account > span.desktop\:hidden {
+      display: inline !important;
+    }
+
+    /* Hide cart text, show cart icon */
+    cart-icon.header-actions__cart-icon--text > span.mobile\:hidden {
+      display: none !important;
+    }
+
+    cart-icon.header-actions__cart-icon--text > span.desktop\:hidden {
+      display: inline !important;
+    }
+  }
+
+  /* Header: Align actions vertically */
+  header-actions {
+    align-items: center;
+  }
+
+  header-actions .header-actions__action {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Header: Cart icon — fix sizing, alignment, and bubble position */
+  cart-icon .svg-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+
+
+  @media screen and (min-width: 750px) {
+    /* Force icon-style bubble positioning even in text mode */
+    .header-actions__cart-icon--text.header-actions__cart-icon .cart-bubble {
+      position: absolute !important;
+      top: -4px !important;
+      right: -8px !important;
+    }
+
+    cart-icon.header-actions__cart-icon--text {
+      position: relative;
+      display: inline;
+      align-items: center !important;
+      gap: 0 !important;
+    }
+
+    /* Vertically align cart button with other actions */
+    .cart-drawer--text > button.header-actions__action {
+      display: inline-flex !important;
+      align-items: center;
+      padding-right: 10px;
+      padding-top: 5px;
+    }
+  }
+
+  /* Header: FAQ link in actions area */
+  .header-actions__faq-link {
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-actions__faq-link {
+      display: flex;
+      align-items: center;
+      font-size: var(--header-actions-font-size, 0.875rem);
+      font-family: var(--header-actions-font-family, var(--font-body--family));
+      font-weight: var(--header-actions-font-weight, var(--font-body--weight));
+      text-transform: var(--header-actions-text-case, none);
+      text-decoration: none;
+      color: inherit;
+      white-space: nowrap;
+    }
+
+    .header-actions__faq-link:hover {
+      opacity: 0.7;
+    }
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const headerActions = document.querySelector('header-actions');
+    if (!headerActions) return;
+
+    /* Inject FAQ link before account/cart */
+    const faqLink = document.createElement('a');
+    faqLink.href = '/pages/faqs';
+    faqLink.className = 'header-actions__faq-link header-actions__action header-actions__text-style';
+    faqLink.textContent = 'FAQs';
+    headerActions.insertBefore(faqLink, headerActions.firstChild);
+  });
+</script>

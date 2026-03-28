@@ -1213,6 +1213,8 @@
     "quote": "Quote",
     "author": "Author",
     "show_play_button": "Show play button",
+    "video_url": "YouTube URL",
+    "video_url_info": "Paste a YouTube video URL",
     "ticker_text": "Ticker text",
     "ticker_color": "Ticker color",
     "is_active": "Active",

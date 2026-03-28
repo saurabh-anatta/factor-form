@@ -17,7 +17,7 @@
         "media_type_2": "image",
         "image_2": "shopify://shop_images/image-1-desktop-110524490.png",
         "content_direction": "column",
-        "horizontal_alignment_flex_direction_column": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 8,
         "section_width": "full-width",
@@ -27,7 +27,13 @@
         "overlay_color": "#00000066",
         "overlay_style": "solid",
         "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-end": 0,
+        "stack_media_on_mobile": true,
+        "custom_mobile_media": true,
+        "media_type_1_mobile": "image",
+        "image_1_mobile": "shopify://shop_images/main-hero-img-3-1-desktop-91051018.png",
+        "media_type_2_mobile": "image",
+        "image_2_mobile": "shopify://shop_images/image-1-desktop-91051020.png"
       },
       "blocks": {
         "heading": {
@@ -36,7 +42,7 @@
             "text": "<h1>Your Daily Greens, Reinvented</h1>",
             "width": "100%",
             "max_width": "narrow",
-            "alignment": "center",
+            "alignment": "left",
             "type_preset": "h1",
             "color": "#FFFFFF"
           }
@@ -47,7 +53,7 @@
             "text": "<p>Better taste. Better routine. Better you.</p>",
             "width": "100%",
             "max_width": "narrow",
-            "alignment": "center",
+            "alignment": "left",
             "type_preset": "paragraph",
             "color": "#FFFFFF",
             "padding-block-end": 24
@@ -79,7 +85,8 @@
             "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524516.png",
             "quote": "\"The taste is a lot better than the greens powder I'm usually taking\"",
             "author": "Nicole B.  |  Paid review†",
-            "show_play_button": true
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           }
         },
         "review-2": {
@@ -88,7 +95,8 @@
             "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524524.png",
             "quote": "\"It's delivered right to your door, for a very fair price, so I highly recommend it\"",
             "author": "Brian L.  |  Paid review†",
-            "show_play_button": true
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           }
         },
         "review-3": {
@@ -97,7 +105,8 @@
             "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524532.png",
             "quote": "\"I feel like I have more energy and ability to focus\"",
             "author": "Omni P.  |  Paid review†",
-            "show_play_button": true
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           }
         },
         "review-4": {
@@ -106,7 +115,8 @@
             "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524540.png",
             "quote": "\"The ritual of having it first thing in the morning has been a positive\"",
             "author": "Zack S. | Paid review†",
-            "show_play_button": true
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           }
         }
       },

@@ -75,7 +75,7 @@
             data-carousel-prev
             aria-label="{{ 'sections.custom_product_carousel.previous' | t }}"
           >
-            <img src="{{ 'chevron-up.svg' | asset_url }}" alt="" role="presentation" width="40" height="40" loading="lazy">
+            <img src="{{ 'chevron-up-2.svg' | asset_url }}" alt="" role="presentation" width="40" height="40" loading="lazy">
           </button>
           <button
             type="button"
@@ -267,6 +267,11 @@
   color: #2A523F;
 }
 
+.cpc__logo {
+  max-width: 30%;
+  height: auto;
+}
+
 .cpc__logo--mobile {
   display: none;
 }
@@ -353,12 +358,8 @@
   }
 }
 
-.cpc__arrow--prev img {
-  transform: rotate(-90deg);
-}
-
 .cpc__arrow--next img {
-  transform: rotate(90deg);
+  transform: scaleX(-1);
 }
 
 /* Carousel track */

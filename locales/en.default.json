@@ -352,7 +352,8 @@
     },
     "custom_reviews": {
       "play_video": "Play video review",
-      "star_rating": "5 star rating"
+      "star_rating": "5 star rating",
+      "close_video": "Close video"
     },
     "custom_product_carousel": {
       "brought_to_you_by": "brought to you by",

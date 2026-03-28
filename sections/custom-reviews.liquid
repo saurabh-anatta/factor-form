@@ -43,7 +43,7 @@
               {%- endif -%}
             </div>
             {%- if block.settings.show_play_button -%}
-              <button type="button" class="custom-reviews__play" aria-label="{{ 'sections.custom_reviews.play_video' | t }}">
+              <button type="button" class="custom-reviews__play"{% if block.settings.video_url != blank %} data-video-url="{{ block.settings.video_url | escape }}"{% endif %} aria-label="{{ 'sections.custom_reviews.play_video' | t }}">
                 <img
                   class="custom-reviews__play-desktop"
                   src="{{ 'play-2.svg' | asset_url }}"
@@ -92,6 +92,20 @@
         </button>
       {%- endfor -%}
     </div>
+
+    {%- comment -%} Video popup dialog {%- endcomment -%}
+    <dialog class="custom-reviews__dialog" data-reviews-dialog>
+      <div class="custom-reviews__dialog-inner">
+        <button type="button" class="custom-reviews__dialog-close" data-reviews-dialog-close aria-label="{{ 'sections.custom_reviews.close_video' | t }}">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M29.9999 10.0001L10 30M9.99992 10L29.9998 29.9999" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="custom-reviews__dialog-circle">
+          <div class="custom-reviews__dialog-video" data-reviews-dialog-video></div>
+        </div>
+      </div>
+    </dialog>
   </div>
 </custom-reviews-carousel>
 
@@ -239,6 +253,77 @@
   display: none;
 }
 
+/* Video popup dialog */
+.custom-reviews__dialog {
+  border: none;
+  background: none;
+  padding: 0;
+  max-width: none;
+  max-height: none;
+  overflow: visible;
+}
+
+.custom-reviews__dialog[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-reviews__dialog::backdrop {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.custom-reviews__dialog-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-reviews__dialog-close {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  z-index: 2;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.custom-reviews__dialog-close:hover {
+  opacity: 0.7;
+}
+
+.custom-reviews__dialog-circle {
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background-color: #141414;
+}
+
+.custom-reviews__dialog-video {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.custom-reviews__dialog-video iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+  border: none;
+}
+
 /* Mobile styles */
 @media screen and (max-width: 749px) {
   .custom-reviews__stars {
@@ -346,6 +431,16 @@
     border-radius: 4px;
     background: linear-gradient(to right, #FFFFFF 54%, #80806F 54%);
   }
+
+  .custom-reviews__dialog-circle {
+    width: 280px;
+    height: 280px;
+  }
+
+  .custom-reviews__dialog-close {
+    top: -16px;
+    right: -8px;
+  }
 }
 {% endstylesheet %}
 
@@ -413,6 +508,12 @@
           "id": "show_play_button",
           "label": "t:settings.show_play_button",
           "default": true
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "t:settings.video_url",
+          "info": "t:settings.video_url_info"
         }
       ]
     }
