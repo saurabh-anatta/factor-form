@@ -35,4 +35,174 @@
     gap: 16px;
     justify-content: flex-start;
   }
+
+  /* ========================================
+     Navigation Overrides — Desktop Mega Menu
+     ======================================== */
+
+  @media screen and (min-width: 990px) {
+    /* White background with shadow for mega menu dropdown */
+    .menu-list__submenu .menu-list__submenu-inner {
+      --color-foreground: rgb(20, 20, 20);
+      --color-foreground-rgb: 20, 20, 20;
+      background-color: #FFFFFF;
+      color: #141414;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding-block: 48px;
+      padding-inline: 164px;
+    }
+
+    /* Split layout: text links stack left, image tiles row right.
+       Uses flex column-wrap so text items stack vertically in column 1
+       and image tiles each get their own column (wrapping at max-height). */
+    .mega-menu__list:has(.mega-menu__link-image) {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      align-items: flex-start;
+      max-height: 280px;
+      gap: 24px 32px;
+    }
+
+    /* Text-only columns stack first (left side) with extra end margin for visual gap */
+    .mega-menu__list:has(.mega-menu__link-image) > .mega-menu__column:not(:has(.mega-menu__link-image)) {
+      flex: 0 0 auto;
+      order: -1;
+      margin-inline-end: 64px;
+    }
+
+    /* Image columns get fixed 200px width to match Figma tile size */
+    .mega-menu__list:has(.mega-menu__link-image) > .mega-menu__column:has(.mega-menu__link-image) {
+      flex: 0 0 auto;
+      width: 200px;
+    }
+
+    /* Hide placeholder rectangles for non-collection links */
+    .mega-menu .mega-menu__grid:has(.mega-menu__link-image)
+      .mega-menu__column
+      > div
+      > .mega-menu__link:not(:has(.mega-menu__link-image))::before {
+      display: none;
+    }
+
+    /* Reset non-image links to simple inline layout */
+    .mega-menu .mega-menu__grid:has(.mega-menu__link-image)
+      .mega-menu__column
+      > div
+      > .mega-menu__link:not(:has(.mega-menu__link-image)) {
+      display: inline-flex;
+      flex-direction: row;
+      padding-block: 0;
+      padding-inline: 0;
+    }
+
+    /* Style text-only links as heading font at 32px */
+    .mega-menu__list:has(.mega-menu__link-image) .mega-menu__column:not(:has(.mega-menu__link-image)) .mega-menu__link {
+      font-family: var(--font-heading--family);
+      font-weight: var(--font-heading--weight);
+      font-size: 32px;
+      line-height: 40px;
+      color: #141414;
+      text-decoration: none;
+      padding: 0;
+    }
+
+    .mega-menu__list:has(.mega-menu__link-image) .mega-menu__column:not(:has(.mega-menu__link-image)) .mega-menu__link:hover {
+      color: #141414;
+      opacity: 0.7;
+    }
+
+    /* Square (1:1) aspect ratio for collection images */
+    .mega-menu .mega-menu__link-image {
+      aspect-ratio: 1 / 1;
+      max-width: 200px;
+      margin-bottom: 8px;
+    }
+
+    /* Image link container styling */
+    .mega-menu .mega-menu__link:has(.mega-menu__link-image) {
+      padding-block: 0;
+    }
+
+    /* Image link label styling */
+    .mega-menu .mega-menu__link:has(.mega-menu__link-image) .wrap-text {
+      font-family: var(--font-body--family);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #141414;
+    }
+
+    /* Top-level nav chevron indicators for links with submenus */
+    .menu-list__link[aria-haspopup='true'] .menu-list__link-title::after {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      margin-inline-start: 4px;
+      margin-block-end: 3px;
+      vertical-align: middle;
+    }
+  }
+
+  /* ========================================
+     Navigation Overrides — Mobile Drawer
+     ======================================== */
+
+  /* Mobile drawer: collection image grid — 2 columns, 12px gap */
+  .menu-drawer .menu-drawer__menu--grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  /* Square aspect ratio for mobile drawer images */
+  .menu-drawer .menu-drawer__link-image {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Adjust gap between image and label in mobile */
+  .menu-drawer .menu-drawer__menu-item:has(> .menu-drawer__link-image) {
+    row-gap: 8px;
+  }
+
+  /* Text-only items in grid span full width */
+  .menu-drawer .menu-drawer__menu--grid:has(.menu-drawer__link-image) > .menu-drawer__list-item:not(:has(.menu-drawer__link-image)) {
+    grid-column: 1 / -1;
+  }
+
+  /* Hide placeholder rectangles for non-image items in mobile grid */
+  .menu-drawer .menu-drawer__menu--grid:has(.menu-drawer__link-image)
+    .menu-drawer__menu-item:not(:has(> .menu-drawer__link-image))::before {
+    display: none;
+  }
+
+  /* Reset non-image items to normal text layout */
+  .menu-drawer .menu-drawer__menu--grid:has(.menu-drawer__link-image)
+    .menu-drawer__menu-item:not(:has(> .menu-drawer__link-image)) {
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+  }
+
+  /* Submenu text-only links: heading font 24px/32px */
+  .menu-drawer .menu-drawer__menu-item--parent:not(:has(> .menu-drawer__link-image)) {
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: 24px;
+    line-height: 32px;
+    color: #141414;
+  }
+
+  /* Image link labels in mobile drawer: body font 14px/20px */
+  .menu-drawer .menu-drawer__menu-item:has(> .menu-drawer__link-image) .menu-drawer__menu-item-text {
+    font-family: var(--font-body--family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #141414;
+  }
 </style>
