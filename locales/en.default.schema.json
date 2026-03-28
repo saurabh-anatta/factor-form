@@ -455,7 +455,9 @@
     "custom_certified": "Certified",
     "certified_item": "Certified item",
     "custom_dietitians": "Dietitians",
-    "dietitian_item": "Dietitian Card"
+    "dietitian_item": "Dietitian Card",
+    "custom_feature": "Feature",
+    "feature_item": "Feature item"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1240,6 +1242,9 @@
     "onetime_heading": "One-time heading",
     "label_text": "Label text",
     "button_text": "Button text",
+    "badge_text": "Badge text",
+    "image_mobile": "Mobile image",
+    "free_label": "Free label",
     "show_usp": "Show guarantees",
     "usp_1_text": "Guarantee 1",
     "usp_2_text": "Guarantee 2",

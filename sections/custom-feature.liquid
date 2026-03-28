@@ -1,0 +1,488 @@
+<div
+  class="custom-feature"
+  style="
+    --section-padding-top: {{ section.settings.padding-block-start }}px;
+    --section-padding-bottom: {{ section.settings.padding-block-end }}px;
+    --feature-bg: {{ section.settings.background_color }};
+  "
+>
+  <div class="custom-feature__container">
+    <div class="custom-feature__media">
+      {% liquid
+        assign desktop_image = section.settings.image
+        assign mobile_image = section.settings.image_mobile | default: desktop_image
+      %}
+      {% if desktop_image != blank %}
+        <img
+          class="custom-feature__image custom-feature__image--desktop"
+          src="{{ desktop_image | image_url: width: 1536 }}"
+          srcset="{{ desktop_image | image_url: width: 768 }} 768w, {{ desktop_image | image_url: width: 1080 }} 1080w, {{ desktop_image | image_url: width: 1536 }} 1536w"
+          sizes="(max-width: 749px) 100vw, 50vw"
+          alt="{{ section.settings.heading | escape }}"
+          width="768"
+          height="614"
+          loading="lazy"
+        >
+      {% endif %}
+      {% if mobile_image != blank %}
+        <img
+          class="custom-feature__image custom-feature__image--mobile"
+          src="{{ mobile_image | image_url: width: 780 }}"
+          srcset="{{ mobile_image | image_url: width: 390 }} 390w, {{ mobile_image | image_url: width: 780 }} 780w"
+          sizes="100vw"
+          alt="{{ section.settings.heading | escape }}"
+          width="390"
+          height="260"
+          loading="lazy"
+        >
+      {% endif %}
+      {% if section.settings.badge_text != blank %}
+        <span class="custom-feature__badge">{{ section.settings.badge_text | escape }}</span>
+      {% endif %}
+    </div>
+
+    <div class="custom-feature__content">
+      {% if section.settings.heading != blank %}
+        <div class="custom-feature__header">
+          <h2 class="custom-feature__heading">{{ section.settings.heading | escape }}</h2>
+          {% if section.settings.description != blank %}
+            <p class="custom-feature__description">{{ section.settings.description | escape }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <div class="custom-feature__items">
+          {% for block in section.blocks %}
+            <div class="custom-feature__item" {{ block.shopify_attributes }}>
+              <div class="custom-feature__item-heading-row">
+                {% if block.settings.heading != blank %}
+                  <span class="custom-feature__item-title">{{ block.settings.heading | escape }}</span>
+                {% endif %}
+                {% if block.settings.free_label != blank %}
+                  <span class="custom-feature__item-free">{{ block.settings.free_label | escape }}</span>
+                {% endif %}
+              </div>
+              <div class="custom-feature__item-detail-row">
+                {% if block.settings.description != blank %}
+                  <span class="custom-feature__item-description">{{ block.settings.description | escape }}</span>
+                {% endif %}
+                {% if block.settings.price != blank %}
+                  <span class="custom-feature__item-price">{{ block.settings.price | escape }}</span>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.button_text != blank %}
+        <a
+          class="custom-feature__button"
+          {% if section.settings.button_link != blank %}href="{{ section.settings.button_link }}"{% endif %}
+        >
+          {{ section.settings.button_text | escape }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.custom-feature {
+  padding-block-start: var(--section-padding-top, 0px);
+  padding-block-end: var(--section-padding-bottom, 0px);
+  background-color: var(--feature-bg, #E1F0E2);
+}
+
+.custom-feature__container {
+  display: flex;
+  flex-direction: row;
+  max-width: var(--normal-page-width, 120rem);
+  margin-inline: auto;
+}
+
+.custom-feature__media {
+  position: relative;
+  width: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.custom-feature__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-feature__image--mobile {
+  display: none;
+}
+
+.custom-feature__badge {
+  position: absolute;
+  inset-block-start: 16px;
+  inset-inline-start: 16px;
+  background-color: #141414;
+  color: #FFFFFF;
+  font-family: var(--font-heading--family);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 6px 12px;
+}
+
+.custom-feature__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+  width: 50%;
+  padding-inline: 64px;
+}
+
+.custom-feature__header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.custom-feature__heading {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight, 300);
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0;
+  color: #141414;
+  margin: 0;
+}
+
+.custom-feature__description {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #000000;
+  margin: 0;
+}
+
+.custom-feature__items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.custom-feature__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.custom-feature__item-heading-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.custom-feature__item-title {
+  font-family: var(--font-body--family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #141414;
+  flex: 1;
+}
+
+.custom-feature__item-free {
+  font-family: var(--font-body--family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: end;
+  flex-shrink: 0;
+}
+
+.custom-feature__item-detail-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.custom-feature__item-description {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #141414;
+}
+
+.custom-feature__item-price {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #80806F;
+  text-decoration: line-through;
+  flex-shrink: 0;
+}
+
+.custom-feature__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  max-width: 320px;
+  padding: 4px 24px;
+  min-height: 40px;
+  background-color: #141414;
+  color: #FFFFFF;
+  font-family: var(--font-heading--family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.custom-feature__button:hover {
+  opacity: 0.85;
+}
+
+.custom-feature__button:focus-visible {
+  outline: 2px solid #141414;
+  outline-offset: 2px;
+}
+
+@media screen and (max-width: 749px) {
+  .custom-feature__container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .custom-feature__media {
+    width: 100%;
+  }
+
+  .custom-feature__image--desktop {
+    display: none;
+  }
+
+  .custom-feature__image--mobile {
+    display: block;
+  }
+
+  .custom-feature__badge {
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0;
+    padding: 4px 6px;
+  }
+
+  .custom-feature__content {
+    width: 100%;
+    padding-inline: 16px;
+    padding-block-start: 24px;
+    padding-block-end: 48px;
+    gap: 24px;
+  }
+
+  .custom-feature__heading {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .custom-feature__description {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .custom-feature__items {
+    gap: 16px;
+  }
+
+  .custom-feature__item-title {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .custom-feature__item-free {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .custom-feature__item-description {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .custom-feature__item-price {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .custom-feature__button {
+    max-width: none;
+    width: 100%;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_feature",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "FREE Daily Greens Welcome Kit worth $36"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:settings.description",
+      "default": "Turn your daily habit into a delicious ritual with a kit full of greens essentials. Free welcome kit with first time purchase of Daily Greens."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image_mobile"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "t:settings.badge_text",
+      "default": "FREE WELCOME KIT"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:settings.button_text",
+      "default": "SHOP DAILY GREENS"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "#E1F0E2"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature-item",
+      "name": "t:names.feature_item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:settings.heading"
+        },
+        {
+          "type": "text",
+          "id": "free_label",
+          "label": "t:settings.free_label",
+          "default": "FREE"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "t:settings.description"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "t:settings.price"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_feature",
+      "blocks": [
+        {
+          "type": "feature-item",
+          "settings": {
+            "heading": "Shaker bottle",
+            "free_label": "FREE",
+            "description": "Premium bottle to mix and carry your greens",
+            "price": "$20.00"
+          }
+        },
+        {
+          "type": "feature-item",
+          "settings": {
+            "heading": "Full-size samples (3)",
+            "free_label": "FREE",
+            "description": "3 product samples free with every first order",
+            "price": "$10.00"
+          }
+        },
+        {
+          "type": "feature-item",
+          "settings": {
+            "heading": "Shipping",
+            "free_label": "FREE",
+            "description": "Free shipping on orders above $50",
+            "price": "$5.99"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

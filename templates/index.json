@@ -343,7 +343,51 @@
         }
       },
       "block_order": ["dietitian-1", "dietitian-2", "dietitian-3"]
+    },
+    "feature": {
+      "type": "custom-feature",
+      "settings": {
+        "heading": "FREE Daily Greens Welcome Kit worth $36",
+        "description": "Turn your daily habit into a delicious ritual with a kit full of greens essentials. Free welcome kit with first time purchase of Daily Greens.",
+        "image": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-desktop-110525076.png",
+        "image_mobile": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-mobile-110526574.png",
+        "badge_text": "FREE WELCOME KIT",
+        "button_text": "SHOP DAILY GREENS",
+        "background_color": "#E1F0E2",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      },
+      "blocks": {
+        "feature-item-1": {
+          "type": "feature-item",
+          "settings": {
+            "heading": "Shaker bottle",
+            "free_label": "FREE",
+            "description": "Premium bottle to mix and carry your greens",
+            "price": "$20.00"
+          }
+        },
+        "feature-item-2": {
+          "type": "feature-item",
+          "settings": {
+            "heading": "Full-size samples (3)",
+            "free_label": "FREE",
+            "description": "3 product samples free with every first order",
+            "price": "$10.00"
+          }
+        },
+        "feature-item-3": {
+          "type": "feature-item",
+          "settings": {
+            "heading": "Shipping",
+            "free_label": "FREE",
+            "description": "Free shipping on orders above $50",
+            "price": "$5.99"
+          }
+        }
+      },
+      "block_order": ["feature-item-1", "feature-item-2", "feature-item-3"]
     }
   },
-  "order": ["hero", "reviews", "product-carousel", "benefits", "certified", "dietitians"]
+  "order": ["hero", "reviews", "product-carousel", "benefits", "certified", "dietitians", "feature"]
 }
