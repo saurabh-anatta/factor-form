@@ -1,4 +1,14 @@
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "main": {
+      "type": "custom-plp",
+      "settings": {
+        "hero_title": "Shop All",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  },
+  "order": ["main"]
 }
