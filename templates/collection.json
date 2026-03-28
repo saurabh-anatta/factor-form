@@ -3,6 +3,7 @@
     "main": {
       "type": "custom-plp",
       "settings": {
+        "hero_image": "shopify://shop_images/image-desktop-90581549.jpg",
         "hero_title": "Shop All",
         "color_scheme": "scheme-1",
         "padding-block-start": 0,
