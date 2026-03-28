@@ -7,27 +7,188 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
-    "custom_footer": {
-      "type": "custom-footer",
+    "footer_main": {
+      "type": "footer",
+      "blocks": {
+        "left_column": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 16,
+            "width": "fill",
+            "height": "fit",
+            "inherit_color_scheme": true,
+            "border": "none",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "footer_logo": {
+              "type": "logo",
+              "settings": {
+                "inverse": false,
+                "unit": "pixel",
+                "pixel_height": 60,
+                "custom_mobile_size": true,
+                "unit_mobile": "pixel",
+                "pixel_height_mobile": 40,
+                "padding-block-start": 0,
+                "padding-block-end": 16,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "newsletter_heading": {
+              "type": "text",
+              "settings": {
+                "text": "Subscribe to our Newsletter",
+                "width": "100%",
+                "alignment": "left",
+                "type_preset": "h3"
+              }
+            },
+            "newsletter_description": {
+              "type": "text",
+              "settings": {
+                "text": "Sign up for updates on new products, exclusive offers and expert wellness tips",
+                "width": "100%",
+                "alignment": "left",
+                "type_preset": "paragraph"
+              }
+            },
+            "newsletter_form": {
+              "type": "email-signup",
+              "settings": {
+                "width": "fill",
+                "inherit_color_scheme": true,
+                "border_style": "all",
+                "border_width": 1,
+                "border_radius": 32,
+                "display_type": "arrow",
+                "integrated_button": true,
+                "padding-block-start": 8,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            }
+          },
+          "block_order": [
+            "footer_logo",
+            "newsletter_heading",
+            "newsletter_description",
+            "newsletter_form"
+          ]
+        },
+        "right_column": {
+          "type": "group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "gap": 40,
+            "width": "fill",
+            "height": "fit",
+            "inherit_color_scheme": true,
+            "border": "none",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "shop_menu": {
+              "type": "menu",
+              "settings": {
+                "menu": "footer-shop",
+                "heading": "Shop",
+                "menu_spacing": 12,
+                "show_as_accordion": false,
+                "inherit_color_scheme": true
+              }
+            },
+            "learn_menu": {
+              "type": "menu",
+              "settings": {
+                "menu": "footer-learn",
+                "heading": "Learn",
+                "menu_spacing": 12,
+                "show_as_accordion": false,
+                "inherit_color_scheme": true
+              }
+            }
+          },
+          "block_order": [
+            "shop_menu",
+            "learn_menu"
+          ]
+        },
+        "social_icons": {
+          "type": "social-links",
+          "settings": {
+            "facebook_url": "https://www.facebook.com",
+            "instagram_url": "https://www.instagram.com"
+          }
+        }
+      },
+      "block_order": [
+        "left_column",
+        "right_column",
+        "social_icons"
+      ],
       "settings": {
-        "newsletter_heading": "Subscribe to our Newsletter",
-        "newsletter_description": "Sign up for updates on new products, exclusive offers and expert wellness tips",
-        "shop_menu": "footer-shop",
-        "learn_menu": "footer-learn",
-        "facebook_url": "https://www.facebook.com",
-        "instagram_url": "https://www.instagram.com",
-        "policy_menu": "footer-policies",
+        "section_width": "page-width",
+        "gap": 20,
         "color_scheme": "scheme-5",
         "padding-block-start": 56,
         "padding-block-end": 56
       }
+    },
+    "footer_utilities": {
+      "type": "footer-utilities",
+      "blocks": {
+        "copyright": {
+          "type": "footer-copyright",
+          "settings": {}
+        },
+        "policy_list": {
+          "type": "footer-policy-list",
+          "settings": {
+            "font_size": "0.75rem",
+            "case": "none"
+          }
+        }
+      },
+      "block_order": [
+        "copyright",
+        "policy_list"
+      ],
+      "settings": {
+        "section_width": "page-width",
+        "gap": 24,
+        "divider_thickness": 1,
+        "color_scheme": "scheme-5",
+        "padding-block-start": 20,
+        "padding-block-end": 20
+      }
     }
   },
   "order": [
-    "custom_footer"
+    "footer_main",
+    "footer_utilities"
   ]
 }
