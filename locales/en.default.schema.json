@@ -457,7 +457,9 @@
     "custom_dietitians": "Dietitians",
     "dietitian_item": "Dietitian Card",
     "custom_feature": "Feature",
-    "feature_item": "Feature item"
+    "feature_item": "Feature item",
+    "custom_faqs": "FAQs",
+    "faq_item": "FAQ Item"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1270,7 +1272,9 @@
     "padding_bottom": "Bottom padding",
     "description_mobile": "Mobile description",
     "icon_desktop": "Desktop icon",
-    "icon_mobile": "Mobile icon"
+    "icon_mobile": "Mobile icon",
+    "question": "Question",
+    "answer": "Answer"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",
