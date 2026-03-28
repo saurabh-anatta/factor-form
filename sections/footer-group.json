@@ -7,20 +7,154 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
-    "custom_footer": {
-      "type": "custom-footer",
+    "footer_section": {
+      "type": "footer",
+      "blocks": {
+        "left-group": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_alignment_flex_direction_column": "space-between",
+            "gap": 20,
+            "width": "fill",
+            "height": "fill",
+            "inherit_color_scheme": true
+          },
+          "blocks": {
+            "newsletter-group": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "gap": 16,
+                "width": "fill",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "newsletter-heading": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Subscribe to our Newsletter</p>",
+                    "width": "100%",
+                    "type_preset": "h3"
+                  }
+                },
+                "newsletter-description": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Sign up for updates on new products, exclusive offers and expert wellness tips</p>",
+                    "width": "100%",
+                    "type_preset": "rte"
+                  }
+                },
+                "newsletter-email": {
+                  "type": "email-signup",
+                  "settings": {
+                    "width": "fill",
+                    "border_style": "all",
+                    "border_width": 1,
+                    "border_radius": 32,
+                    "display_type": "arrow",
+                    "style_class": "button-unstyled",
+                    "integrated_button": true
+                  }
+                }
+              },
+              "block_order": ["newsletter-heading", "newsletter-description", "newsletter-email"]
+            },
+            "footer-logo": {
+              "type": "logo",
+              "settings": {
+                "unit": "percent",
+                "percent_width": 100
+              }
+            }
+          },
+          "block_order": ["newsletter-group", "footer-logo"]
+        },
+        "right-group": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_alignment_flex_direction_column": "space-between",
+            "gap": 24,
+            "width": "fill",
+            "height": "fill",
+            "inherit_color_scheme": true
+          },
+          "blocks": {
+            "menus-row": {
+              "type": "group",
+              "settings": {
+                "content_direction": "row",
+                "vertical_on_mobile": true,
+                "gap": 48,
+                "width": "fill",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "shop-menu": {
+                  "type": "menu",
+                  "settings": {
+                    "menu": "footer-shop",
+                    "heading": "Shop",
+                    "heading_preset": "h3",
+                    "link_preset": "paragraph",
+                    "menu_spacing": 12
+                  }
+                },
+                "learn-menu": {
+                  "type": "menu",
+                  "settings": {
+                    "menu": "footer-learn",
+                    "heading": "Learn",
+                    "heading_preset": "h3",
+                    "link_preset": "paragraph",
+                    "menu_spacing": 12
+                  }
+                }
+              },
+              "block_order": ["shop-menu", "learn-menu"]
+            },
+            "bottom-group": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "gap": 24,
+                "width": "fill",
+                "inherit_color_scheme": true
+              },
+              "blocks": {
+                "social-links": {
+                  "type": "social-links",
+                  "settings": {
+                    "facebook_url": "https://www.facebook.com",
+                    "instagram_url": "https://www.instagram.com"
+                  }
+                },
+                "policy-menu": {
+                  "type": "menu",
+                  "settings": {
+                    "menu": "footer-policies",
+                    "heading_preset": "paragraph",
+                    "link_preset": "paragraph",
+                    "menu_spacing": 8
+                  }
+                }
+              },
+              "block_order": ["social-links", "policy-menu"]
+            }
+          },
+          "block_order": ["menus-row", "bottom-group"]
+        }
+      },
+      "block_order": ["left-group", "right-group"],
       "settings": {
-        "newsletter_heading": "Subscribe to our Newsletter",
-        "newsletter_description": "Sign up for updates on new products, exclusive offers and expert wellness tips",
-        "shop_menu": "footer-shop",
-        "learn_menu": "footer-learn",
-        "facebook_url": "https://www.facebook.com",
-        "instagram_url": "https://www.instagram.com",
-        "policy_menu": "footer-policies",
+        "section_width": "full-width",
+        "gap": 48,
         "color_scheme": "scheme-5",
         "padding-block-start": 56,
         "padding-block-end": 56
@@ -28,6 +162,6 @@
     }
   },
   "order": [
-    "custom_footer"
+    "footer_section"
   ]
 }

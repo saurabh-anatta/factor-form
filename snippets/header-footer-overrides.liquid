@@ -1,0 +1,38 @@
+<style>
+  /* Header & Footer CSS Overrides to match Figma design */
+
+  /* Footer: On mobile, logo block appears above newsletter content */
+  @media screen and (max-width: 749px) {
+    .footer-content > .group:first-child .logo-block {
+      order: -1;
+    }
+  }
+
+  /* Footer: Policy menu links displayed horizontally */
+  .footer-content .menu:last-of-type .list-unstyled {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .footer-content .menu:last-of-type .list-unstyled {
+      gap: 24px;
+    }
+  }
+
+  .footer-content .menu:last-of-type .menu__item {
+    margin-block-start: 0;
+  }
+
+  .footer-content .menu:last-of-type .menu__item a {
+    text-decoration: underline;
+    color: #F1F1EA;
+  }
+
+  /* Footer: Social icons gap */
+  .footer-content .social-icons__wrapper {
+    gap: 16px;
+    justify-content: flex-start;
+  }
+</style>
