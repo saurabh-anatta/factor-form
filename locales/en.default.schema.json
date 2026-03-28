@@ -453,7 +453,9 @@
     "custom_benefits": "Benefits",
     "benefit_item": "Benefit item",
     "custom_certified": "Certified",
-    "certified_item": "Certified item"
+    "certified_item": "Certified item",
+    "custom_dietitians": "Dietitians",
+    "dietitian_item": "Dietitian Card"
   },
   "options": {
     "above_carousel": "Above carousel",

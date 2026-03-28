@@ -303,7 +303,47 @@
         }
       },
       "block_order": ["certified-1", "certified-2", "certified-3"]
+    },
+    "dietitians": {
+      "type": "custom-dietitians",
+      "settings": {
+        "heading": "Backed By Factor Dietitians",
+        "description": "Formulated with guidance from Factor\u2019s in-house dietitians to help you meet your wellness goals with confidence",
+        "background_color": "#F1F1EA",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "dietitian-1": {
+          "type": "dietitian-item",
+          "settings": {
+            "image": "shopify://shop_images/image-61-desktop-118265456.png",
+            "quote": "\"A rigorous 'no list' of over 100 banned ingredients\"",
+            "description": "Factor Form upholds strong nutrition and ingredient standards across all products. We ensure only high quality ingredients make it into our products",
+            "author": "Kara Kash   |   Research & Development"
+          }
+        },
+        "dietitian-2": {
+          "type": "dietitian-item",
+          "settings": {
+            "image": "shopify://shop_images/image-62-desktop-118265466.png",
+            "quote": "\"One serving equals a whole serving of green leafy veggies\"",
+            "description": "I love that the vitamin and mineral content is balanced; the daily value percentages aren't excessive",
+            "author": "Carlie Williams   |   Dietitian + Personal Trainer"
+          }
+        },
+        "dietitian-3": {
+          "type": "dietitian-item",
+          "settings": {
+            "image": "shopify://shop_images/image-63-desktop-118265476.png",
+            "quote": "\"A good mix of B vitamins along with typical electrolytes\"",
+            "description": "B Vitamins act as coenzymes when your body is metabolizing energy, so it's nice to have that in an electrolyte mix",
+            "author": "Olivia Hamilton   |   Dietitian"
+          }
+        }
+      },
+      "block_order": ["dietitian-1", "dietitian-2", "dietitian-3"]
     }
   },
-  "order": ["hero", "reviews", "product-carousel", "benefits", "certified"]
+  "order": ["hero", "reviews", "product-carousel", "benefits", "certified", "dietitians"]
 }
