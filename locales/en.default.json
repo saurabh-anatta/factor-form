@@ -362,6 +362,14 @@
       "previous": "Previous products",
       "next": "Next products"
     },
+    "custom_plp": {
+      "add_to_cart": "ADD TO CART",
+      "per_day": "per day",
+      "shop_prefix": "SHOP",
+      "previous": "Previous products",
+      "next": "Next products",
+      "all_products": "All Products"
+    },
     "custom_pdp": {
       "add_to_cart": "ADD TO CART",
       "sold_out": "SOLD OUT",

@@ -151,7 +151,10 @@
     "width": "Width",
     "width_is_automatically_optimized": "Width is automatically optimized for mobile.",
     "app_required_for_ratings": "An app is required for product ratings. [Learn more](https://help.shopify.com/manual/apps)",
-    "navigation": "Navigation"
+    "navigation": "Navigation",
+    "custom_plp_hero": "Hero banner",
+    "custom_plp_style": "Style",
+    "feature_card": "Feature card"
   },
   "html_defaults": {
     "join_our_email_list": "<h2>Join our email list</h2>",
@@ -459,7 +462,9 @@
     "custom_feature": "Feature",
     "feature_item": "Feature item",
     "custom_faqs": "FAQs",
-    "faq_item": "FAQ Item"
+    "faq_item": "FAQ Item",
+    "custom_plp": "Shop All",
+    "collection_group": "Collection group"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1276,7 +1281,19 @@
     "icon_desktop": "Desktop icon",
     "icon_mobile": "Mobile icon",
     "question": "Question",
-    "answer": "Answer"
+    "answer": "Answer",
+    "hero_image": "Hero image",
+    "hero_image_mobile": "Hero image mobile",
+    "hero_title": "Hero title",
+    "show_feature_card": "Show feature card",
+    "feature_card_position": "Card position",
+    "feature_card_image": "Card image",
+    "feature_card_title": "Card title",
+    "feature_card_description": "Card description",
+    "feature_card_button_text": "Button text",
+    "feature_card_button_link": "Button link",
+    "max_products": "Max products",
+    "tab_label": "Tab label"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",

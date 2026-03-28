@@ -1,0 +1,79 @@
+{
+  "sections": {
+    "plp": {
+      "type": "custom-plp",
+      "settings": {
+        "hero_image": "shopify://shop_images/image-desktop-plp-90581549.jpg",
+        "hero_image_mobile": "shopify://shop_images/heading-mobile-navigation-90582110.jpg",
+        "hero_title": "Shop All",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      },
+      "blocks": {
+        "all-products": {
+          "type": "collection-group",
+          "settings": {
+            "title": "All Products",
+            "description": "Performance-focused nutrition essentials, made to help you feel better, move better, and live better.",
+            "tab_label": "All Products",
+            "layout": "grid",
+            "max_products": 8,
+            "show_feature_card": true,
+            "feature_card_position": 4,
+            "feature_card_image": "shopify://shop_images/content-desktop-plp-92675539.jpg",
+            "feature_card_title": "Welcome Kit",
+            "feature_card_description": "Free shaker + 3 full-size samples ($36 value) with your first Daily Greens purchase",
+            "feature_card_button_text": "SHOP DAILY GREENS"
+          }
+        },
+        "gut-health": {
+          "type": "collection-group",
+          "settings": {
+            "title": "Gut Health",
+            "description": "Formulated with prebiotics and probiotics to support smooth digestion, reduce bloating and nurture your gut microbiome",
+            "tab_label": "Gut Health",
+            "layout": "row",
+            "max_products": 8,
+            "show_feature_card": false
+          }
+        },
+        "recovery": {
+          "type": "collection-group",
+          "settings": {
+            "title": "Recovery",
+            "description": "Restore, rebuild, and recharge after every workout.",
+            "tab_label": "Recovery",
+            "layout": "row",
+            "max_products": 8,
+            "show_feature_card": false
+          }
+        },
+        "immunity": {
+          "type": "collection-group",
+          "settings": {
+            "title": "Immunity",
+            "description": "Strengthen your body's natural defenses with targeted immune support.",
+            "tab_label": "Immunity",
+            "layout": "row",
+            "max_products": 8,
+            "show_feature_card": false
+          }
+        },
+        "energy-focus": {
+          "type": "collection-group",
+          "settings": {
+            "title": "Energy & Focus",
+            "description": "Clean, sustained energy and mental clarity to power through your day.",
+            "tab_label": "Energy & Focus",
+            "layout": "row",
+            "max_products": 8,
+            "show_feature_card": false
+          }
+        }
+      },
+      "block_order": ["all-products", "gut-health", "recovery", "immunity", "energy-focus"]
+    }
+  },
+  "order": ["plp"]
+}
