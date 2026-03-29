@@ -304,7 +304,7 @@
 .custom-pdp__details {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
 
   @media screen and (max-width: 749px) {
     padding: 0 16px;
@@ -314,8 +314,20 @@
 
 @media screen and (min-width: 750px) {
   .custom-pdp__details {
-    gap: 56px;
+    gap: 24px;
     max-width: 568px;
+  }
+
+  .custom-pdp__details .pdp-buy-cta {
+    margin-top: 8px;
+  }
+
+  .custom-pdp__details .pdp-accordion {
+    margin-top: 32px;
+  }
+
+  .custom-pdp__details .pdp-upsells {
+    margin-top: 16px;
   }
 }
 {% endstylesheet %}

@@ -53,12 +53,14 @@
               {%- endif -%}
             </div>
             <div class="pdp-upsells__card-info">
-              <div class="pdp-upsells__card-title-row">
-                <a href="{{ upsell_product.url }}" class="pdp-upsells__card-title">{{ upsell_product.title | escape }}</a>
-              </div>
-              <div class="pdp-upsells__card-rating">
-                <img src="{{ 'stars.svg' | asset_url }}" alt="{{ upsell_product.metafields.reviews.rating.value | default: '4.9' }} stars" width="66" height="10" loading="lazy">
-                <span class="pdp-upsells__card-rating-value">{{ upsell_product.metafields.reviews.rating.value | default: '4.9' }}</span>
+              <div class="pdp-upsells__card-title-rating">
+                <div class="pdp-upsells__card-title-row">
+                  <a href="{{ upsell_product.url }}" class="pdp-upsells__card-title">{{ upsell_product.title | escape }}</a>
+                </div>
+                <div class="pdp-upsells__card-rating">
+                  <img src="{{ 'stars.svg' | asset_url }}" alt="{{ upsell_product.metafields.reviews.rating.value | default: '4.9' }} stars" width="66" height="10" loading="lazy">
+                  <span class="pdp-upsells__card-rating-value">{{ upsell_product.metafields.reviews.rating.value | default: '4.9' }}</span>
+                </div>
               </div>
               <div class="pdp-upsells__card-price-row">
                 {%- if upsell_variant.compare_at_price > upsell_variant.price -%}
@@ -152,8 +154,14 @@
 .pdp-upsells__card-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 12px;
   padding: 8px 0;
+}
+
+.pdp-upsells__card-title-rating {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .pdp-upsells__card-title-row {
