@@ -1,0 +1,55 @@
+{% doc %}
+  PDP Description Block
+
+  Renders product description/bullet points and supplement facts link inside the hero card.
+
+  @example {% content_for 'block', type: 'pdp-description', id: 'description' %}
+{% enddoc %}
+
+{% liquid
+  assign supplement_text = block.settings.supplement_facts_text
+  assign supplement_url = block.settings.supplement_facts_url
+%}
+
+<div {{ block.shopify_attributes }}>
+  {%- if block.settings.description != blank -%}
+    <div class="pdp-hero-card__description">
+      {{ block.settings.description }}
+    </div>
+  {%- endif -%}
+
+  {%- if supplement_text != blank -%}
+    <div class="pdp-hero-card__supplement">
+      {%- if supplement_url != blank -%}
+        <a href="{{ supplement_url }}" class="pdp-hero-card__supplement-link">{{ supplement_text | escape }}</a>
+      {%- else -%}
+        <span class="pdp-hero-card__supplement-link">{{ supplement_text | escape }}</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:names.pdp_description",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:settings.description"
+    },
+    {
+      "type": "text",
+      "id": "supplement_facts_text",
+      "label": "t:settings.supplement_facts_text",
+      "default": "Supplement Facts"
+    },
+    {
+      "type": "url",
+      "id": "supplement_facts_url",
+      "label": "t:settings.supplement_facts_url"
+    }
+  ]
+}
+{% endschema %}

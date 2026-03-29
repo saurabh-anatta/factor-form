@@ -38,30 +38,35 @@
 
       <div class="custom-comparison__table-wrapper">
         <div class="custom-comparison__table" role="table" aria-label="{{ heading | escape }}">
-          {%- comment -%} Green highlight column background {%- endcomment -%}
-          <div class="custom-comparison__highlight-column" aria-hidden="true">
-            {%- if section.settings.highlight_image != blank -%}
-              <img
-                class="custom-comparison__highlight-product"
-                src="{{ section.settings.highlight_image | image_url: width: 128 }}"
-                alt=""
-                role="presentation"
-                width="64"
-                height="64"
-                loading="lazy"
-              >
-            {%- endif -%}
-          </div>
-
           {%- comment -%} Table header row {%- endcomment -%}
           <div class="custom-comparison__row custom-comparison__row--header" role="row">
-            <div class="custom-comparison__cell custom-comparison__cell--feature" role="columnheader">
-              <span class="custom-comparison__header-label">{{ 'sections.custom_comparison.factor_form' | t }}</span>
-            </div>
+            <div class="custom-comparison__cell custom-comparison__cell--feature" role="columnheader"></div>
             <div class="custom-comparison__cell custom-comparison__cell--ff" role="columnheader">
+              {%- if section.settings.highlight_image != blank -%}
+                <img
+                  class="custom-comparison__col-product"
+                  src="{{ section.settings.highlight_image | image_url: width: 160 }}"
+                  alt=""
+                  role="presentation"
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                >
+              {%- endif -%}
               <span>{{ 'sections.custom_comparison.factor_form' | t }}</span>
             </div>
             <div class="custom-comparison__cell custom-comparison__cell--others" role="columnheader">
+              {%- if section.settings.others_image != blank -%}
+                <img
+                  class="custom-comparison__col-product custom-comparison__col-product--others"
+                  src="{{ section.settings.others_image | image_url: width: 96 }}"
+                  alt=""
+                  role="presentation"
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                >
+              {%- endif -%}
               <span>{{ 'sections.custom_comparison.others' | t }}</span>
             </div>
           </div>
@@ -152,7 +157,7 @@
   display: flex;
   flex-direction: row;
   gap: 32px;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
 }
 
@@ -165,7 +170,9 @@
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
+  border-radius: 8px;
 }
 
 .custom-comparison__table-wrapper {
@@ -177,77 +184,39 @@
 }
 
 .custom-comparison__table {
+  display: grid;
+  grid-template-columns: 1fr 140px 140px;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding-inline-start: 12px;
 }
 
-.custom-comparison__highlight-column {
+.custom-comparison__table::before {
+  content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 174px;
+  right: 140px;
   width: 140px;
   background-color: #C4E0CB;
-  border-radius: 4px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-block-start: 8px;
+  border-radius: 8px;
   z-index: 0;
 }
 
-.custom-comparison__highlight-product {
-  display: block;
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
+.custom-comparison__row {
+  display: contents;
 }
 
-.custom-comparison__row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 12px 12px 0;
-  border-block-end: 1px solid #D0D0BC;
+.custom-comparison__cell--feature,
+.custom-comparison__cell--ff,
+.custom-comparison__cell--others {
   position: relative;
   z-index: 1;
 }
 
-.custom-comparison__row--header {
-  padding: 4px 16px 4px 16px;
-  border-block-end: none;
-}
-
-.custom-comparison__row--header .custom-comparison__cell--feature {
-  opacity: 0;
-}
-
-.custom-comparison__row--header .custom-comparison__cell--ff,
-.custom-comparison__row--header .custom-comparison__cell--others {
-  font-family: var(--font-body--family);
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.custom-comparison__row--subheading .custom-comparison__cell--feature span {
-  font-family: var(--font-subheading--family);
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-}
-
-.custom-comparison__row:first-of-type {
-  border-block-end: none;
-}
-
 .custom-comparison__cell--feature {
-  flex: 1;
-  min-width: 0;
+  display: flex;
+  align-items: center;
+  padding: 14px 16px 14px 0;
+  border-block-end: 1px solid #D0D0BC;
 }
 
 .custom-comparison__cell--feature span {
@@ -260,11 +229,11 @@
 
 .custom-comparison__cell--ff,
 .custom-comparison__cell--others {
-  width: 87px;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  padding: 14px 0;
+  border-block-end: 1px solid #D0D0BC;
   font-family: var(--font-body--family);
   font-weight: 600;
   font-size: 14px;
@@ -272,13 +241,40 @@
   color: #141414;
 }
 
-.custom-comparison__cell--ff img,
-.custom-comparison__cell--others img {
+.custom-comparison__row:not(.custom-comparison__row--header) .custom-comparison__cell--ff img,
+.custom-comparison__row:not(.custom-comparison__row--header) .custom-comparison__cell--others img {
   display: block;
+  width: 24px;
+  height: 24px;
 }
 
-.custom-comparison__header-label {
-  visibility: hidden;
+.custom-comparison__row--header .custom-comparison__cell--feature,
+.custom-comparison__row--header .custom-comparison__cell--ff,
+.custom-comparison__row--header .custom-comparison__cell--others {
+  border-block-end: none;
+  padding: 0 0 8px;
+}
+
+.custom-comparison__row--header .custom-comparison__cell--ff,
+.custom-comparison__row--header .custom-comparison__cell--others {
+  flex-direction: column;
+  gap: 8px;
+  padding-block-start: 16px;
+  padding-block-end: 12px;
+}
+
+.custom-comparison__col-product {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.custom-comparison__row--subheading .custom-comparison__cell--feature span {
+  font-family: var(--font-subheading--family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .custom-comparison__disclaimer {
@@ -288,7 +284,7 @@
   line-height: 20px;
   color: #141414;
   margin: 0;
-  text-align: center;
+  text-align: start;
 }
 
 @media screen and (max-width: 749px) {
@@ -315,19 +311,33 @@
     width: 100%;
   }
 
-  .custom-comparison__highlight-column {
-    right: 80px;
-    width: 100px;
+  .custom-comparison__table {
+    grid-template-columns: 1fr 90px 90px;
   }
 
-  .custom-comparison__cell--ff,
-  .custom-comparison__cell--others {
-    width: 50px;
+  .custom-comparison__table::before {
+    right: 90px;
+    width: 90px;
+  }
+
+  .custom-comparison__cell--feature {
+    padding: 12px 8px 12px 0;
   }
 
   .custom-comparison__cell--feature span {
     font-size: 14px;
     line-height: 20px;
+  }
+
+  .custom-comparison__row:not(.custom-comparison__row--header) .custom-comparison__cell--ff img,
+  .custom-comparison__row:not(.custom-comparison__row--header) .custom-comparison__cell--others img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .custom-comparison__col-product {
+    width: 48px;
+    height: 48px;
   }
 }
 {% endstylesheet %}
@@ -357,6 +367,11 @@
       "type": "image_picker",
       "id": "highlight_image",
       "label": "t:settings.highlight_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "others_image",
+      "label": "t:settings.others_image"
     },
     {
       "type": "text",

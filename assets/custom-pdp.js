@@ -17,8 +17,10 @@ class CustomPdpSection extends HTMLElement {
 
   connectedCallback() {
     this.productData = this._getProductData();
+    this.variantsData = this._getVariantsData();
     this.addEventListener('click', this._handleClick.bind(this));
     this.addEventListener('change', this._handleChange.bind(this));
+    this._initSellingPlan();
   }
 
   disconnectedCallback() {}
@@ -35,6 +37,32 @@ class CustomPdpSection extends HTMLElement {
     return null;
   }
 
+  _getVariantsData() {
+    const script = this.querySelector('[data-variants-json]');
+    if (script) {
+      try {
+        return JSON.parse(script.textContent);
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  /** Initialize selling plan ID from the pre-selected subscription option */
+  _initSellingPlan() {
+    const selectedOption = this.querySelector('.pdp-subscription__option--selected');
+    if (!selectedOption) return;
+
+    const type = selectedOption.dataset.subscriptionType;
+    if (type === 'subscribe') {
+      const selectedFreq = selectedOption.querySelector('.pdp-subscription__freq--selected');
+      if (selectedFreq && selectedFreq.dataset.sellingPlanId) {
+        this.dataset.sellingPlanId = selectedFreq.dataset.sellingPlanId;
+      }
+    }
+  }
+
   _handleClick(event) {
     const thumbnail = event.target.closest('[data-thumbnail-index]');
     if (thumbnail) {
@@ -48,15 +76,15 @@ class CustomPdpSection extends HTMLElement {
       return;
     }
 
-    const subscriptionOption = event.target.closest('[data-subscription-type]');
-    if (subscriptionOption) {
-      this._onSubscriptionSelect(subscriptionOption);
-      return;
-    }
-
     const frequencyOption = event.target.closest('[data-frequency-id]');
     if (frequencyOption) {
       this._onFrequencySelect(frequencyOption);
+      return;
+    }
+
+    const subscriptionOption = event.target.closest('[data-subscription-type]');
+    if (subscriptionOption) {
+      this._onSubscriptionSelect(subscriptionOption);
       return;
     }
 
@@ -159,6 +187,9 @@ class CustomPdpSection extends HTMLElement {
         this._updatePriceDisplay(matchedVariant);
         this._updateButtonState(matchedVariant);
         this._updateSellingPlanPrices(matchedVariant);
+        this._updateMediaGallery(matchedVariant);
+        this._updateVariantLabel(selectedOptions);
+        this._updateUrl(matchedVariant);
 
         this.dispatchEvent(
           new CustomEvent('variant:change', {
@@ -208,15 +239,22 @@ class CustomPdpSection extends HTMLElement {
     const type = option.dataset.subscriptionType;
     const allOptions = this.querySelectorAll('[data-subscription-type]');
 
+    // Update radio visual state
     for (const opt of allOptions) {
       opt.classList.remove('pdp-subscription__option--selected');
     }
     option.classList.add('pdp-subscription__option--selected');
 
     if (type === 'subscribe') {
-      const firstPlan = option.querySelector('[data-selling-plan-id]');
-      if (firstPlan) {
-        this.dataset.sellingPlanId = firstPlan.dataset.sellingPlanId;
+      // Use the currently selected frequency pill, not just the first plan
+      const selectedFreq = option.querySelector('.pdp-subscription__freq--selected');
+      if (selectedFreq && selectedFreq.dataset.sellingPlanId) {
+        this.dataset.sellingPlanId = selectedFreq.dataset.sellingPlanId;
+      } else {
+        const firstPlan = option.querySelector('[data-selling-plan-id]');
+        if (firstPlan) {
+          this.dataset.sellingPlanId = firstPlan.dataset.sellingPlanId;
+        }
       }
     } else {
       delete this.dataset.sellingPlanId;
@@ -255,11 +293,61 @@ class CustomPdpSection extends HTMLElement {
 
   /** Update selling plan prices when variant changes */
   _updateSellingPlanPrices(variant) {
-    // Prices for subscription are computed server-side, no client update needed in static render
-  }
+    if (!variant || !variant.selling_plan_allocations) return;
 
-  _updateSubscriptionPrices(sellingPlanId) {
-    // Could be expanded for dynamic selling plan price updates
+    // Update one-time price
+    const onetimePrice = this.querySelector('[data-onetime-price]');
+    if (onetimePrice) {
+      onetimePrice.textContent = this._formatMoney(variant.price);
+    }
+
+    // Update subscribe price using current selling plan or first available
+    const sellingPlanId = this.dataset.sellingPlanId;
+    let allocation = null;
+
+    if (sellingPlanId) {
+      allocation = variant.selling_plan_allocations.find(
+        (a) => String(a.selling_plan_id) === String(sellingPlanId)
+      );
+    }
+
+    if (!allocation && variant.selling_plan_allocations.length > 0) {
+      allocation = variant.selling_plan_allocations[0];
+    }
+
+    if (allocation) {
+      const subscribePrice = this.querySelector('[data-subscribe-price]');
+      if (subscribePrice) {
+        subscribePrice.textContent = this._formatMoney(allocation.per_delivery_price);
+      }
+
+      const comparePrice = this.querySelector('.pdp-subscription__compare-price');
+      if (comparePrice) {
+        if (variant.price > allocation.per_delivery_price) {
+          comparePrice.innerHTML = '<s>' + this._formatMoney(variant.price) + '</s>';
+          comparePrice.style.display = '';
+        } else {
+          comparePrice.style.display = 'none';
+        }
+      }
+
+      const savings = this.querySelector('.pdp-subscription__savings');
+      if (savings) {
+        const saved = variant.price - allocation.per_delivery_price;
+        if (saved > 0) {
+          savings.textContent = 'SAVE ' + this._formatMoney(saved);
+          savings.style.display = '';
+        } else {
+          savings.style.display = 'none';
+        }
+      }
+    }
+
+    // Also update the hero card sale price based on current subscription type
+    const selectedType = this.querySelector('.pdp-subscription__option--selected');
+    if (selectedType) {
+      this._updateSubscriptionPriceDisplay(selectedType.dataset.subscriptionType);
+    }
   }
 
   /** Accordion toggle */
@@ -386,6 +474,60 @@ class CustomPdpSection extends HTMLElement {
       btn.disabled = false;
       btn.textContent = originalText;
     }
+  }
+
+  /** Update media gallery to show matched variant's featured image */
+  _updateMediaGallery(variant) {
+    if (!variant.featured_image) return;
+
+    const variantImageUrl = variant.featured_image.src;
+    if (!variantImageUrl) return;
+
+    // Mobile: update main image
+    const mainImage = this.querySelector('[data-main-image]');
+    if (mainImage) {
+      mainImage.src = variantImageUrl;
+      mainImage.alt = variant.featured_image.alt || variant.title || '';
+    }
+
+    // Mobile: highlight matching thumbnail
+    const thumbnails = this.querySelectorAll('[data-thumbnail-index]');
+    for (const thumb of thumbnails) {
+      const thumbSrc = thumb.dataset.thumbnailSrc || '';
+      thumb.classList.remove('custom-pdp__thumbnail--active');
+      if (thumbSrc && variantImageUrl.includes(thumbSrc.split('?')[0].split('/').pop())) {
+        thumb.classList.add('custom-pdp__thumbnail--active');
+      }
+    }
+
+    // Desktop: scroll matching media item into view
+    const mediaItems = this.querySelectorAll('[data-media-index]');
+    for (const item of mediaItems) {
+      const img = item.querySelector('img');
+      if (img && img.src && variantImageUrl.includes(img.src.split('?')[0].split('/').pop())) {
+        item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        break;
+      }
+    }
+  }
+
+  /** Update the option label values after variant change */
+  _updateVariantLabel(selectedOptions) {
+    const groups = this.querySelectorAll('[data-option-group]');
+    for (const group of groups) {
+      const idx = parseInt(group.dataset.optionIndex, 10);
+      const labelValue = group.querySelector('.pdp-variant-picker__label-value');
+      if (labelValue && selectedOptions[idx] !== undefined) {
+        labelValue.textContent = selectedOptions[idx];
+      }
+    }
+  }
+
+  /** Update browser URL with selected variant */
+  _updateUrl(variant) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('variant', variant.id);
+    window.history.replaceState({}, '', url.toString());
   }
 
   /** Format cents to money string */

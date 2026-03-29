@@ -17,10 +17,10 @@
       {% endif %}
       <div class="custom-ingredients__arrows">
         <button type="button" class="custom-ingredients__arrow custom-ingredients__arrow--prev" aria-label="{{ 'sections.custom_ingredients.previous' | t }}">
-          <img src="{{ 'chevron-up-4.svg' | asset_url }}" alt="" role="presentation" width="40" height="40" loading="lazy">
+          <img src="{{ 'chevron-left.svg' | asset_url }}" alt="" role="presentation" width="24" height="24" loading="lazy">
         </button>
         <button type="button" class="custom-ingredients__arrow custom-ingredients__arrow--next" aria-label="{{ 'sections.custom_ingredients.next' | t }}">
-          <img src="{{ 'chevron-up-5.svg' | asset_url }}" alt="" role="presentation" width="40" height="40" loading="lazy">
+          <img src="{{ 'chevron-left.svg' | asset_url }}" alt="" role="presentation" width="24" height="24" loading="lazy">
         </button>
       </div>
     </div>
@@ -103,12 +103,8 @@
   height: 40px;
 }
 
-.custom-ingredients__arrow--prev img {
-  transform: rotate(-90deg);
-}
-
 .custom-ingredients__arrow--next img {
-  transform: rotate(90deg);
+  transform: rotate(180deg);
 }
 
 .custom-ingredients__arrow:focus-visible {

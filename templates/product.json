@@ -23,18 +23,44 @@
         "hero-card": {
           "type": "pdp-hero-card",
           "settings": {
-            "bg_color": "#2A523F",
-            "badge_1_text": "NEW",
-            "badge_1_bg_color": "#FFFFFF",
-            "badge_1_text_color": "#141414",
-            "badge_2_text": "40% OFF FIRST ORDER",
-            "badge_2_bg_color": "#EC0606",
-            "badge_2_text_color": "#FFFFFF",
-            "show_rating": true,
-            "tags": "Fresh & Citrusy, Flavorful Nutrition, Energy + Immunity",
-            "description": "<p>• Packed with 40 essential vitamins, minerals, and superfoods.<br/>• Dietitian-approved formula.<br/>• Provides a full serving of vegetables.<br/>• Boosts gut, immune, and energy health.</p>",
-            "supplement_facts_text": "Supplement Facts"
-          }
+            "bg_color": "#2A523F"
+          },
+          "blocks": {
+            "badges": {
+              "type": "pdp-badges",
+              "settings": {
+                "badge_1_text": "NEW",
+                "badge_1_bg_color": "#FFFFFF",
+                "badge_1_text_color": "#141414",
+                "badge_2_text": "40% OFF FIRST ORDER",
+                "badge_2_bg_color": "#EC0606",
+                "badge_2_text_color": "#FFFFFF"
+              }
+            },
+            "product-title": {
+              "type": "pdp-product-title"
+            },
+            "rating-price": {
+              "type": "pdp-rating-price",
+              "settings": {
+                "show_rating": true
+              }
+            },
+            "tags": {
+              "type": "pdp-tags",
+              "settings": {
+                "tags": "Fresh & Citrusy, Flavorful Nutrition, Energy + Immunity"
+              }
+            },
+            "description": {
+              "type": "pdp-description",
+              "settings": {
+                "description": "<p>• Packed with 40 essential vitamins, minerals, and superfoods.<br/>• Dietitian-approved formula.<br/>• Provides a full serving of vegetables.<br/>• Boosts gut, immune, and energy health.</p>",
+                "supplement_facts_text": "Supplement Facts"
+              }
+            }
+          },
+          "block_order": ["badges", "product-title", "rating-price", "tags", "description"]
         },
         "variant-picker": {
           "type": "pdp-variant-picker",
@@ -152,6 +178,7 @@
         "description": "76% stick with Factor Form longer because of its award-winning taste.",
         "image": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-4-full-page-109831571.png",
         "highlight_image": "shopify://shop_images/image-2-full-page-109831575.png",
+        "others_image": "shopify://shop_images/image-4-full-page-109831644.png",
         "disclaimer_text": "† In a 3rd-party blind taste test with 115 adults from the general population.",
         "background_color": "#F1F1EA",
         "padding-block-start": 80,

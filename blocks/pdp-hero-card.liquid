@@ -1,23 +1,14 @@
 {% doc %}
-  Product Info Card Block
+  Product Hero Card (Container Block)
 
-  Branded green info card with badges, title, rating, price, tags, and description.
+  Green branded card that wraps child blocks: badges, title, rating, tags, description.
+  Merchants can insert @app blocks (e.g. Yotpo reviews) between any child block.
 
   @example {% content_for 'block', type: 'pdp-hero-card', id: 'hero-card' %}
 {% enddoc %}
 
 {% liquid
-  assign product = closest.product
   assign bg_color = block.settings.bg_color | default: '#2A523F'
-  assign badge_1_text = block.settings.badge_1_text
-  assign badge_1_bg = block.settings.badge_1_bg_color | default: '#FFFFFF'
-  assign badge_1_color = block.settings.badge_1_text_color | default: '#141414'
-  assign badge_2_text = block.settings.badge_2_text
-  assign badge_2_bg = block.settings.badge_2_bg_color | default: '#EC0606'
-  assign badge_2_color = block.settings.badge_2_text_color | default: '#FFFFFF'
-  assign tags_text = block.settings.tags
-  assign supplement_text = block.settings.supplement_facts_text
-  assign supplement_url = block.settings.supplement_facts_url
 %}
 
 <div
@@ -25,96 +16,7 @@
   style="--hero-card-bg: {{ bg_color }};"
   {{ block.shopify_attributes }}
 >
-  {%- comment -%} Badges row {%- endcomment -%}
-  <div class="pdp-hero-card__badges">
-    {%- if badge_1_text != blank -%}
-      <span
-        class="pdp-hero-card__badge"
-        style="background-color: {{ badge_1_bg }}; color: {{ badge_1_color }};"
-      >
-        {{- badge_1_text | escape -}}
-      </span>
-    {%- endif -%}
-    {%- if badge_2_text != blank -%}
-      <span
-        class="pdp-hero-card__badge"
-        style="background-color: {{ badge_2_bg }}; color: {{ badge_2_color }};"
-      >
-        {{- badge_2_text | escape -}}
-      </span>
-    {%- endif -%}
-  </div>
-
-  {%- comment -%} Product title {%- endcomment -%}
-  <div class="pdp-hero-card__title-wrap">
-    <h1 class="pdp-hero-card__title">{{ product.title | escape }}</h1>
-  </div>
-
-  {%- comment -%} Rating + Price row {%- endcomment -%}
-  <div class="pdp-hero-card__meta">
-    {%- if block.settings.show_rating -%}
-      <div class="pdp-hero-card__ratings">
-        <span class="pdp-hero-card__stars pdp-hero-card__stars--desktop">
-          <img src="{{ 'stars-2.svg' | asset_url }}" alt="{{ product.metafields.reviews.rating.value | default: '4.9' }} stars" width="96" height="16" loading="lazy">
-        </span>
-        <span class="pdp-hero-card__stars pdp-hero-card__stars--mobile">
-          <img src="{{ 'stars.svg' | asset_url }}" alt="{{ product.metafields.reviews.rating.value | default: '4.9' }} stars" width="66" height="10" loading="lazy">
-        </span>
-        <span class="pdp-hero-card__rating-text">
-          <span class="pdp-hero-card__rating-value">{{ product.metafields.reviews.rating.value | default: '4.9' }}</span>
-          <span class="pdp-hero-card__rating-count">({{ product.metafields.reviews.rating_count | default: 51 }} {{ 'content.reviews' | t }})</span>
-        </span>
-      </div>
-    {%- endif -%}
-    <div class="pdp-hero-card__price">
-      {% liquid
-        assign current_variant = product.selected_or_first_available_variant
-        assign sale_price = current_variant.price
-        assign compare_price = current_variant.compare_at_price
-      %}
-      <span class="pdp-hero-card__sale-price" data-sale-price>{{ sale_price | money }}</span>
-      {%- if compare_price > sale_price -%}
-        <span class="pdp-hero-card__compare-price" data-compare-price>
-          <s>{{ compare_price | money }}</s>
-        </span>
-      {%- else -%}
-        <span class="pdp-hero-card__compare-price" data-compare-price style="display:none;">
-          <s></s>
-        </span>
-      {%- endif -%}
-    </div>
-  </div>
-
-  {%- comment -%} Tags row {%- endcomment -%}
-  {%- if tags_text != blank -%}
-    <div class="pdp-hero-card__tags">
-      {%- assign tag_items = tags_text | split: ',' -%}
-      {%- for tag in tag_items -%}
-        {%- assign tag_trimmed = tag | strip -%}
-        {%- if tag_trimmed != blank -%}
-          <span class="pdp-hero-card__tag">{{ tag_trimmed | escape }}</span>
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
-  {%- endif -%}
-
-  {%- comment -%} Description {%- endcomment -%}
-  {%- if block.settings.description != blank -%}
-    <div class="pdp-hero-card__description">
-      {{ block.settings.description }}
-    </div>
-  {%- endif -%}
-
-  {%- comment -%} Supplement facts link {%- endcomment -%}
-  {%- if supplement_text != blank -%}
-    <div class="pdp-hero-card__supplement">
-      {%- if supplement_url != blank -%}
-        <a href="{{ supplement_url }}" class="pdp-hero-card__supplement-link">{{ supplement_text | escape }}</a>
-      {%- else -%}
-        <span class="pdp-hero-card__supplement-link">{{ supplement_text | escape }}</span>
-      {%- endif -%}
-    </div>
-  {%- endif -%}
+  {% content_for 'blocks' %}
 
   {%- comment -%} Decorative corner elements {%- endcomment -%}
   <div class="pdp-hero-card__deco pdp-hero-card__deco--left" aria-hidden="true">
@@ -371,97 +273,33 @@
 {
   "name": "t:names.pdp_hero_card",
   "tag": null,
+  "blocks": [
+    { "type": "pdp-badges" },
+    { "type": "pdp-product-title" },
+    { "type": "pdp-rating-price" },
+    { "type": "pdp-tags" },
+    { "type": "pdp-description" },
+    { "type": "@app" },
+    { "type": "@theme" }
+  ],
   "settings": [
-    {
-      "type": "header",
-      "content": "t:content.appearance"
-    },
     {
       "type": "color",
       "id": "bg_color",
       "label": "t:settings.bg_color",
       "default": "#2A523F"
-    },
-    {
-      "type": "header",
-      "content": "t:settings.badge_1_header"
-    },
-    {
-      "type": "text",
-      "id": "badge_1_text",
-      "label": "t:settings.badge_1_text",
-      "default": "NEW"
-    },
-    {
-      "type": "color",
-      "id": "badge_1_bg_color",
-      "label": "t:settings.badge_1_bg_color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "badge_1_text_color",
-      "label": "t:settings.badge_1_text_color",
-      "default": "#141414"
-    },
-    {
-      "type": "header",
-      "content": "t:settings.badge_2_header"
-    },
-    {
-      "type": "text",
-      "id": "badge_2_text",
-      "label": "t:settings.badge_2_text",
-      "default": "40% OFF FIRST ORDER"
-    },
-    {
-      "type": "color",
-      "id": "badge_2_bg_color",
-      "label": "t:settings.badge_2_bg_color",
-      "default": "#EC0606"
-    },
-    {
-      "type": "color",
-      "id": "badge_2_text_color",
-      "label": "t:settings.badge_2_text_color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "header",
-      "content": "t:content.text"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_rating",
-      "label": "t:settings.show_rating",
-      "default": true
-    },
-    {
-      "type": "textarea",
-      "id": "tags",
-      "label": "t:settings.tags",
-      "default": "Fresh & Citrusy, Flavorful Nutrition, Energy + Immunity"
-    },
-    {
-      "type": "richtext",
-      "id": "description",
-      "label": "t:settings.description"
-    },
-    {
-      "type": "text",
-      "id": "supplement_facts_text",
-      "label": "t:settings.supplement_facts_text",
-      "default": "Supplement Facts"
-    },
-    {
-      "type": "url",
-      "id": "supplement_facts_url",
-      "label": "t:settings.supplement_facts_url"
     }
   ],
   "presets": [
     {
-      "name": "t:names.pdp_hero_card"
+      "name": "t:names.pdp_hero_card",
+      "blocks": [
+        { "type": "pdp-badges" },
+        { "type": "pdp-product-title" },
+        { "type": "pdp-rating-price" },
+        { "type": "pdp-tags" },
+        { "type": "pdp-description" }
+      ]
     }
   ]
 }

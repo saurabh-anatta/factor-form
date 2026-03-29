@@ -14,51 +14,58 @@
 
 <div class="pdp-variant-picker" {{ block.shopify_attributes }}>
   {%- for option in product.options_with_values -%}
-    <div class="pdp-variant-picker__group" data-option-group data-option-index="{{ forloop.index0 }}">
+    {%- assign option_index = forloop.index0 -%}
+    <div class="pdp-variant-picker__group" data-option-group data-option-index="{{ option_index }}">
       <div class="pdp-variant-picker__label">
         <span class="pdp-variant-picker__label-text">{{ 'sections.custom_pdp.select_prefix' | t: option: option.name }}:</span>
-        <span class="pdp-variant-picker__label-value">{{ current_variant.options[forloop.index0] | escape }}</span>
+        <span class="pdp-variant-picker__label-value">{{ current_variant.options[option_index] | escape }}</span>
       </div>
       <div class="pdp-variant-picker__options">
         {%- for value in option.values -%}
           {%- liquid
             assign is_selected = false
-            if current_variant.options[forloop.parentloop.index0] == value
+            if current_variant.options[option_index] == value
               assign is_selected = true
             endif
 
-            assign variant_for_image = nil
-            if show_images
-              for variant in product.variants
-                if variant.options[forloop.parentloop.index0] == value
-                  assign variant_for_image = variant
-                  break
-                endif
-              endfor
-            endif
+            assign variant_for_option = nil
+            for variant in product.variants
+              if variant.options[option_index] == value
+                assign variant_for_option = variant
+                break
+              endif
+            endfor
           -%}
           <button
             type="button"
             class="pdp-variant-picker__card{% if is_selected %} pdp-variant-picker__card--selected{% endif %}"
-            data-variant-id="{{ current_variant.id }}"
+            data-variant-id="{% if variant_for_option %}{{ variant_for_option.id }}{% else %}{{ current_variant.id }}{% endif %}"
             data-option-value="{{ value | escape }}"
             aria-label="{{ option.name }}: {{ value | escape }}"
             aria-pressed="{{ is_selected }}"
           >
-            {%- if show_images and variant_for_image and variant_for_image.featured_image -%}
-              <img
-                class="pdp-variant-picker__card-image"
-                src="{{ variant_for_image.featured_image | image_url: width: 160 }}"
-                alt="{{ value | escape }}"
-                width="80"
-                height="80"
-                loading="lazy"
-              >
+            {%- if show_images and variant_for_option -%}
+              {%- liquid
+                assign card_image = variant_for_option.featured_image
+                unless card_image
+                  assign card_image = variant_for_option.image
+                endunless
+              -%}
+              {%- if card_image -%}
+                <img
+                  class="pdp-variant-picker__card-image"
+                  src="{{ card_image | image_url: width: 160 }}"
+                  alt="{{ value | escape }}"
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                >
+              {%- endif -%}
             {%- endif -%}
             <div class="pdp-variant-picker__card-info">
               <span class="pdp-variant-picker__card-value">{{ value | escape }}</span>
-              {%- if variant_for_image -%}
-                {%- assign per_day = variant_for_image.price | divided_by: 30 -%}
+              {%- if variant_for_option -%}
+                {%- assign per_day = variant_for_option.price | divided_by: 30 -%}
                 <span class="pdp-variant-picker__card-meta">{{ per_day | money }}/day</span>
               {%- endif -%}
             </div>
