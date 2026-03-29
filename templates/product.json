@@ -1,0 +1,569 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
+  "sections": {
+    "breadcrumbs": {
+      "type": "custom-breadcrumbs",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "main": {
+      "type": "custom-pdp",
+      "blocks": {
+        "hero-card": {
+          "type": "pdp-hero-card",
+          "settings": {
+            "bg_color": "#2A523F"
+          },
+          "blocks": {
+            "badges": {
+              "type": "pdp-badges",
+              "settings": {
+                "badge_1_text": "NEW",
+                "badge_1_bg_color": "#FFFFFF",
+                "badge_1_text_color": "#141414",
+                "badge_2_text": "40% OFF FIRST ORDER",
+                "badge_2_bg_color": "#EC0606",
+                "badge_2_text_color": "#FFFFFF"
+              }
+            },
+            "product-title": {
+              "type": "pdp-product-title"
+            },
+            "rating-price": {
+              "type": "pdp-rating-price",
+              "settings": {
+                "show_rating": true
+              }
+            },
+            "tags": {
+              "type": "pdp-tags",
+              "settings": {
+                "tags": "Fresh & Citrusy, Flavorful Nutrition, Energy + Immunity"
+              }
+            },
+            "description": {
+              "type": "pdp-description",
+              "settings": {
+                "description": "<p>• Packed with 40 essential vitamins, minerals, and superfoods.<br/>• Dietitian-approved formula.<br/>• Provides a full serving of vegetables.<br/>• Boosts gut, immune, and energy health.</p>",
+                "supplement_facts_text": "Supplement Facts"
+              }
+            }
+          },
+          "block_order": ["badges", "product-title", "rating-price", "tags", "description"]
+        },
+        "variant-picker": {
+          "type": "pdp-variant-picker",
+          "settings": {
+            "show_option_images": true
+          }
+        },
+        "subscription": {
+          "type": "pdp-subscription",
+          "settings": {
+            "popular_badge_text": "MOST POPULAR",
+            "subscribe_heading": "Subscribe & Save",
+            "onetime_heading": "One-time Purchase",
+            "label_text": "Select Frequency:"
+          }
+        },
+        "buy-cta": {
+          "type": "pdp-buy-cta",
+          "settings": {
+            "button_text": "ADD TO CART",
+            "show_usp": true,
+            "usp_1_text": "30-day money-back guarantee",
+            "usp_2_text": "Delay or cancel anytime"
+          }
+        },
+        "accordion": {
+          "type": "pdp-accordion",
+          "settings": {
+            "heading_1": "Description",
+            "heading_2": "Benefits",
+            "heading_3": "How to use"
+          }
+        },
+        "upsells": {
+          "type": "pdp-upsells",
+          "settings": {
+            "heading_text": "You may also like"
+          }
+        }
+      },
+      "block_order": [
+        "hero-card",
+        "variant-picker",
+        "subscription",
+        "buy-cta",
+        "accordion",
+        "upsells"
+      ],
+      "settings": {
+        "media_position": "left",
+        "gallery_columns": "2",
+        "gallery_badge_text": "FREE WELCOME KIT",
+        "gallery_badge_bg": "#141414",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 64
+      }
+    },
+    "reviews": {
+      "type": "custom-reviews",
+      "settings": {
+        "heading": "Over 5,000 5-stars reviews on Trustpilot",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "review-1": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524516.png",
+            "quote": "\"The taste is a lot better than the greens powder I'm usually taking\"",
+            "author": "Nicole B.  |  Paid review†",
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        },
+        "review-2": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524524.png",
+            "quote": "\"It's delivered right to your door, for a very fair price, so I highly recommend it\"",
+            "author": "Brian L.  |  Paid review†",
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        },
+        "review-3": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524532.png",
+            "quote": "\"I feel like I have more energy and ability to focus\"",
+            "author": "Omni P.  |  Paid review†",
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        },
+        "review-4": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524540.png",
+            "quote": "\"The ritual of having it first thing in the morning has been a positive\"",
+            "author": "Zack S. | Paid review†",
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3", "review-4"]
+    },
+    "comparison": {
+      "type": "custom-comparison",
+      "settings": {
+        "heading": "Better Taste, Better Results",
+        "description": "76% stick with Factor Form longer because of its award-winning taste.",
+        "image": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-4-full-page-109831571.png",
+        "highlight_image": "shopify://shop_images/image-2-full-page-109831575.png",
+        "others_image": "shopify://shop_images/image-4-full-page-109831644.png",
+        "disclaimer_text": "† In a 3rd-party blind taste test with 115 adults from the general population.",
+        "background_color": "#F1F1EA",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "row-1": {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "#1 in taste, texture & aroma",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        "row-2": {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "More reasons",
+            "is_subheading": true,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        "row-3": {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "1 full serving of vegetables",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        "row-4": {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "No megadoses (<100% DV)",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        "row-5": {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "Under $2 per serving",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        "row-6": {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "Single-serving packets",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": true
+          }
+        }
+      },
+      "block_order": ["row-1", "row-2", "row-3", "row-4", "row-5", "row-6"]
+    },
+    "ticker": {
+      "type": "marquee",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "scheme-58084d4c-a86e-4d0a-855e-a0966e5043f7",
+        "padding-block-start": 16,
+        "padding-block-end": 16,
+        "gap_between_elements": 24
+      },
+      "blocks": {
+        "ticker-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Grounded in Food Science</p>",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "1.125rem",
+            "line_height": "tight",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "ticker-text-2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>High Quality Ingredients</p>",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "1.125rem",
+            "line_height": "tight",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "ticker-text-3": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Flavorful Nutrition</p>",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "1.125rem",
+            "line_height": "tight",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "ticker-text-4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Dietitian Approved</p>",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "1.125rem",
+            "line_height": "tight",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "ticker-text-5": {
+          "type": "text",
+          "settings": {
+            "text": "<p>No Added Sugar</p>",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "1.125rem",
+            "line_height": "tight",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        },
+        "ticker-text-6": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Keto Friendly</p>",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "1.125rem",
+            "line_height": "tight",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "wrap": "nowrap",
+            "width": "fit-content"
+          }
+        }
+      },
+      "block_order": ["ticker-text-1", "ticker-text-2", "ticker-text-3", "ticker-text-4", "ticker-text-5", "ticker-text-6"]
+    },
+    "pdp-dietitians": {
+      "type": "custom-dietitians",
+      "settings": {
+        "heading": "Backed By Dietitians",
+        "description": "Formulated with guidance from Factor's in-house dietitians to help you meet your wellness goals with confidence",
+        "background_color": "#F1F1EA",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "dietitian-1": {
+          "type": "dietitian-item",
+          "settings": {
+            "image": "shopify://shop_images/silo-1-full-page-109831656.png",
+            "quote": "\"A rigorous 'no list' of over 100 banned ingredients\"",
+            "description": "Factor Form upholds strong nutrition and ingredient standards across all products. We ensure only high quality ingredients make it into our products",
+            "author": "Kara Kash   |   Research & Development"
+          }
+        },
+        "dietitian-2": {
+          "type": "dietitian-item",
+          "settings": {
+            "image": "shopify://shop_images/silo-1-full-page-109831666.png",
+            "quote": "\"One serving equals a whole serving of green leafy veggies\"",
+            "description": "I love that the vitamin and mineral content is balanced; the daily value percentages aren't excessive",
+            "author": "Carlie Williams   |   Dietitian + Personal Trainer"
+          }
+        },
+        "dietitian-3": {
+          "type": "dietitian-item",
+          "settings": {
+            "image": "shopify://shop_images/silo-1-full-page-109831676.png",
+            "quote": "\"A good mix of B vitamins along with typical electrolytes\"",
+            "description": "B Vitamins act as coenzymes when your body is metabolizing energy, so it's nice to have that in an electrolyte mix",
+            "author": "Olivia Hamilton   |   Dietitian"
+          }
+        }
+      },
+      "block_order": ["dietitian-1", "dietitian-2", "dietitian-3"]
+    },
+    "pdp-benefits": {
+      "type": "custom-pdp-benefits",
+      "settings": {
+        "heading": "Benefits on the go",
+        "image": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-4-full-page-109831687.png",
+        "background_color": "#141414",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      },
+      "blocks": {
+        "benefit-1": {
+          "type": "benefit-point",
+          "settings": {
+            "icon": "icon-13-immune-support.svg",
+            "heading": "Gut Health Support",
+            "description": "Supports a balanced and healthy digestive system."
+          }
+        },
+        "benefit-2": {
+          "type": "benefit-point",
+          "settings": {
+            "icon": "icon-14-gut-health.svg",
+            "heading": "Immune Support",
+            "description": "Helps strengthen your body's natural defense system."
+          }
+        },
+        "benefit-3": {
+          "type": "benefit-point",
+          "settings": {
+            "icon": "icon-15-energy-focus-1.svg",
+            "heading": "Energy and Mood",
+            "description": "Boosts daily energy levels and promotes a positive mood."
+          }
+        }
+      },
+      "block_order": ["benefit-1", "benefit-2", "benefit-3"]
+    },
+    "results": {
+      "type": "custom-results",
+      "settings": {
+        "heading": "Real Ingredients, Real Results",
+        "description": "Active customers share how Daily Greens made a difference†.",
+        "disclaimer_text": "† In a 3rd-party blind taste test with 115 adults from the general population.",
+        "background_color": "#E1F0E2",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "stat-1": {
+          "type": "stat-item",
+          "settings": {
+            "stat_value": "88%",
+            "description": "Supports a balanced and healthy digestive system."
+          }
+        },
+        "stat-2": {
+          "type": "stat-item",
+          "settings": {
+            "stat_value": "76%",
+            "description": "Supports a balanced and healthy digestive system."
+          }
+        },
+        "stat-3": {
+          "type": "stat-item",
+          "settings": {
+            "stat_value": "75%",
+            "description": "Had more energy"
+          }
+        },
+        "stat-4": {
+          "type": "stat-item",
+          "settings": {
+            "stat_value": "99%",
+            "description": "loved getting an extra daily serving of vegetables"
+          }
+        }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3", "stat-4"]
+    },
+    "ingredients": {
+      "type": "custom-ingredients",
+      "settings": {
+        "heading": "Quality Ingredients",
+        "background_color": "#FFFFFF",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "ingredient-1": {
+          "type": "ingredient-item",
+          "settings": {
+            "image": "shopify://shop_images/silo-1-full-page-109831776.png",
+            "heading": "Greens and fruits blend",
+            "description": "Leafy greens and superfood fruits help pack nutrients and a full serving of vegetables into your daily routine."
+          }
+        },
+        "ingredient-2": {
+          "type": "ingredient-item",
+          "settings": {
+            "image": "shopify://shop_images/silo-1-full-page-109831784.png",
+            "heading": "Gut health blend",
+            "description": "Prebiotic fiber plus two strains of live probiotics promote a healthy gut and support digestive health.*"
+          }
+        },
+        "ingredient-3": {
+          "type": "ingredient-item",
+          "settings": {
+            "image": "shopify://shop_images/silo-1-full-page-109831792.png",
+            "heading": "Adaptogen blend",
+            "description": "Rhodiola, Lion's Mane, and Ashwagandha support cognitive function, better sleep, healthy aging, and reduce everyday stress.*"
+          }
+        },
+        "ingredient-4": {
+          "type": "ingredient-item",
+          "settings": {
+            "image": "shopify://shop_images/silo-1-full-page-109831800.png",
+            "heading": "Energy blend",
+            "description": "B vitamins, ginseng, and adaptogens naturally support energy without caffeine.*"
+          }
+        },
+        "ingredient-5": {
+          "type": "ingredient-item",
+          "settings": {
+            "image": "shopify://shop_images/silo-1-full-page-109831808.png",
+            "heading": "Immune support blend",
+            "description": "Vitamins C & D, zinc, ginseng, and reishi mushroom support the immune system and healthy aging.*"
+          }
+        }
+      },
+      "block_order": ["ingredient-1", "ingredient-2", "ingredient-3", "ingredient-4", "ingredient-5"]
+    },
+    "faqs": {
+      "type": "custom-faqs",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "background_color": "#FFFFFF",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "faq-1": {
+          "type": "faq-item",
+          "settings": {
+            "question": "What makes Factor Form products different?",
+            "answer": "Factor Form products are built with clean, science-backed ingredients chosen for real, functional benefits; not trends or fillers. Each formula is optimised for daily performance, energy, and recovery. You get products that are effective, transparent, and designed to fit effortlessly into your routine."
+          }
+        },
+        "faq-2": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are Factor Form products third-party tested?"
+          }
+        },
+        "faq-3": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are Factor Form products safe to use together?"
+          }
+        },
+        "faq-4": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Do you ship internationally?"
+          }
+        },
+        "faq-5": {
+          "type": "faq-item",
+          "settings": {
+            "question": "What is your return policy?"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"]
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main",
+    "reviews",
+    "comparison",
+    "ticker",
+    "pdp-dietitians",
+    "pdp-benefits",
+    "results",
+    "ingredients",
+    "faqs"
+  ]
+}

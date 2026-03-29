@@ -1,0 +1,294 @@
+{% liquid
+  assign heading = section.settings.heading
+%}
+
+<div
+  class="custom-pdp-benefits"
+  style="
+    --section-padding-top: {{ section.settings.padding-block-start }}px;
+    --section-padding-bottom: {{ section.settings.padding-block-end }}px;
+    --pdp-benefits-bg: {{ section.settings.background_color }};
+  "
+>
+  <div class="custom-pdp-benefits__layout">
+    {%- if section.settings.image != blank -%}
+      <div class="custom-pdp-benefits__image-wrapper">
+        <img
+          class="custom-pdp-benefits__image"
+          src="{{ section.settings.image | image_url: width: 1536 }}"
+          alt="{{ heading | escape }}"
+          width="768"
+          height="576"
+          loading="lazy"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="custom-pdp-benefits__content">
+      {% if heading != blank %}
+        <h2 class="custom-pdp-benefits__heading">{{ heading | escape }}</h2>
+      {% endif %}
+
+      <div class="custom-pdp-benefits__points">
+        {%- for block in section.blocks -%}
+          <div class="custom-pdp-benefits__point" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <img
+                class="custom-pdp-benefits__icon"
+                src="{{ block.settings.icon | asset_url }}"
+                alt=""
+                role="presentation"
+                width="64"
+                height="64"
+                loading="lazy"
+              >
+            {%- endif -%}
+            <div class="custom-pdp-benefits__point-content">
+              {%- if block.settings.heading != blank -%}
+                <h3 class="custom-pdp-benefits__point-heading">{{ block.settings.heading | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="custom-pdp-benefits__point-description">{{ block.settings.description | escape }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.custom-pdp-benefits {
+  padding-block-start: var(--section-padding-top, 0px);
+  padding-block-end: var(--section-padding-bottom, 0px);
+  background-color: var(--pdp-benefits-bg, #141414);
+}
+
+.custom-pdp-benefits__layout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+}
+
+.custom-pdp-benefits__image-wrapper {
+  flex: 0 0 50%;
+  max-width: 50%;
+  overflow: hidden;
+}
+
+.custom-pdp-benefits__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 768 / 576;
+}
+
+.custom-pdp-benefits__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  padding: 0 64px 0 0;
+}
+
+.custom-pdp-benefits__heading {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight, 300);
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-pdp-benefits__points {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 0 16px;
+}
+
+.custom-pdp-benefits__point {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.custom-pdp-benefits__icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.custom-pdp-benefits__point-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.custom-pdp-benefits__point-heading {
+  font-family: var(--font-subheading--family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.custom-pdp-benefits__point-description {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .custom-pdp-benefits__layout {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .custom-pdp-benefits__image-wrapper {
+    flex: none;
+    max-width: none;
+    width: 100%;
+  }
+
+  .custom-pdp-benefits__content {
+    padding: 40px 16px;
+    gap: 24px;
+  }
+
+  .custom-pdp-benefits__heading {
+    font-size: 32px;
+    line-height: 40px;
+    text-align: start;
+  }
+
+  .custom-pdp-benefits__points {
+    gap: 24px;
+    padding: 0;
+  }
+
+  .custom-pdp-benefits__icon {
+    width: 48px;
+    height: 48px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_pdp_benefits",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Benefits on the go"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "#141414"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit-point",
+      "name": "t:names.benefit_point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "t:settings.icon"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:settings.heading"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "t:settings.description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_pdp_benefits",
+      "blocks": [
+        {
+          "type": "benefit-point",
+          "settings": {
+            "icon": "icon-13-immune-support.svg",
+            "heading": "Gut Health Support",
+            "description": "Supports a balanced and healthy digestive system."
+          }
+        },
+        {
+          "type": "benefit-point",
+          "settings": {
+            "icon": "icon-14-gut-health.svg",
+            "heading": "Immune Support",
+            "description": "Helps strengthen your body's natural defense system."
+          }
+        },
+        {
+          "type": "benefit-point",
+          "settings": {
+            "icon": "icon-15-energy-focus-1.svg",
+            "heading": "Energy and Mood",
+            "description": "Boosts daily energy levels and promotes a positive mood."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

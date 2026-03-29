@@ -1,0 +1,277 @@
+{% liquid
+  assign heading = section.settings.heading
+  assign description = section.settings.description
+  assign disclaimer = section.settings.disclaimer_text
+%}
+
+<div
+  class="custom-results"
+  style="
+    --section-padding-top: {{ section.settings.padding-block-start }}px;
+    --section-padding-bottom: {{ section.settings.padding-block-end }}px;
+    --results-bg: {{ section.settings.background_color }};
+  "
+>
+  <div class="custom-results__container">
+    <div class="custom-results__header">
+      {% if heading != blank %}
+        <h2 class="custom-results__heading">{{ heading | escape }}</h2>
+      {% endif %}
+      {% if description != blank %}
+        <p class="custom-results__description">{{ description | escape }}</p>
+      {% endif %}
+    </div>
+
+    <div class="custom-results__stats">
+      {%- for block in section.blocks -%}
+        <div class="custom-results__stat" {{ block.shopify_attributes }}>
+          {%- if block.settings.stat_value != blank -%}
+            <span class="custom-results__stat-value">{{ block.settings.stat_value | escape }}</span>
+          {%- endif -%}
+          {%- if block.settings.description != blank -%}
+            <p class="custom-results__stat-description">{{ block.settings.description | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if disclaimer != blank -%}
+      <p class="custom-results__disclaimer">{{ disclaimer | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+.custom-results {
+  padding-block-start: var(--section-padding-top, 80px);
+  padding-block-end: var(--section-padding-bottom, 80px);
+  background-color: var(--results-bg, #E1F0E2);
+}
+
+.custom-results__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  max-width: var(--normal-page-width, 120rem);
+  margin-inline: auto;
+  padding-inline: 64px;
+}
+
+.custom-results__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.custom-results__heading {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight, 300);
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-results__description {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-results__stats {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.custom-results__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 240px;
+}
+
+.custom-results__stat-value {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight, 300);
+  font-size: 60px;
+  line-height: 68px;
+  letter-spacing: 0;
+  color: #141414;
+}
+
+.custom-results__stat-description {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #141414;
+  margin: 0;
+}
+
+.custom-results__disclaimer {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight, 300);
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: center;
+  margin: 0;
+  padding-inline: 16px;
+}
+
+@media screen and (max-width: 749px) {
+  .custom-results__container {
+    padding-inline: 16px;
+    gap: 32px;
+  }
+
+  .custom-results__heading {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .custom-results__stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .custom-results__stat {
+    width: auto;
+  }
+
+  .custom-results__stat-value {
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  .custom-results__stat-description {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_results",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Real Ingredients, Real Results"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:settings.description"
+    },
+    {
+      "type": "text",
+      "id": "disclaimer_text",
+      "label": "t:settings.disclaimer_text"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "#E1F0E2"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat-item",
+      "name": "t:names.stat_item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat_value",
+          "label": "t:settings.stat_value"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "t:settings.description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_results",
+      "blocks": [
+        {
+          "type": "stat-item",
+          "settings": {
+            "stat_value": "88%",
+            "description": "Supports a balanced and healthy digestive system."
+          }
+        },
+        {
+          "type": "stat-item",
+          "settings": {
+            "stat_value": "76%",
+            "description": "Supports a balanced and healthy digestive system."
+          }
+        },
+        {
+          "type": "stat-item",
+          "settings": {
+            "stat_value": "75%",
+            "description": "Had more energy"
+          }
+        },
+        {
+          "type": "stat-item",
+          "settings": {
+            "stat_value": "99%",
+            "description": "loved getting an extra daily serving of vegetables"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,112 @@
+{% doc %}
+  PLP Product Card
+
+  Renders a product card for the custom PLP section with image, badges,
+  scroller bar, title, description, price, and add-to-cart button.
+
+  @param product {Object} Product object (required)
+  @param card_index {Number} Card index for the scroller (optional)
+
+  @example
+    {% render 'plp-product-card', product: product, card_index: forloop.index %}
+{% enddoc %}
+
+{% liquid
+  assign product = product | default: empty
+  unless product != empty
+    break
+  endunless
+
+  assign first_variant = product.selected_or_first_available_variant
+  assign has_compare = false
+  if product.compare_at_price > product.price
+    assign has_compare = true
+  endif
+
+  assign per_day_price = product.metafields.custom.per_day_price.value
+%}
+
+<article class="plp-card">
+  <a href="{{ product.url }}" class="plp-card__link" aria-label="{{ product.title | escape }}">
+    <div class="plp-card__image">
+      <div class="plp-card__gallery">
+        {%- if product.featured_image != blank -%}
+          <img
+            src="{{ product.featured_image | image_url: width: 656 }}"
+            alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
+            width="328"
+            height="328"
+            loading="lazy"
+            class="plp-card__img"
+          >
+        {%- else -%}
+          <div class="plp-card__placeholder">{{ product.title | escape | truncate: 1, '' }}</div>
+        {%- endif -%}
+      </div>
+      {%- comment -%} Badges from product tags {%- endcomment -%}
+      <div class="plp-card__badges">
+        {%- for tag in product.tags -%}
+          {%- case tag -%}
+            {%- when 'new' -%}
+              <span class="plp-card__badge plp-card__badge--white">NEW</span>
+            {%- when 'bestseller' -%}
+              <span class="plp-card__badge plp-card__badge--white">BESTSELLER</span>
+            {%- when 'best-value' -%}
+              <span class="plp-card__badge plp-card__badge--white">BEST VALUE</span>
+            {%- when 'free-welcome-kit' -%}
+              <span class="plp-card__badge plp-card__badge--dark">FREE WELCOME KIT</span>
+            {%- when 'sale' -%}
+              <span class="plp-card__badge plp-card__badge--sale">40% OFF FIRST ORDER</span>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Scroller bar {%- endcomment -%}
+    <div class="plp-card__scroller" aria-hidden="true">
+      <div class="plp-card__scroller-all"></div>
+      <div class="plp-card__scroller-partial"></div>
+    </div>
+
+    {%- comment -%} Content area {%- endcomment -%}
+    <div class="plp-card__content">
+      <div class="plp-card__details">
+        <div class="plp-card__title-row">
+          <h3 class="plp-card__title">{{ product.title | escape }}</h3>
+        </div>
+        {%- if product.description != blank -%}
+          <p class="plp-card__desc">{{ product.description | strip_html | truncate: 120 }}</p>
+        {%- endif -%}
+      </div>
+      <div class="plp-card__footer">
+        <div class="plp-card__price-block">
+          <div class="plp-card__price-top">
+            <span class="plp-card__price">{{ product.price | money }}</span>
+            {%- if has_compare -%}
+              <s class="plp-card__compare-price">{{ product.compare_at_price | money }}</s>
+            {%- endif -%}
+          </div>
+          {%- if per_day_price != blank -%}
+            <div class="plp-card__per-day">
+              {{ per_day_price }} {{ 'sections.custom_plp.per_day' | t }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </a>
+  {%- comment -%} Add to cart form (outside the link to avoid nesting interactive elements) {%- endcomment -%}
+  <div class="plp-card__cta-wrap">
+    <form method="post" action="/cart/add" class="plp-card__form">
+      <input type="hidden" name="id" value="{{ first_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <button
+        type="submit"
+        class="plp-card__add-btn"
+        {% unless first_variant.available %}disabled{% endunless %}
+      >
+        {{ 'sections.custom_plp.add_to_cart' | t }}
+      </button>
+    </form>
+  </div>
+</article>

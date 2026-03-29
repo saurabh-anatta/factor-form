@@ -1,0 +1,156 @@
+{% liquid
+  assign home_label = 'sections.custom_breadcrumbs.home' | t
+  assign aria_label = 'sections.custom_breadcrumbs.aria_label' | t
+%}
+
+<section
+  id="section-{{ section.id }}"
+  class="custom-breadcrumbs color-{{ section.settings.color_scheme }}"
+  style="--section-padding-top: {{ section.settings.padding-block-start }}px; --section-padding-bottom: {{ section.settings.padding-block-end }}px;"
+>
+  <nav class="custom-breadcrumbs__nav" aria-label="{{ aria_label }}">
+    <ol class="custom-breadcrumbs__list">
+      <li class="custom-breadcrumbs__item">
+        <a class="custom-breadcrumbs__link" href="/">{{ home_label }}</a>
+      </li>
+      <li class="custom-breadcrumbs__separator" aria-hidden="true">/</li>
+      {% if product.collections.size > 0 %}
+        {% assign breadcrumb_collection = product.collections.first %}
+        <li class="custom-breadcrumbs__item">
+          <a class="custom-breadcrumbs__link" href="{{ breadcrumb_collection.url }}">{{ breadcrumb_collection.title }}</a>
+        </li>
+        <li class="custom-breadcrumbs__separator" aria-hidden="true">/</li>
+      {% endif %}
+      <li class="custom-breadcrumbs__item" aria-current="page">
+        <span class="custom-breadcrumbs__current">{{ product.title }}</span>
+      </li>
+    </ol>
+  </nav>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": {{ home_label | json }},
+          "item": "{{ shop.url }}"
+        }
+        {% if product.collections.size > 0 %}
+          ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ breadcrumb_collection.title | json }},
+            "item": "{{ shop.url }}{{ breadcrumb_collection.url }}"
+          }
+          ,{
+            "@type": "ListItem",
+            "position": 3,
+            "name": {{ product.title | json }}
+          }
+        {% else %}
+          ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ product.title | json }}
+          }
+        {% endif %}
+      ]
+    }
+  </script>
+</section>
+
+{% stylesheet %}
+.custom-breadcrumbs {
+  background-color: #FFFFFF;
+  padding-top: var(--section-padding-top, 0px);
+  padding-bottom: var(--section-padding-bottom, 0px);
+}
+
+.custom-breadcrumbs__nav {
+  max-width: var(--normal-page-width, 120rem);
+  margin: 0 auto;
+  padding: 16px 64px;
+}
+
+.custom-breadcrumbs__list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-breadcrumbs__item,
+.custom-breadcrumbs__separator {
+  font-family: var(--font-body--family);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #141414;
+}
+
+.custom-breadcrumbs__link {
+  color: #141414;
+  text-decoration: none;
+}
+
+.custom-breadcrumbs__link:hover {
+  text-decoration: underline;
+}
+
+.custom-breadcrumbs__current {
+  color: #141414;
+}
+
+@media screen and (max-width: 749px) {
+  .custom-breadcrumbs__nav {
+    padding: 16px 16px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_breadcrumbs",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_breadcrumbs"
+    }
+  ]
+}
+{% endschema %}

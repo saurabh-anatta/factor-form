@@ -1,0 +1,454 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/main-hero-img-3-1-desktop-110524489.png",
+        "media_type_2": "image",
+        "image_2": "shopify://shop_images/image-1-desktop-110524490.png",
+        "content_direction": "column",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 8,
+        "section_width": "full-width",
+        "section_height": "medium",
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000066",
+        "overlay_style": "solid",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "stack_media_on_mobile": true,
+        "custom_mobile_media": true,
+        "media_type_1_mobile": "image",
+        "image_1_mobile": "shopify://shop_images/main-hero-img-3-1-desktop-91051018.png",
+        "media_type_2_mobile": "image",
+        "image_2_mobile": "shopify://shop_images/image-1-desktop-91051020.png"
+      },
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>Your Daily Greens, Reinvented</h1>",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h1",
+            "color": "#FFFFFF"
+          }
+        },
+        "description": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Better taste. Better routine. Better you.</p>",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "paragraph",
+            "color": "#FFFFFF",
+            "padding-block-end": 24
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "label": "Shop Now",
+            "link": "shopify://collections/all",
+            "style_class": "button"
+          }
+        }
+      },
+      "block_order": ["heading", "description", "button"]
+    },
+    "reviews": {
+      "type": "custom-reviews",
+      "settings": {
+        "heading": "Over 5,000 5-stars reviews on Trustpilot",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "review-1": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524516.png",
+            "quote": "\"The taste is a lot better than the greens powder I'm usually taking\"",
+            "author": "Nicole B.  |  Paid review†",
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        },
+        "review-2": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524524.png",
+            "quote": "\"It's delivered right to your door, for a very fair price, so I highly recommend it\"",
+            "author": "Brian L.  |  Paid review†",
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        },
+        "review-3": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524532.png",
+            "quote": "\"I feel like I have more energy and ability to focus\"",
+            "author": "Omni P.  |  Paid review†",
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        },
+        "review-4": {
+          "type": "review-item",
+          "settings": {
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524540.png",
+            "quote": "\"The ritual of having it first thing in the morning has been a positive\"",
+            "author": "Zack S. | Paid review†",
+            "show_play_button": true,
+            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3", "review-4"]
+    },
+    "product-carousel": {
+      "type": "custom-product-carousel",
+      "settings": {
+        "subheading": "brought to you by",
+        "heading": "Built From Food, Designed for Results",
+        "ticker_text": "Grounded in Food Science | High Quality Ingredients | Flavorful Nutrition | Dietitian Approved | No Added Sugar | Keto Friendly",
+        "ticker_color": "#3F7057",
+        "background_color": "#F1F1EA",
+        "padding-block-start": 64,
+        "padding-block-end": 0
+      },
+      "blocks": {
+        "tab-1": {
+          "type": "tab",
+          "settings": {
+            "label": "Gut Health",
+            "is_active": true
+          }
+        },
+        "tab-2": {
+          "type": "tab",
+          "settings": {
+            "label": "Recovery",
+            "is_active": false
+          }
+        },
+        "tab-3": {
+          "type": "tab",
+          "settings": {
+            "label": "Immunity",
+            "is_active": false
+          }
+        },
+        "tab-4": {
+          "type": "tab",
+          "settings": {
+            "label": "Energy & Focus",
+            "is_active": false
+          }
+        },
+        "category-card-1": {
+          "type": "category-card",
+          "settings": {
+            "image": "shopify://shop_images/agile-support-1-desktop-112594627.png",
+            "title": "Gut Health",
+            "description": "Superfoods and nutrients for daily digestive support",
+            "cta_text": "VIEW ALL GUT HEALTH",
+            "mobile_cta_text": "VIEW ALL"
+          }
+        },
+        "product-card-1": {
+          "type": "product-card",
+          "settings": {
+            "product": "daily-greens",
+            "product_handle": "daily-greens",
+            "image": "shopify://shop_images/image-desktop-112594636.png",
+            "title": "Daily Greens",
+            "description": "Drink your veggies on-the-go with a refreshing twist.",
+            "price": "$47.39",
+            "compare_price": "$78.99",
+            "cta_text": "ADD TO CART",
+            "badge_1_text": "FREE WELCOME KIT",
+            "badge_1_color": "#141414",
+            "badge_2_text": "40% OFF FIRST ORDER",
+            "badge_2_color": "#EC0606"
+          }
+        },
+        "product-card-2": {
+          "type": "product-card",
+          "settings": {
+            "product": "starter-bundle",
+            "product_handle": "starter-bundle",
+            "image": "shopify://shop_images/image-desktop-112594700.png",
+            "title": "Starter Bundle",
+            "description": "Hydration and gut health to give you energy and crush your goals",
+            "price": "$56.39",
+            "compare_price": "$93.98",
+            "cta_text": "ADD TO CART"
+          }
+        },
+        "product-card-3": {
+          "type": "product-card",
+          "settings": {
+            "product": "greens-gains-bundle",
+            "product_handle": "greens-gains-bundle",
+            "image": "shopify://shop_images/agile-support-1-desktop-112594812.png",
+            "title": "Greens & Gains Bundle",
+            "description": "Foundation nutrition plus protein to support muscle recovery and gut health",
+            "price": "$56.39",
+            "compare_price": "$93.98",
+            "cta_text": "ADD TO CART"
+          }
+        },
+        "product-card-4": {
+          "type": "product-card",
+          "settings": {
+            "product": "immunity-bundle",
+            "product_handle": "immunity-bundle",
+            "image": "shopify://shop_images/image-desktop-112594752.png",
+            "title": "Immunity Bundle",
+            "description": "Daily defense with probiotics, immunity vitamins & minerals, and electrolytes.",
+            "price": "$56.39",
+            "compare_price": "$93.98",
+            "cta_text": "ADD TO CART",
+            "badge_1_text": "BESTSELLER",
+            "badge_1_color": "#FFFFFF",
+            "show_heart": true
+          }
+        }
+      },
+      "block_order": ["tab-1", "tab-2", "tab-3", "tab-4", "category-card-1", "product-card-1", "product-card-2", "product-card-3", "product-card-4"]
+    },
+    "benefits": {
+      "type": "custom-benefits",
+      "settings": {
+        "heading": "Why Factor Form",
+        "background_color": "#E1F0E2",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "benefit-1": {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Flexibility",
+            "description": "Build a personalized wellness routine with targeted formulas for gut health, immunity, recovery, and more",
+            "description_mobile": "Create your perfect routine with targeted wellness products",
+            "icon_desktop": "icon-1-nutrition-all-in-one-place-2.svg",
+            "icon_mobile": "icon-1-nutrition-all-in-one-place.svg"
+          }
+        },
+        "benefit-2": {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Quality",
+            "description": "Made with no added sugar, our products are keto-friendly and free of unnecessary ingredients",
+            "description_mobile": "No added sugar\u2014keto-friendly and free of unnecessary ingredients",
+            "icon_desktop": "icon-2-quality-ingredients-2.svg",
+            "icon_mobile": "icon-2-quality-ingredients.svg"
+          }
+        },
+        "benefit-3": {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Nutrition",
+            "description": "Enjoy dietitian-approved formulas packed with premium, nutritional ingredients.",
+            "description_mobile": "Dietitian-approved formulas made with premium, nutrient-rich ingredients",
+            "icon_desktop": "icon-3-b-food-first-nutrition-2.svg",
+            "icon_mobile": "icon-3-b-food-first-nutrition.svg"
+          }
+        },
+        "benefit-4": {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Convenience",
+            "description": "Take your life on the go with our single-serving packets you can tuck in your bag, car, or suitcase.",
+            "description_mobile": "Grab-and-go packets designed for life on the move",
+            "icon_desktop": "icon-4-designed-for-on-the-go-2.svg",
+            "icon_mobile": "icon-4-designed-for-on-the-go.svg"
+          }
+        }
+      },
+      "block_order": ["benefit-1", "benefit-2", "benefit-3", "benefit-4"]
+    },
+    "certified": {
+      "type": "custom-certified",
+      "settings": {
+        "heading": "The Factor Standard",
+        "background_color": "#FFFFFF",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "certified-1": {
+          "type": "certified-item",
+          "settings": {
+            "image": "shopify://shop_images/image-59-desktop-110864992.png",
+            "heading": "Pure Ingredients",
+            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
+          }
+        },
+        "certified-2": {
+          "type": "certified-item",
+          "settings": {
+            "image": "shopify://shop_images/image-58-desktop-110864999.png",
+            "heading": "Expert-Crafted Blends",
+            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
+          }
+        },
+        "certified-3": {
+          "type": "certified-item",
+          "settings": {
+            "image": "shopify://shop_images/image-60-desktop-110865006.png",
+            "heading": "Transparent and Clean Labels",
+            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
+          }
+        }
+      },
+      "block_order": ["certified-1", "certified-2", "certified-3"]
+    },
+    "dietitians": {
+      "type": "custom-dietitians",
+      "settings": {
+        "heading": "Backed By Factor Dietitians",
+        "description": "Formulated with guidance from Factor\u2019s in-house dietitians to help you meet your wellness goals with confidence",
+        "background_color": "#F1F1EA",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "dietitian-1": {
+          "type": "dietitian-item",
+          "settings": {
+            "image": "shopify://shop_images/image-61-desktop-118265456.png",
+            "quote": "\"A rigorous 'no list' of over 100 banned ingredients\"",
+            "description": "Factor Form upholds strong nutrition and ingredient standards across all products. We ensure only high quality ingredients make it into our products",
+            "author": "Kara Kash   |   Research & Development"
+          }
+        },
+        "dietitian-2": {
+          "type": "dietitian-item",
+          "settings": {
+            "image": "shopify://shop_images/image-62-desktop-118265466.png",
+            "quote": "\"One serving equals a whole serving of green leafy veggies\"",
+            "description": "I love that the vitamin and mineral content is balanced; the daily value percentages aren't excessive",
+            "author": "Carlie Williams   |   Dietitian + Personal Trainer"
+          }
+        },
+        "dietitian-3": {
+          "type": "dietitian-item",
+          "settings": {
+            "image": "shopify://shop_images/image-63-desktop-118265476.png",
+            "quote": "\"A good mix of B vitamins along with typical electrolytes\"",
+            "description": "B Vitamins act as coenzymes when your body is metabolizing energy, so it's nice to have that in an electrolyte mix",
+            "author": "Olivia Hamilton   |   Dietitian"
+          }
+        }
+      },
+      "block_order": ["dietitian-1", "dietitian-2", "dietitian-3"]
+    },
+    "feature": {
+      "type": "custom-feature",
+      "settings": {
+        "heading": "FREE Daily Greens Welcome Kit worth $36",
+        "description": "Turn your daily habit into a delicious ritual with a kit full of greens essentials. Free welcome kit with first time purchase of Daily Greens.",
+        "image": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-desktop-110525076.png",
+        "image_mobile": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-mobile-110526574.png",
+        "badge_text": "FREE WELCOME KIT",
+        "button_text": "SHOP DAILY GREENS",
+        "background_color": "#E1F0E2",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      },
+      "blocks": {
+        "feature-item-1": {
+          "type": "feature-item",
+          "settings": {
+            "heading": "Shaker bottle",
+            "free_label": "FREE",
+            "description": "Premium bottle to mix and carry your greens",
+            "price": "$20.00"
+          }
+        },
+        "feature-item-2": {
+          "type": "feature-item",
+          "settings": {
+            "heading": "Full-size samples (3)",
+            "free_label": "FREE",
+            "description": "3 product samples free with every first order",
+            "price": "$10.00"
+          }
+        },
+        "feature-item-3": {
+          "type": "feature-item",
+          "settings": {
+            "heading": "Shipping",
+            "free_label": "FREE",
+            "description": "Free shipping on orders above $50",
+            "price": "$5.99"
+          }
+        }
+      },
+      "block_order": ["feature-item-1", "feature-item-2", "feature-item-3"]
+    },
+    "faqs": {
+      "type": "custom-faqs",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "background_color": "#FFFFFF",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "faq-1": {
+          "type": "faq-item",
+          "settings": {
+            "question": "What makes Factor Form products different?",
+            "answer": "Factor Form products are built with clean, science-backed ingredients chosen for real, functional benefits; not trends or fillers. Each formula is optimised for daily performance, energy, and recovery. You get products that are effective, transparent, and designed to fit effortlessly into your routine."
+          }
+        },
+        "faq-2": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are Factor Form products third-party tested?"
+          }
+        },
+        "faq-3": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Are Factor Form products safe to use together?"
+          }
+        },
+        "faq-4": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Do you ship internationally?"
+          }
+        },
+        "faq-5": {
+          "type": "faq-item",
+          "settings": {
+            "question": "What is your return policy?"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"]
+    }
+  },
+  "order": ["hero", "reviews", "product-carousel", "benefits", "certified", "dietitians", "feature", "faqs"]
+}

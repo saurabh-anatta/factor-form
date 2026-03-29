@@ -1,0 +1,506 @@
+{% liquid
+  assign heading = section.settings.heading
+  assign description = section.settings.description
+  assign disclaimer = section.settings.disclaimer_text
+%}
+
+<div
+  class="custom-comparison"
+  style="
+    --section-padding-top: {{ section.settings.padding-block-start }}px;
+    --section-padding-bottom: {{ section.settings.padding-block-end }}px;
+    --comparison-bg: {{ section.settings.background_color }};
+  "
+>
+  <div class="custom-comparison__container">
+    <div class="custom-comparison__header">
+      {% if heading != blank %}
+        <h2 class="custom-comparison__heading">{{ heading | escape }}</h2>
+      {% endif %}
+      {% if description != blank %}
+        <p class="custom-comparison__description">{{ description | escape }}</p>
+      {% endif %}
+    </div>
+
+    <div class="custom-comparison__content">
+      {%- if section.settings.image != blank -%}
+        <div class="custom-comparison__image-wrapper">
+          <img
+            class="custom-comparison__image"
+            src="{{ section.settings.image | image_url: width: 1444 }}"
+            alt="{{ heading | escape }}"
+            width="722"
+            height="542"
+            loading="lazy"
+          >
+        </div>
+      {%- endif -%}
+
+      <div class="custom-comparison__table-wrapper">
+        <div class="custom-comparison__table" role="table" aria-label="{{ heading | escape }}">
+          {%- comment -%} Table header row {%- endcomment -%}
+          <div class="custom-comparison__row custom-comparison__row--header" role="row">
+            <div class="custom-comparison__cell custom-comparison__cell--feature" role="columnheader"></div>
+            <div class="custom-comparison__cell custom-comparison__cell--ff" role="columnheader">
+              {%- if section.settings.highlight_image != blank -%}
+                <img
+                  class="custom-comparison__col-product"
+                  src="{{ section.settings.highlight_image | image_url: width: 160 }}"
+                  alt=""
+                  role="presentation"
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                >
+              {%- endif -%}
+              <span>{{ 'sections.custom_comparison.factor_form' | t }}</span>
+            </div>
+            <div class="custom-comparison__cell custom-comparison__cell--others" role="columnheader">
+              {%- if section.settings.others_image != blank -%}
+                <img
+                  class="custom-comparison__col-product custom-comparison__col-product--others"
+                  src="{{ section.settings.others_image | image_url: width: 96 }}"
+                  alt=""
+                  role="presentation"
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                >
+              {%- endif -%}
+              <span>{{ 'sections.custom_comparison.others' | t }}</span>
+            </div>
+          </div>
+
+          {%- comment -%} Table rows from blocks {%- endcomment -%}
+          {%- for block in section.blocks -%}
+            <div
+              class="custom-comparison__row{% if block.settings.is_subheading %} custom-comparison__row--subheading{% endif %}"
+              role="row"
+              {{ block.shopify_attributes }}
+            >
+              <div class="custom-comparison__cell custom-comparison__cell--feature" role="cell">
+                <span>{{ block.settings.feature_text | escape }}</span>
+              </div>
+              <div class="custom-comparison__cell custom-comparison__cell--ff" role="cell">
+                {%- if block.settings.factor_form_check -%}
+                  <img src="{{ 'check-4.svg' | asset_url }}" alt="{{ 'sections.custom_comparison.check_alt' | t }}" width="24" height="24" loading="lazy">
+                {%- else -%}
+                  <img src="{{ 'letter-x-2.svg' | asset_url }}" alt="{{ 'sections.custom_comparison.x_alt' | t }}" width="24" height="24" loading="lazy">
+                {%- endif -%}
+              </div>
+              <div class="custom-comparison__cell custom-comparison__cell--others" role="cell">
+                {%- if block.settings.others_check -%}
+                  <img src="{{ 'check-4.svg' | asset_url }}" alt="{{ 'sections.custom_comparison.check_alt' | t }}" width="24" height="24" loading="lazy">
+                {%- else -%}
+                  <img src="{{ 'letter-x-2.svg' | asset_url }}" alt="{{ 'sections.custom_comparison.x_alt' | t }}" width="24" height="24" loading="lazy">
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if disclaimer != blank -%}
+          <p class="custom-comparison__disclaimer">{{ disclaimer | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.custom-comparison {
+  padding-block-start: var(--section-padding-top, 80px);
+  padding-block-end: var(--section-padding-bottom, 80px);
+  background-color: var(--comparison-bg, #F1F1EA);
+}
+
+.custom-comparison__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  max-width: var(--normal-page-width, 120rem);
+  margin-inline: auto;
+  padding-inline: 64px;
+}
+
+.custom-comparison__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.custom-comparison__heading {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight, 300);
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-comparison__description {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-comparison__content {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.custom-comparison__image-wrapper {
+  flex: 1;
+  min-width: 0;
+}
+
+.custom-comparison__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.custom-comparison__table-wrapper {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.custom-comparison__table {
+  display: grid;
+  grid-template-columns: 1fr 140px 140px;
+  position: relative;
+}
+
+.custom-comparison__table::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 140px;
+  width: 140px;
+  background-color: #C4E0CB;
+  border-radius: 8px;
+  z-index: 0;
+}
+
+.custom-comparison__row {
+  display: contents;
+}
+
+.custom-comparison__cell--feature,
+.custom-comparison__cell--ff,
+.custom-comparison__cell--others {
+  position: relative;
+  z-index: 1;
+}
+
+.custom-comparison__cell--feature {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px 14px 0;
+  border-block-end: 1px solid #D0D0BC;
+}
+
+.custom-comparison__cell--feature span {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #141414;
+}
+
+.custom-comparison__cell--ff,
+.custom-comparison__cell--others {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 0;
+  border-block-end: 1px solid #D0D0BC;
+  font-family: var(--font-body--family);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+}
+
+.custom-comparison__row:not(.custom-comparison__row--header) .custom-comparison__cell--ff img,
+.custom-comparison__row:not(.custom-comparison__row--header) .custom-comparison__cell--others img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.custom-comparison__row--header .custom-comparison__cell--feature,
+.custom-comparison__row--header .custom-comparison__cell--ff,
+.custom-comparison__row--header .custom-comparison__cell--others {
+  border-block-end: none;
+  padding: 0 0 8px;
+}
+
+.custom-comparison__row--header .custom-comparison__cell--ff,
+.custom-comparison__row--header .custom-comparison__cell--others {
+  flex-direction: column;
+  gap: 8px;
+  padding-block-start: 16px;
+  padding-block-end: 12px;
+}
+
+.custom-comparison__col-product {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.custom-comparison__row--subheading .custom-comparison__cell--feature span {
+  font-family: var(--font-subheading--family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.custom-comparison__disclaimer {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight, 300);
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+  margin: 0;
+  text-align: start;
+}
+
+@media screen and (max-width: 749px) {
+  .custom-comparison__container {
+    padding-inline: 16px;
+    gap: 32px;
+  }
+
+  .custom-comparison__heading {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .custom-comparison__content {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .custom-comparison__image-wrapper {
+    width: 100%;
+  }
+
+  .custom-comparison__table-wrapper {
+    width: 100%;
+  }
+
+  .custom-comparison__table {
+    grid-template-columns: 1fr 90px 90px;
+  }
+
+  .custom-comparison__table::before {
+    right: 90px;
+    width: 90px;
+  }
+
+  .custom-comparison__cell--feature {
+    padding: 12px 8px 12px 0;
+  }
+
+  .custom-comparison__cell--feature span {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .custom-comparison__row:not(.custom-comparison__row--header) .custom-comparison__cell--ff img,
+  .custom-comparison__row:not(.custom-comparison__row--header) .custom-comparison__cell--others img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .custom-comparison__col-product {
+    width: 48px;
+    height: 48px;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_comparison",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Better Taste, Better Results"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:settings.description"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "image_picker",
+      "id": "highlight_image",
+      "label": "t:settings.highlight_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "others_image",
+      "label": "t:settings.others_image"
+    },
+    {
+      "type": "text",
+      "id": "disclaimer_text",
+      "label": "t:settings.disclaimer_text"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "#F1F1EA"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison-row",
+      "name": "t:names.comparison_row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_text",
+          "label": "t:settings.feature_text"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_subheading",
+          "label": "t:settings.is_subheading",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "factor_form_check",
+          "label": "t:settings.factor_form_check",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "others_check",
+          "label": "t:settings.others_check",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_comparison",
+      "blocks": [
+        {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "#1 in taste, texture & aroma",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "More reasons",
+            "is_subheading": true,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "1 full serving of vegetables",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "No megadoses (<100% DV)",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "Under $2 per serving",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": false
+          }
+        },
+        {
+          "type": "comparison-row",
+          "settings": {
+            "feature_text": "Single-serving packets",
+            "is_subheading": false,
+            "factor_form_check": true,
+            "others_check": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

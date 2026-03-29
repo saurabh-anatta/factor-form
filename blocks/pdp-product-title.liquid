@@ -1,0 +1,23 @@
+{% doc %}
+  PDP Product Title Block
+
+  Renders the product h1 title inside the hero card.
+
+  @example {% content_for 'block', type: 'pdp-product-title', id: 'product-title' %}
+{% enddoc %}
+
+{% liquid
+  assign product = closest.product
+%}
+
+<div class="pdp-hero-card__title-wrap" {{ block.shopify_attributes }}>
+  <h1 class="pdp-hero-card__title">{{ product.title | escape }}</h1>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.pdp_product_title",
+  "tag": null,
+  "settings": []
+}
+{% endschema %}

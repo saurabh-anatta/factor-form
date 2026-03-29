@@ -1,0 +1,385 @@
+<style>
+  /* Header & Footer CSS Overrides to match Figma design */
+
+  /* Footer: On mobile, logo block appears above newsletter content */
+  @media screen and (max-width: 749px) {
+    .footer-content > .group:first-child .logo-block {
+      order: -1;
+    }
+  }
+
+  /* Footer: Policy menu (no heading) links displayed horizontally */
+  .footer-content .menu:has(.menu__heading--empty) .list-unstyled {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .footer-content .menu:has(.menu__heading--empty) .list-unstyled {
+      gap: 24px;
+    }
+  }
+
+  .footer-content .menu:has(.menu__heading--empty) .menu__item {
+    margin-block-start: 0;
+  }
+
+  .footer-content .menu:has(.menu__heading--empty) .menu__item a {
+    text-decoration: underline;
+    color: #F1F1EA;
+  }
+
+  /* Footer: Hide empty heading summary for policy menu */
+  .footer-content .menu__heading--empty .menu__heading__default {
+    display: none;
+  }
+
+  /* Footer: Policy links centered on mobile */
+  @media screen and (max-width: 749px) {
+    .footer-content .menu:has(.menu__heading--empty) .list-unstyled {
+      justify-content: center;
+    }
+  }
+
+  /* Footer: Compact email input to match Figma */
+  .footer-content .email-signup__input,
+  .footer-content .email-signup__button--text {
+    padding: 12px 20px;
+  }
+
+  .footer-content .email-signup__input-group--integrated {
+    max-width: 420px;
+  }
+
+  /* Footer: Social icons gap */
+  .footer-content .social-icons__wrapper {
+    gap: 16px;
+    justify-content: flex-start;
+  }
+
+  /* ========================================
+     Navigation Overrides — Desktop Mega Menu
+     ======================================== */
+
+  @media screen and (min-width: 990px) {
+    /* Override dark color scheme on submenu container and all its wrappers */
+    .menu-list__submenu,
+    .menu-list__submenu[class*="color-"] {
+      --color-background: rgb(255, 255, 255) !important;
+      --color-background-rgb: 255, 255, 255 !important;
+      --submenu-padding-block-start: 0px !important;
+      --submenu-padding-block-end: 0px !important;
+      background-color: #FFFFFF !important;
+      color: #141414;
+    }
+
+    /* White background with shadow for mega menu dropdown */
+    .menu-list__submenu .menu-list__submenu-inner {
+      --color-foreground: rgb(20, 20, 20);
+      --color-foreground-rgb: 20, 20, 20;
+      background-color: #FFFFFF;
+      color: #141414;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding-block: 48px;
+      padding-inline: 164px;
+    }
+
+    /* Split layout: text links stack left, image tiles row right.
+       Uses flex column-wrap so text items stack vertically in column 1
+       and image tiles each get their own column (wrapping at max-height). */
+    .mega-menu__list:has(.mega-menu__link-image) {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      align-items: flex-start;
+      max-height: 280px;
+      gap: 24px 32px;
+    }
+
+    /* Text-only columns stack first (left side) with extra end margin for visual gap */
+    .mega-menu__list:has(.mega-menu__link-image) > .mega-menu__column:not(:has(.mega-menu__link-image)) {
+      flex: 0 0 auto;
+      order: -1;
+      margin-inline-end: 64px;
+    }
+
+    /* Image columns get fixed 200px width to match Figma tile size */
+    .mega-menu__list:has(.mega-menu__link-image) > .mega-menu__column:has(.mega-menu__link-image) {
+      flex: 0 0 auto;
+      width: 200px;
+    }
+
+    /* Hide placeholder rectangles for non-collection links */
+    .mega-menu .mega-menu__grid:has(.mega-menu__link-image)
+      .mega-menu__column
+      > div
+      > .mega-menu__link:not(:has(.mega-menu__link-image))::before {
+      display: none;
+    }
+
+    /* Reset non-image links to simple inline layout */
+    .mega-menu .mega-menu__grid:has(.mega-menu__link-image)
+      .mega-menu__column
+      > div
+      > .mega-menu__link:not(:has(.mega-menu__link-image)) {
+      display: inline-flex;
+      flex-direction: row;
+      padding-block: 0;
+      padding-inline: 0;
+    }
+
+    /* Style text-only links as heading font at 32px */
+    .mega-menu__list:has(.mega-menu__link-image) .mega-menu__column:not(:has(.mega-menu__link-image)) .mega-menu__link {
+      font-family: var(--font-heading--family);
+      font-weight: var(--font-heading--weight);
+      font-size: 32px;
+      line-height: 40px;
+      color: #141414;
+      text-decoration: none;
+      padding: 0;
+    }
+
+    .mega-menu__list:has(.mega-menu__link-image) .mega-menu__column:not(:has(.mega-menu__link-image)) .mega-menu__link:hover {
+      color: #141414;
+      opacity: 0.7;
+    }
+
+    /* Square (1:1) aspect ratio for collection images */
+    .mega-menu .mega-menu__link-image {
+      aspect-ratio: 1 / 1;
+      max-width: 200px;
+      margin-bottom: 8px;
+    }
+
+    /* Image link container styling */
+    .mega-menu .mega-menu__link:has(.mega-menu__link-image) {
+      padding-block: 0;
+    }
+
+    /* Image link label styling */
+    .mega-menu .mega-menu__link:has(.mega-menu__link-image) .wrap-text {
+      font-family: var(--font-body--family);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #141414;
+    }
+
+    /* Top-level nav chevron indicators for links with submenus */
+    .menu-list__link[aria-haspopup='true'] .menu-list__link-title::after {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      margin-inline-start: 4px;
+      margin-block-end: 3px;
+      vertical-align: middle;
+    }
+  }
+
+  /* ========================================
+     Navigation Overrides — Mobile Drawer
+     ======================================== */
+
+  /* White background for mobile drawer (override dark color scheme) */
+  .menu-drawer {
+    --color-foreground: rgb(20, 20, 20);
+    --color-foreground-rgb: 20, 20, 20;
+    --color-background: rgb(255, 255, 255);
+    --color-background-rgb: 255, 255, 255;
+    background-color: #FFFFFF;
+    color: #141414;
+  }
+
+  /* Mobile drawer: collection image grid — 2 columns, 12px gap */
+  .menu-drawer .menu-drawer__menu--grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  /* Square aspect ratio for mobile drawer images */
+  .menu-drawer .menu-drawer__link-image {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Adjust gap between image and label in mobile */
+  .menu-drawer .menu-drawer__menu-item:has(> .menu-drawer__link-image) {
+    row-gap: 8px;
+  }
+
+  /* Text-only items in grid span full width */
+  .menu-drawer .menu-drawer__menu--grid:has(.menu-drawer__link-image) > .menu-drawer__list-item:not(:has(.menu-drawer__link-image)) {
+    grid-column: 1 / -1;
+  }
+
+  /* Hide placeholder rectangles for non-image items in mobile grid */
+  .menu-drawer .menu-drawer__menu--grid:has(.menu-drawer__link-image)
+    .menu-drawer__menu-item:not(:has(> .menu-drawer__link-image))::before {
+    display: none;
+  }
+
+  /* Reset non-image items to normal text layout */
+  .menu-drawer .menu-drawer__menu--grid:has(.menu-drawer__link-image)
+    .menu-drawer__menu-item:not(:has(> .menu-drawer__link-image)) {
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+  }
+
+  /* Submenu text-only links: heading font 24px/32px */
+  .menu-drawer .menu-drawer__menu-item--parent:not(:has(> .menu-drawer__link-image)) {
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: 24px;
+    line-height: 32px;
+    color: #141414;
+  }
+
+  /* Image link labels in mobile drawer: body font 14px/20px */
+  .menu-drawer .menu-drawer__menu-item:has(> .menu-drawer__link-image) .menu-drawer__menu-item-text {
+    font-family: var(--font-body--family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #141414;
+  }
+  /* Hero Desktop: Constrain content to left half, add padding */
+  @media screen and (min-width: 750px) {
+    .hero .hero__content-wrapper {
+      max-width: 50%;
+      padding-inline-start: 64px;
+    }
+  }
+
+  /* Hero Mobile: Stack images, center text over bottom image */
+  @media screen and (max-width: 749px) {
+    .hero--stack-mobile {
+      --hero-min-height: 1084px;
+    }
+
+    .hero--stack-mobile .hero__content-wrapper.layout-panel-flex--column {
+      align-items: center;
+      justify-content: flex-end;
+      padding-block-end: 40px;
+    }
+
+    .hero--stack-mobile .hero__content-wrapper.layout-panel-flex--column::before {
+      content: '';
+      flex: 0 0 542px;
+    }
+
+    .hero--stack-mobile .hero__content-wrapper .text-block > *,
+    .hero--stack-mobile .hero__content-wrapper .text-block * {
+      text-align: center !important; /* Override inline --text-align on mobile */
+    }
+
+    .hero--stack-mobile .hero__content-wrapper .button {
+      width: 100%;
+      max-width: 340px;
+    }
+  }
+
+  /* Header: Keep account and cart as icons even in text mode */
+  @media screen and (min-width: 750px) {
+    /* Hide account text, show account icon */
+    .account-button--text .account-button__text.mobile\:hidden {
+      display: none !important;
+    }
+
+    .account-button--text shopify-account > span.desktop\:hidden {
+      display: inline !important;
+    }
+
+    /* Hide cart text, show cart icon */
+    cart-icon.header-actions__cart-icon--text > span.mobile\:hidden {
+      display: none !important;
+    }
+
+    cart-icon.header-actions__cart-icon--text > span.desktop\:hidden {
+      display: inline !important;
+    }
+  }
+
+  /* Header: Align actions vertically */
+  header-actions {
+    align-items: center;
+  }
+
+  header-actions .header-actions__action {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Header: Cart icon — fix sizing, alignment, and bubble position */
+  cart-icon .svg-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+
+
+  @media screen and (min-width: 750px) {
+    /* Force icon-style bubble positioning even in text mode */
+    .header-actions__cart-icon--text.header-actions__cart-icon .cart-bubble {
+      position: absolute !important;
+      top: -4px !important;
+      right: -8px !important;
+    }
+
+    cart-icon.header-actions__cart-icon--text {
+      position: relative;
+      display: inline;
+      align-items: center !important;
+      gap: 0 !important;
+    }
+
+    /* Vertically align cart button with other actions */
+    .cart-drawer--text > button.header-actions__action {
+      display: inline-flex !important;
+      align-items: center;
+      padding-right: 10px;
+      padding-top: 0;
+    }
+  }
+
+  /* Header: FAQ link in actions area */
+  .header-actions__faq-link {
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-actions__faq-link {
+      display: flex;
+      align-items: center;
+      font-size: var(--header-actions-font-size, 0.875rem);
+      font-family: var(--header-actions-font-family, var(--font-body--family));
+      font-weight: var(--header-actions-font-weight, var(--font-body--weight));
+      text-transform: var(--header-actions-text-case, none);
+      text-decoration: none;
+      color: inherit;
+      white-space: nowrap;
+    }
+
+    .header-actions__faq-link:hover {
+      opacity: 0.7;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const headerActions = document.querySelector('header-actions');
+    if (!headerActions) return;
+
+    /* Inject FAQ link before account/cart */
+    const faqLink = document.createElement('a');
+    faqLink.href = '/pages/faqs';
+    faqLink.className = 'header-actions__faq-link header-actions__action header-actions__text-style';
+    faqLink.textContent = 'FAQs';
+    headerActions.insertBefore(faqLink, headerActions.firstChild);
+  });
+</script>

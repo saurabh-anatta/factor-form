@@ -1,0 +1,335 @@
+<div
+  class="custom-benefits"
+  style="
+    --section-padding-top: {{ section.settings.padding-block-start }}px;
+    --section-padding-bottom: {{ section.settings.padding-block-end }}px;
+    --benefits-bg: {{ section.settings.background_color }};
+  "
+>
+  <div class="custom-benefits__container">
+    {% if section.settings.heading != blank %}
+      <h2 class="custom-benefits__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+
+    <div class="custom-benefits__points">
+      {% for block in section.blocks %}
+        <div class="custom-benefits__point" {{ block.shopify_attributes }}>
+          {% if block.settings.icon_desktop != blank %}
+            <img
+              class="custom-benefits__icon custom-benefits__icon--desktop"
+              src="{{ block.settings.icon_desktop | asset_url }}"
+              alt=""
+              role="presentation"
+              width="64"
+              height="64"
+              loading="lazy"
+            >
+          {% endif %}
+          {% if block.settings.icon_mobile != blank %}
+            <img
+              class="custom-benefits__icon custom-benefits__icon--mobile"
+              src="{{ block.settings.icon_mobile | asset_url }}"
+              alt=""
+              role="presentation"
+              width="48"
+              height="48"
+              loading="lazy"
+            >
+          {% endif %}
+          <div class="custom-benefits__content">
+            {% if block.settings.heading != blank %}
+              <h3 class="custom-benefits__item-heading">{{ block.settings.heading | escape }}</h3>
+            {% endif %}
+            {% if block.settings.description != blank %}
+              <p class="custom-benefits__description custom-benefits__description--desktop">{{ block.settings.description | escape }}</p>
+            {% endif %}
+            {% if block.settings.description_mobile != blank %}
+              <p class="custom-benefits__description custom-benefits__description--mobile">{{ block.settings.description_mobile | escape }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.custom-benefits {
+  padding-block-start: var(--section-padding-top, 80px);
+  padding-block-end: var(--section-padding-bottom, 80px);
+  padding-inline: 64px;
+  background-color: var(--benefits-bg, #E1F0E2);
+}
+
+.custom-benefits__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-2xl, 4rem);
+  max-width: var(--normal-page-width, 120rem);
+  margin-inline: auto;
+}
+
+.custom-benefits__heading {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight, 300);
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-benefits__points {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  justify-content: center;
+  width: 100%;
+}
+
+.custom-benefits__point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex: 1;
+  max-width: 328px;
+}
+
+.custom-benefits__icon--desktop {
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.custom-benefits__icon--mobile {
+  display: none;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.custom-benefits__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.custom-benefits__item-heading {
+  font-family: var(--font-subheading--family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-benefits__description {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-benefits__description--desktop {
+  display: block;
+}
+
+.custom-benefits__description--mobile {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .custom-benefits {
+    padding-block-start: 48px;
+    padding-block-end: 48px;
+    padding-inline: 16px;
+  }
+
+  .custom-benefits__container {
+    gap: 32px;
+    align-items: flex-start;
+  }
+
+  .custom-benefits__heading {
+    font-size: 32px;
+    line-height: 40px;
+    text-align: start;
+  }
+
+  .custom-benefits__points {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .custom-benefits__point {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+    max-width: none;
+  }
+
+  .custom-benefits__icon--desktop {
+    display: none;
+  }
+
+  .custom-benefits__icon--mobile {
+    display: block;
+  }
+
+  .custom-benefits__item-heading {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: start;
+  }
+
+  .custom-benefits__description {
+    text-align: start;
+  }
+
+  .custom-benefits__description--desktop {
+    display: none;
+  }
+
+  .custom-benefits__description--mobile {
+    display: block;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_benefits",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Why Factor Form"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "#E1F0E2"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 80,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit-item",
+      "name": "t:names.benefit_item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:settings.heading"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "t:settings.description"
+        },
+        {
+          "type": "textarea",
+          "id": "description_mobile",
+          "label": "t:settings.description_mobile"
+        },
+        {
+          "type": "text",
+          "id": "icon_desktop",
+          "label": "t:settings.icon_desktop"
+        },
+        {
+          "type": "text",
+          "id": "icon_mobile",
+          "label": "t:settings.icon_mobile"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_benefits",
+      "blocks": [
+        {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Flexibility",
+            "description": "Build a personalized wellness routine with targeted formulas for gut health, immunity, recovery, and more",
+            "description_mobile": "Create your perfect routine with targeted wellness products",
+            "icon_desktop": "icon-1-nutrition-all-in-one-place-2.svg",
+            "icon_mobile": "icon-1-nutrition-all-in-one-place.svg"
+          }
+        },
+        {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Quality",
+            "description": "Made with no added sugar, our products are keto-friendly and free of unnecessary ingredients",
+            "description_mobile": "No added sugar\u2014keto-friendly and free of unnecessary ingredients",
+            "icon_desktop": "icon-2-quality-ingredients-2.svg",
+            "icon_mobile": "icon-2-quality-ingredients.svg"
+          }
+        },
+        {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Nutrition",
+            "description": "Enjoy dietitian-approved formulas packed with premium, nutritional ingredients.",
+            "description_mobile": "Dietitian-approved formulas made with premium, nutrient-rich ingredients",
+            "icon_desktop": "icon-3-b-food-first-nutrition-2.svg",
+            "icon_mobile": "icon-3-b-food-first-nutrition.svg"
+          }
+        },
+        {
+          "type": "benefit-item",
+          "settings": {
+            "heading": "More Convenience",
+            "description": "Take your life on the go with our single-serving packets you can tuck in your bag, car, or suitcase.",
+            "description_mobile": "Grab-and-go packets designed for life on the move",
+            "icon_desktop": "icon-4-designed-for-on-the-go-2.svg",
+            "icon_mobile": "icon-4-designed-for-on-the-go.svg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

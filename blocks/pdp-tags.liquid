@@ -1,0 +1,40 @@
+{% doc %}
+  PDP Tags Block
+
+  Renders product tags as pills inside the hero card.
+
+  @example {% content_for 'block', type: 'pdp-tags', id: 'tags' %}
+{% enddoc %}
+
+{% liquid
+  assign tags_text = block.settings.tags
+%}
+
+{%- if tags_text != blank -%}
+  <div class="pdp-hero-card__tags" {{ block.shopify_attributes }}>
+    {%- assign tag_items = tags_text | split: ',' -%}
+    {%- for tag in tag_items -%}
+      {%- assign tag_trimmed = tag | strip -%}
+      {%- if tag_trimmed != blank -%}
+        <span class="pdp-hero-card__tag">{{ tag_trimmed | escape }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- else -%}
+  <div {{ block.shopify_attributes }}></div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:names.pdp_tags",
+  "tag": null,
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "tags",
+      "label": "t:settings.tags",
+      "default": "Fresh & Citrusy, Flavorful Nutrition, Energy + Immunity"
+    }
+  ]
+}
+{% endschema %}

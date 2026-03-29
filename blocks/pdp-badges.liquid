@@ -1,0 +1,92 @@
+{% doc %}
+  PDP Badges Block
+
+  Renders badge pills (NEW, 40% OFF, etc.) inside the hero card.
+
+  @example {% content_for 'block', type: 'pdp-badges', id: 'badges' %}
+{% enddoc %}
+
+{% liquid
+  assign badge_1_text = block.settings.badge_1_text
+  assign badge_1_bg = block.settings.badge_1_bg_color | default: '#FFFFFF'
+  assign badge_1_color = block.settings.badge_1_text_color | default: '#141414'
+  assign badge_2_text = block.settings.badge_2_text
+  assign badge_2_bg = block.settings.badge_2_bg_color | default: '#EC0606'
+  assign badge_2_color = block.settings.badge_2_text_color | default: '#FFFFFF'
+%}
+
+{%- if badge_1_text != blank or badge_2_text != blank -%}
+  <div class="pdp-hero-card__badges" {{ block.shopify_attributes }}>
+    {%- if badge_1_text != blank -%}
+      <span
+        class="pdp-hero-card__badge"
+        style="background-color: {{ badge_1_bg }}; color: {{ badge_1_color }};"
+      >
+        {{- badge_1_text | escape -}}
+      </span>
+    {%- endif -%}
+    {%- if badge_2_text != blank -%}
+      <span
+        class="pdp-hero-card__badge"
+        style="background-color: {{ badge_2_bg }}; color: {{ badge_2_color }};"
+      >
+        {{- badge_2_text | escape -}}
+      </span>
+    {%- endif -%}
+  </div>
+{%- else -%}
+  <div {{ block.shopify_attributes }}></div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:names.pdp_badges",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:settings.badge_1_header"
+    },
+    {
+      "type": "text",
+      "id": "badge_1_text",
+      "label": "t:settings.badge_1_text",
+      "default": "NEW"
+    },
+    {
+      "type": "color",
+      "id": "badge_1_bg_color",
+      "label": "t:settings.badge_1_bg_color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "badge_1_text_color",
+      "label": "t:settings.badge_1_text_color",
+      "default": "#141414"
+    },
+    {
+      "type": "header",
+      "content": "t:settings.badge_2_header"
+    },
+    {
+      "type": "text",
+      "id": "badge_2_text",
+      "label": "t:settings.badge_2_text",
+      "default": "40% OFF FIRST ORDER"
+    },
+    {
+      "type": "color",
+      "id": "badge_2_bg_color",
+      "label": "t:settings.badge_2_bg_color",
+      "default": "#EC0606"
+    },
+    {
+      "type": "color",
+      "id": "badge_2_text_color",
+      "label": "t:settings.badge_2_text_color",
+      "default": "#FFFFFF"
+    }
+  ]
+}
+{% endschema %}

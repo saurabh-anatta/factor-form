@@ -1,0 +1,306 @@
+{% doc %}
+  Product Hero Card (Container Block)
+
+  Green branded card that wraps child blocks: badges, title, rating, tags, description.
+  Merchants can insert @app blocks (e.g. Yotpo reviews) between any child block.
+
+  @example {% content_for 'block', type: 'pdp-hero-card', id: 'hero-card' %}
+{% enddoc %}
+
+{% liquid
+  assign bg_color = block.settings.bg_color | default: '#2A523F'
+%}
+
+<div
+  class="pdp-hero-card"
+  style="--hero-card-bg: {{ bg_color }};"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+
+  {%- comment -%} Decorative corner elements {%- endcomment -%}
+  <div class="pdp-hero-card__deco pdp-hero-card__deco--left" aria-hidden="true">
+    <svg width="14" height="28" viewBox="0 0 14 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="14" height="28" rx="2" fill="#FFFFFF"/>
+    </svg>
+  </div>
+  <div class="pdp-hero-card__deco pdp-hero-card__deco--right" aria-hidden="true">
+    <svg width="14" height="28" viewBox="0 0 14 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="14" height="28" rx="2" fill="#FFFFFF" transform="rotate(3 7 14)"/>
+    </svg>
+  </div>
+</div>
+
+{% stylesheet %}
+.pdp-hero-card {
+  position: relative;
+  background-color: var(--hero-card-bg, #2A523F);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+
+  @media screen and (max-width: 749px) {
+    padding: 24px;
+    gap: 8px;
+  }
+}
+
+.pdp-hero-card__badges {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding-bottom: 8px;
+}
+
+.pdp-hero-card__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.pdp-hero-card__title-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pdp-hero-card__title {
+  font-family: var(--font-heading--family), sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 48px;
+  color: #FFFFFF;
+  margin: 0;
+
+  @media screen and (max-width: 749px) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+.pdp-hero-card__meta {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pdp-hero-card__ratings {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.pdp-hero-card__stars--desktop {
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 749px) {
+    display: none;
+  }
+}
+
+.pdp-hero-card__stars--mobile {
+  display: none;
+  align-items: center;
+
+  @media screen and (max-width: 749px) {
+    display: flex;
+  }
+}
+
+.pdp-hero-card__stars img {
+  display: block;
+}
+
+.pdp-hero-card__rating-text {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #FFFFFF;
+
+  @media screen and (max-width: 749px) {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+.pdp-hero-card__price {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.pdp-hero-card__sale-price {
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+  color: #FFFFFF;
+
+  @media screen and (max-width: 749px) {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
+.pdp-hero-card__compare-price {
+  font-family: var(--font-heading--family), sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 28px;
+  color: #FFFFFF;
+  opacity: 0.7;
+
+  @media screen and (max-width: 749px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+.pdp-hero-card__compare-price s {
+  text-decoration: line-through;
+}
+
+.pdp-hero-card__tags {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pdp-hero-card__tag {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 6px;
+  background-color: #F5FAF6;
+  color: #2A523F;
+  font-family: var(--font-accent--family), sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  white-space: nowrap;
+
+  @media screen and (max-width: 749px) {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+.pdp-hero-card__description {
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+
+  @media screen and (max-width: 749px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.pdp-hero-card__description p {
+  margin: 0;
+}
+
+.pdp-hero-card__description ul {
+  margin: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.pdp-hero-card__description li::before {
+  content: "• ";
+}
+
+.pdp-hero-card__supplement {
+  font-family: var(--font-body--family), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+
+  @media screen and (max-width: 749px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.pdp-hero-card__supplement-link {
+  color: #FFFFFF;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pdp-hero-card__deco {
+  position: absolute;
+  bottom: 32px;
+  pointer-events: none;
+
+  @media screen and (max-width: 749px) {
+    bottom: 24px;
+  }
+}
+
+.pdp-hero-card__deco--left {
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.pdp-hero-card__deco--right {
+  left: 14px;
+  transform: translateX(-50%) rotate(3deg);
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.pdp_hero_card",
+  "tag": null,
+  "blocks": [
+    { "type": "pdp-badges" },
+    { "type": "pdp-product-title" },
+    { "type": "pdp-rating-price" },
+    { "type": "pdp-tags" },
+    { "type": "pdp-description" },
+    { "type": "@app" },
+    { "type": "@theme" }
+  ],
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:settings.bg_color",
+      "default": "#2A523F"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.pdp_hero_card",
+      "blocks": [
+        { "type": "pdp-badges" },
+        { "type": "pdp-product-title" },
+        { "type": "pdp-rating-price" },
+        { "type": "pdp-tags" },
+        { "type": "pdp-description" }
+      ]
+    }
+  ]
+}
+{% endschema %}

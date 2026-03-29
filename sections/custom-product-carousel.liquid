@@ -1,0 +1,1149 @@
+{% liquid
+  assign color_scheme = section.settings.color_scheme
+  assign heading = section.settings.heading
+  assign subheading = section.settings.subheading
+  assign ticker_text = section.settings.ticker_text
+  assign ticker_color = section.settings.ticker_color
+  assign bg_color = section.settings.background_color
+%}
+
+<custom-product-carousel>
+  <div
+    class="cpc color-{{ color_scheme }}"
+    style="
+      --section-padding-top: {{ section.settings.padding-block-start }}px;
+      --section-padding-bottom: {{ section.settings.padding-block-end }}px;
+      --cpc-bg: {{ bg_color }};
+      --cpc-ticker-color: {{ ticker_color }};
+    "
+  >
+    {%- comment -%} Header area {%- endcomment -%}
+    <div class="cpc__header">
+      <div class="cpc__title-area">
+        {% if subheading != blank %}
+          <div class="cpc__brought">
+            <span class="cpc__brought-text">{{ subheading | escape }}</span>
+            <img
+              class="cpc__logo cpc__logo--desktop"
+              src="{{ 'logo-factor-2.svg' | asset_url }}"
+              alt="Factor"
+              width="130"
+              height="18"
+              loading="lazy"
+            >
+            <img
+              class="cpc__logo cpc__logo--mobile"
+              src="{{ 'logo-factor.svg' | asset_url }}"
+              alt="Factor"
+              width="87"
+              height="12"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+        {% if heading != blank %}
+          <h2 class="cpc__heading">{{ heading | escape }}</h2>
+        {% endif %}
+      </div>
+
+      <div class="cpc__nav-area">
+        {%- comment -%} Tabs {%- endcomment -%}
+        <div class="cpc__tabs" role="tablist" aria-label="Product categories">
+          <div class="cpc__tabs-inner">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'tab' -%}
+                <button
+                  type="button"
+                  role="tab"
+                  class="cpc__tab{% if block.settings.is_active %} cpc__tab--active{% endif %}"
+                  aria-selected="{{ block.settings.is_active }}"
+                  data-carousel-tab
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.label | escape }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- comment -%} Desktop arrows {%- endcomment -%}
+        <div class="cpc__arrows">
+          <button
+            type="button"
+            class="cpc__arrow cpc__arrow--prev"
+            data-carousel-prev
+            aria-label="{{ 'sections.custom_product_carousel.previous' | t }}"
+          >
+            <img src="{{ 'chevron-up-2.svg' | asset_url }}" alt="" role="presentation" width="40" height="40" loading="lazy">
+          </button>
+          <button
+            type="button"
+            class="cpc__arrow cpc__arrow--next"
+            data-carousel-next
+            aria-label="{{ 'sections.custom_product_carousel.next' | t }}"
+          >
+            <img src="{{ 'chevron-up-2.svg' | asset_url }}" alt="" role="presentation" width="40" height="40" loading="lazy">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Carousel track {%- endcomment -%}
+    <div class="cpc__track" data-carousel-track>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'category-card' -%}
+            <div class="cpc__card cpc__card--category" {{ block.shopify_attributes }}>
+              <div class="cpc__cat-image">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 1004 }}"
+                    alt="{{ block.settings.title | escape }}"
+                    width="502"
+                    height="502"
+                    loading="lazy"
+                    class="cpc__cat-img"
+                  >
+                {%- endif -%}
+                <div class="cpc__cat-overlay"></div>
+              </div>
+              <div class="cpc__cat-content">
+                {% if block.settings.title != blank %}
+                  <h3 class="cpc__cat-title">{{ block.settings.title | escape }}</h3>
+                {% endif %}
+                <div class="cpc__cat-bottom">
+                  {% if block.settings.description != blank %}
+                    <p class="cpc__cat-desc">{{ block.settings.description | escape }}</p>
+                  {% endif %}
+                  {% if block.settings.cta_text != blank %}
+                    <span class="cpc__cat-cta cpc__cat-cta--desktop">{{ block.settings.cta_text | escape }}</span>
+                  {% endif %}
+                  {% if block.settings.mobile_cta_text != blank %}
+                    <span class="cpc__cat-cta cpc__cat-cta--mobile">{{ block.settings.mobile_cta_text | escape }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+          {%- when 'product-card' -%}
+            <article class="cpc__card cpc__card--product" {{ block.shopify_attributes }}>
+              <div class="cpc__prod-image">
+                <div class="cpc__prod-gallery">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 656 }}"
+                      alt="{{ block.settings.title | escape }}"
+                      width="328"
+                      height="328"
+                      loading="lazy"
+                      class="cpc__prod-img"
+                    >
+                  {%- endif -%}
+                </div>
+                {%- comment -%} Badges {%- endcomment -%}
+                <div class="cpc__badges">
+                  {%- if block.settings.badge_1_text != blank -%}
+                    <span
+                      class="cpc__badge"
+                      style="--badge-bg: {{ block.settings.badge_1_color }}; --badge-text: {% if block.settings.badge_1_color == '#FFFFFF' or block.settings.badge_1_color == '#ffffff' %}#141414{% else %}#FFFFFF{% endif %};"
+                    >
+                      {{ block.settings.badge_1_text | escape }}
+                    </span>
+                  {%- endif -%}
+                  {%- if block.settings.badge_2_text != blank -%}
+                    <span
+                      class="cpc__badge"
+                      style="--badge-bg: {{ block.settings.badge_2_color }}; --badge-text: {% if block.settings.badge_2_color == '#FFFFFF' or block.settings.badge_2_color == '#ffffff' %}#141414{% else %}#FFFFFF{% endif %};"
+                    >
+                      {{ block.settings.badge_2_text | escape }}
+                    </span>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.show_heart -%}
+                  <span class="cpc__heart" aria-hidden="true">
+                    <img src="{{ 'heart-2.svg' | asset_url }}" alt="" role="presentation" width="16" height="16" loading="lazy">
+                  </span>
+                {%- endif -%}
+              </div>
+              {%- comment -%} Scroller bar {%- endcomment -%}
+              <div class="cpc__scroller" aria-hidden="true">
+                <div class="cpc__scroller-all"></div>
+                <div class="cpc__scroller-partial"></div>
+              </div>
+              {%- comment -%} Content area {%- endcomment -%}
+              <div class="cpc__prod-content">
+                <div class="cpc__prod-details">
+                  {% if block.settings.title != blank %}
+                    <h3 class="cpc__prod-title">{{ block.settings.title | escape }}</h3>
+                  {% endif %}
+                  {% if block.settings.description != blank %}
+                    <p class="cpc__prod-desc">{{ block.settings.description | escape }}</p>
+                  {% endif %}
+                </div>
+                <div class="cpc__prod-footer">
+                  <div class="cpc__pricing">
+                    {% if block.settings.price != blank %}
+                      <span class="cpc__price">{{ block.settings.price | escape }}</span>
+                    {% endif %}
+                    {% if block.settings.compare_price != blank %}
+                      <s class="cpc__compare-price">{{ block.settings.compare_price | escape }}</s>
+                    {% endif %}
+                  </div>
+                  <button
+                    type="button"
+                    class="cpc__add-btn"
+                    {% if block.settings.product != blank %}
+                      data-subscription-drawer-handle="{{ block.settings.product.handle }}"
+                    {% elsif block.settings.product_handle != blank %}
+                      data-subscription-drawer-handle="{{ block.settings.product_handle }}"
+                    {% endif %}
+                  >
+                    {{ block.settings.cta_text | default: 'ADD TO CART' | escape }}
+                  </button>
+                </div>
+              </div>
+            </article>
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Ticker marquee {%- endcomment -%}
+    {% if ticker_text != blank %}
+      {% assign ticker_items = ticker_text | split: '|' %}
+      <div class="cpc__ticker" aria-hidden="true">
+        <div class="cpc__ticker-track" data-ticker-track>
+          <div class="cpc__ticker-content" data-ticker-content>
+            {%- for item in ticker_items -%}
+              <span class="cpc__ticker-item">{{ item | strip | escape }}</span>
+              {%- unless forloop.last -%}
+                <span class="cpc__ticker-dot"></span>
+              {%- endunless -%}
+            {%- endfor -%}
+            <span class="cpc__ticker-dot"></span>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</custom-product-carousel>
+
+<script src="{{ 'custom-product-carousel.js' | asset_url }}" type="module"></script>
+
+{% stylesheet %}
+.cpc {
+  padding-block-start: var(--section-padding-top, 64px);
+  padding-block-end: var(--section-padding-bottom, 0px);
+  background-color: var(--cpc-bg, #F1F1EA);
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  overflow: hidden;
+}
+
+/* Header */
+.cpc__header {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-inline: 64px;
+}
+
+.cpc__title-area {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cpc__brought {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.cpc__brought-text {
+  font-family: var(--font-body--family);
+  font-style: var(--font-body--style);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  color: #2A523F;
+}
+
+.cpc__logo {
+  max-width: 30%;
+  height: auto;
+}
+
+.cpc__logo--mobile {
+  display: none;
+}
+
+.cpc__heading {
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 56px;
+  color: #141414;
+  margin: 0;
+  max-width: 580px;
+}
+
+/* Nav area — tabs + arrows */
+.cpc__nav-area {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+  align-items: flex-end;
+}
+
+.cpc__tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cpc__tabs-inner {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: center;
+}
+
+.cpc__tab {
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  padding: 0 0 8px 0;
+  cursor: pointer;
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 24px;
+  color: #656558;
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    color: #141414;
+  }
+}
+
+.cpc__tab--active {
+  color: #141414;
+  border-bottom-color: #141414;
+}
+
+.cpc__arrows {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+}
+
+.cpc__arrow {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+
+  &:focus-visible {
+    outline: 2px solid #141414;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+.cpc__arrow--next img {
+  transform: scaleX(-1);
+}
+
+/* Carousel track */
+.cpc__track {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  padding-inline: 64px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+
+.cpc__track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cards — shared */
+.cpc__card {
+  flex: 0 0 328px;
+  min-width: 328px;
+  scroll-snap-align: start;
+}
+
+/* Category card */
+.cpc__card--category {
+  position: relative;
+  height: 502px;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.cpc__cat-image {
+  position: absolute;
+  inset: 0;
+}
+
+.cpc__cat-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cpc__cat-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0) 0%, rgba(20, 20, 20, 1) 100%);
+}
+
+.cpc__cat-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  gap: 4px;
+}
+
+.cpc__cat-title {
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.cpc__cat-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cpc__cat-desc {
+  font-family: var(--font-body--family);
+  font-style: var(--font-body--style);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.cpc__cat-cta {
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
+  display: inline-block;
+  padding-block-end: 2px;
+  text-align: center;
+  width: fit-content;
+}
+
+.cpc__cat-cta--mobile {
+  display: none;
+}
+
+/* Product card */
+.cpc__card--product {
+  display: flex;
+  flex-direction: column;
+}
+
+.cpc__prod-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.cpc__prod-gallery {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cpc__prod-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cpc__badges {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cpc__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: var(--badge-bg, #141414);
+  color: var(--badge-text, #FFFFFF);
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+}
+
+.cpc__heart {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scroller bar */
+.cpc__scroller {
+  position: relative;
+  width: 100%;
+  height: 2px;
+}
+
+.cpc__scroller-all {
+  position: absolute;
+  inset: 0;
+  background-color: #FFFFFF;
+}
+
+.cpc__scroller-partial {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 46px;
+  height: 2px;
+  background-color: #6FAB84;
+}
+
+/* Product content */
+.cpc__prod-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 16px 24px 16px;
+  background-color: #FFFFFF;
+  flex: 1;
+}
+
+.cpc__prod-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cpc__prod-title {
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  color: #141414;
+  margin: 0;
+}
+
+.cpc__prod-desc {
+  font-family: var(--font-body--family);
+  font-style: var(--font-body--style);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+  margin: 0;
+}
+
+.cpc__prod-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.cpc__pricing {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.cpc__price {
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #141414;
+}
+
+.cpc__compare-price {
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  color: #141414;
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+.cpc__add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 32px;
+  background-color: #0F1F18;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #141414;
+    outline-offset: 2px;
+  }
+}
+
+/* Ticker */
+.cpc__ticker {
+  width: 100%;
+  overflow: hidden;
+  padding: 16px 0;
+}
+
+.cpc__ticker-track {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  animation: cpc-ticker-scroll 30s linear infinite;
+}
+
+@keyframes cpc-ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.cpc__ticker-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  padding-inline-end: 24px;
+}
+
+.cpc__ticker-item {
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--cpc-ticker-color, #3F7057);
+  white-space: nowrap;
+}
+
+.cpc__ticker-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--cpc-ticker-color, #3F7057);
+  flex-shrink: 0;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 749px) {
+  .cpc {
+    padding-block-start: var(--section-padding-top, 48px);
+    gap: 32px;
+    padding-inline-start: 0;
+  }
+
+  .cpc__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding-inline: 0;
+  }
+
+  .cpc__title-area {
+    gap: 16px;
+    padding-inline: 16px;
+  }
+
+  .cpc__brought {
+    gap: 6px;
+    align-items: flex-end;
+  }
+
+  .cpc__brought-text {
+    font-size: 14px;
+    line-height: 14px;
+  }
+
+  .cpc__logo--desktop {
+    display: none;
+  }
+
+  .cpc__logo--mobile {
+    display: block;
+  }
+
+  .cpc__heading {
+    font-size: 32px;
+    line-height: 40px;
+    max-width: 100%;
+  }
+
+  .cpc__nav-area {
+    width: 100%;
+    padding-inline: 16px;
+  }
+
+  .cpc__tabs {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .cpc__tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cpc__tabs-inner {
+    gap: 24px;
+    padding-inline-end: 32px;
+  }
+
+  .cpc__tab {
+    font-size: 18px;
+    line-height: 28px;
+    padding-block-end: 4px;
+  }
+
+  .cpc__arrows {
+    display: none;
+  }
+
+  .cpc__track {
+    gap: 16px;
+    padding-inline: 16px;
+  }
+
+  .cpc__card {
+    flex: 0 0 160px;
+    min-width: 160px;
+  }
+
+  /* Category card mobile */
+  .cpc__card--category {
+    height: 334px;
+  }
+
+  .cpc__cat-content {
+    padding: 16px 12px;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  .cpc__cat-title {
+    display: none;
+  }
+
+  .cpc__cat-bottom {
+    gap: 12px;
+  }
+
+  .cpc__cat-desc {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .cpc__cat-cta {
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 1.2px;
+  }
+
+  .cpc__cat-cta--desktop {
+    display: none;
+  }
+
+  .cpc__cat-cta--mobile {
+    display: inline-block;
+  }
+
+  /* Product card mobile */
+  .cpc__prod-image {
+    aspect-ratio: 1 / 1;
+  }
+
+  .cpc__badge {
+    padding: 4px 6px;
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.6px;
+  }
+
+  .cpc__prod-content {
+    gap: 12px;
+    padding: 8px;
+    justify-content: space-between;
+    flex: 1;
+  }
+
+  .cpc__prod-details {
+    gap: 4px;
+  }
+
+  .cpc__prod-title {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .cpc__prod-desc {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .cpc__prod-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cpc__pricing {
+    gap: 4px;
+  }
+
+  .cpc__price {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .cpc__compare-price {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .cpc__add-btn {
+    width: 100%;
+    padding: 4px 8px;
+    font-family: var(--font-heading--family);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .cpc__ticker-track {
+    animation-play-state: paused;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_product_carousel",
+  "tag": "section",
+  "class": "custom-product-carousel-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:settings.subheading",
+      "default": "brought to you by"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Built From Food, Designed for Results"
+    },
+    {
+      "type": "textarea",
+      "id": "ticker_text",
+      "label": "t:settings.ticker_text",
+      "default": "Grounded in Food Science | High Quality Ingredients | Flavorful Nutrition | Dietitian Approved | No Added Sugar | Keto Friendly"
+    },
+    {
+      "type": "color",
+      "id": "ticker_color",
+      "label": "t:settings.ticker_color",
+      "default": "#3F7057"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "#F1F1EA"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 64,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "t:names.tab_item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:settings.label",
+          "default": "Tab"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "t:settings.is_active",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "category-card",
+      "name": "t:names.category_card_item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:settings.title",
+          "default": "Category"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "t:settings.description",
+          "default": "Category description"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "t:settings.cta_text",
+          "default": "VIEW ALL"
+        },
+        {
+          "type": "text",
+          "id": "mobile_cta_text",
+          "label": "t:settings.mobile_cta_text",
+          "default": "VIEW ALL"
+        }
+      ]
+    },
+    {
+      "type": "product-card",
+      "name": "t:names.product_card_item",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:settings.product"
+        },
+        {
+          "type": "text",
+          "id": "product_handle",
+          "label": "Product handle"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:settings.title",
+          "default": "Product name"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "t:settings.description",
+          "default": "Product description"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "t:settings.price"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "t:settings.compare_price"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "t:settings.cta_text",
+          "default": "ADD TO CART"
+        },
+        {
+          "type": "text",
+          "id": "badge_1_text",
+          "label": "t:settings.badge_1_text"
+        },
+        {
+          "type": "color",
+          "id": "badge_1_color",
+          "label": "t:settings.badge_1_color",
+          "default": "#141414"
+        },
+        {
+          "type": "text",
+          "id": "badge_2_text",
+          "label": "t:settings.badge_2_text"
+        },
+        {
+          "type": "color",
+          "id": "badge_2_color",
+          "label": "t:settings.badge_2_color",
+          "default": "#EC0606"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_heart",
+          "label": "t:settings.show_heart",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_product_carousel",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Gut Health",
+            "is_active": true
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Recovery"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Immunity"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Energy & Focus"
+          }
+        },
+        {
+          "type": "category-card",
+          "settings": {
+            "title": "Gut Health",
+            "description": "Superfoods and nutrients for daily digestive support",
+            "cta_text": "VIEW ALL GUT HEALTH",
+            "mobile_cta_text": "VIEW ALL"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "title": "Daily Greens",
+            "description": "Drink your veggies on-the-go with a refreshing twist.",
+            "price": "$47.39",
+            "compare_price": "$78.99",
+            "cta_text": "ADD TO CART"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

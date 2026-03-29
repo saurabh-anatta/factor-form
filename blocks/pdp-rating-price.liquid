@@ -1,0 +1,58 @@
+{% doc %}
+  PDP Rating & Price Block
+
+  Renders star rating and price row inside the hero card.
+
+  @example {% content_for 'block', type: 'pdp-rating-price', id: 'rating-price' %}
+{% enddoc %}
+
+{% liquid
+  assign product = closest.product
+  assign current_variant = product.selected_or_first_available_variant
+  assign sale_price = current_variant.price
+  assign compare_price = current_variant.compare_at_price
+%}
+
+<div class="pdp-hero-card__meta" {{ block.shopify_attributes }}>
+  {%- if block.settings.show_rating -%}
+    <div class="pdp-hero-card__ratings">
+      <span class="pdp-hero-card__stars pdp-hero-card__stars--desktop">
+        <img src="{{ 'stars-2.svg' | asset_url }}" alt="{{ product.metafields.reviews.rating.value | default: '4.9' }} stars" width="96" height="16" loading="lazy">
+      </span>
+      <span class="pdp-hero-card__stars pdp-hero-card__stars--mobile">
+        <img src="{{ 'stars.svg' | asset_url }}" alt="{{ product.metafields.reviews.rating.value | default: '4.9' }} stars" width="66" height="10" loading="lazy">
+      </span>
+      <span class="pdp-hero-card__rating-text">
+        <span class="pdp-hero-card__rating-value">{{ product.metafields.reviews.rating.value | default: '4.9' }}</span>
+        <span class="pdp-hero-card__rating-count">({{ product.metafields.reviews.rating_count | default: 51 }} {{ 'content.reviews' | t }})</span>
+      </span>
+    </div>
+  {%- endif -%}
+  <div class="pdp-hero-card__price">
+    <span class="pdp-hero-card__sale-price" data-sale-price>{{ sale_price | money }}</span>
+    {%- if compare_price > sale_price -%}
+      <span class="pdp-hero-card__compare-price" data-compare-price>
+        <s>{{ compare_price | money }}</s>
+      </span>
+    {%- else -%}
+      <span class="pdp-hero-card__compare-price" data-compare-price style="display:none;">
+        <s></s>
+      </span>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.pdp_rating_price",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "t:settings.show_rating",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
