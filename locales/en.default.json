@@ -370,6 +370,10 @@
       "next": "Next products",
       "all_products": "All Products"
     },
+    "custom_breadcrumbs": {
+      "home": "Home",
+      "aria_label": "Breadcrumb"
+    },
     "custom_pdp": {
       "add_to_cart": "ADD TO CART",
       "sold_out": "SOLD OUT",

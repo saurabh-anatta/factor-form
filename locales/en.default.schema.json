@@ -464,7 +464,8 @@
     "custom_faqs": "FAQs",
     "faq_item": "FAQ Item",
     "custom_plp": "Shop All",
-    "collection_group": "Collection group"
+    "collection_group": "Collection group",
+    "custom_breadcrumbs": "Breadcrumbs"
   },
   "options": {
     "above_carousel": "Above carousel",

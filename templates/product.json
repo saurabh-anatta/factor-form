@@ -9,6 +9,14 @@
  */
  {
   "sections": {
+    "breadcrumbs": {
+      "type": "custom-breadcrumbs",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "main": {
       "type": "custom-pdp",
       "blocks": {
@@ -228,6 +236,7 @@
     }
   },
   "order": [
+    "breadcrumbs",
     "main",
     "product_recommendations_qggXJq"
   ]
