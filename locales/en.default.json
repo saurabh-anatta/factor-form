@@ -374,6 +374,16 @@
       "home": "Home",
       "aria_label": "Breadcrumb"
     },
+    "custom_comparison": {
+      "factor_form": "Factor Form",
+      "others": "Others",
+      "check_alt": "Included",
+      "x_alt": "Not included"
+    },
+    "custom_ingredients": {
+      "previous": "Previous ingredients",
+      "next": "Next ingredients"
+    },
     "custom_pdp": {
       "add_to_cart": "ADD TO CART",
       "sold_out": "SOLD OUT",

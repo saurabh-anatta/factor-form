@@ -465,7 +465,15 @@
     "faq_item": "FAQ Item",
     "custom_plp": "Shop All",
     "collection_group": "Collection group",
-    "custom_breadcrumbs": "Breadcrumbs"
+    "custom_breadcrumbs": "Breadcrumbs",
+    "custom_comparison": "Comparison",
+    "comparison_row": "Comparison Row",
+    "custom_pdp_benefits": "PDP Benefits",
+    "benefit_point": "Benefit Point",
+    "custom_results": "Results",
+    "stat_item": "Stat Item",
+    "custom_ingredients": "Ingredients",
+    "ingredient_item": "Ingredient"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1294,7 +1302,15 @@
     "feature_card_button_text": "Button text",
     "feature_card_button_link": "Button link",
     "max_products": "Max products",
-    "tab_label": "Tab label"
+    "tab_label": "Tab label",
+    "disclaimer_text": "Disclaimer text",
+    "highlight_image": "Highlight image",
+    "feature_text": "Feature text",
+    "is_subheading": "Section heading",
+    "factor_form_check": "Factor Form",
+    "others_check": "Others",
+    "stat_value": "Stat value",
+    "icon": "Icon"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",
