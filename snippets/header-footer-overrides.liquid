@@ -63,6 +63,17 @@
      ======================================== */
 
   @media screen and (min-width: 990px) {
+    /* Override dark color scheme on submenu container and all its wrappers */
+    .menu-list__submenu,
+    .menu-list__submenu[class*="color-"] {
+      --color-background: rgb(255, 255, 255) !important;
+      --color-background-rgb: 255, 255, 255 !important;
+      --submenu-padding-block-start: 0px !important;
+      --submenu-padding-block-end: 0px !important;
+      background-color: #FFFFFF !important;
+      color: #141414;
+    }
+
     /* White background with shadow for mega menu dropdown */
     .menu-list__submenu .menu-list__submenu-inner {
       --color-foreground: rgb(20, 20, 20);
@@ -174,6 +185,16 @@
   /* ========================================
      Navigation Overrides — Mobile Drawer
      ======================================== */
+
+  /* White background for mobile drawer (override dark color scheme) */
+  .menu-drawer {
+    --color-foreground: rgb(20, 20, 20);
+    --color-foreground-rgb: 20, 20, 20;
+    --color-background: rgb(255, 255, 255);
+    --color-background-rgb: 255, 255, 255;
+    background-color: #FFFFFF;
+    color: #141414;
+  }
 
   /* Mobile drawer: collection image grid — 2 columns, 12px gap */
   .menu-drawer .menu-drawer__menu--grid {

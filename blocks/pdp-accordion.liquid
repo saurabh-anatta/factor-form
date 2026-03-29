@@ -119,6 +119,7 @@
 
 .pdp-accordion__chevron-down {
   display: block;
+  transition: transform 0.2s ease;
 }
 
 .pdp-accordion__chevron-up {
@@ -126,11 +127,12 @@
 }
 
 .pdp-accordion__icon--open .pdp-accordion__chevron-down {
-  display: none;
+  display: block;
+  transform: rotate(180deg);
 }
 
 .pdp-accordion__icon--open .pdp-accordion__chevron-up {
-  display: block;
+  display: none;
 }
 
 .pdp-accordion__content {

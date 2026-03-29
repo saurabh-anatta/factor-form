@@ -1,0 +1,45 @@
+{% comment %}
+  Hidden section used by the subscription drawer JS to fetch selling plan data
+  via Shopify's section rendering API: /products/handle?section_id=subscription-drawer-data
+{% endcomment %}
+
+<script type="application/json" data-selling-plans-json>
+{
+  "selling_plan_groups": [
+    {%- for group in product.selling_plan_groups -%}
+      {
+        "id": {{ group.id | json }},
+        "name": {{ group.name | json }},
+        "selling_plans": [
+          {%- for plan in group.selling_plans -%}
+            {
+              "id": {{ plan.id }},
+              "name": {{ plan.name | json }}
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ],
+  "allocations": [
+    {%- assign alloc_comma = '' -%}
+    {%- for variant in product.variants -%}
+      {%- for alloc in variant.selling_plan_allocations -%}
+        {{ alloc_comma }}{
+          "variant_id": {{ variant.id }},
+          "selling_plan_id": {{ alloc.selling_plan.id | default: 0 }},
+          "price": {{ alloc.per_delivery_price | default: 0 }}
+        }
+        {%- assign alloc_comma = ',' -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Subscription Drawer Data",
+  "settings": []
+}
+{% endschema %}

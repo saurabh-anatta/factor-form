@@ -137,7 +137,8 @@
                           assign catalog_links = link.links | where: 'type', 'catalog_link'
                           assign collection_list_links = link.links | where: 'type', 'collections_link'
                           assign collection_links = link.links | where: 'type', 'collection_link'
-                          if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
+                          assign product_links = link.links | where: 'type', 'product_link'
+                          if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0 or product_links.size > 0
                             assign render_link_image = true
                           endif
                         endif
@@ -194,7 +195,8 @@
                       assign catalog_links = link.links | where: 'type', 'catalog_link'
                       assign collection_list_links = link.links | where: 'type', 'collections_link'
                       assign collection_links = link.links | where: 'type', 'collection_link'
-                      if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
+                      assign product_links = link.links | where: 'type', 'product_link'
+                          if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0 or product_links.size > 0
                         assign render_link_image = true
                       endif
                     endif
@@ -310,7 +312,8 @@
                             assign catalog_links = link.links | where: 'type', 'catalog_link'
                             assign collection_list_links = link.links | where: 'type', 'collections_link'
                             assign collection_links = link.links | where: 'type', 'collection_link'
-                            if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
+                            assign product_links = link.links | where: 'type', 'product_link'
+                          if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0 or product_links.size > 0
                               assign render_link_image = true
                             endif
                           endif
@@ -388,7 +391,8 @@
                                           assign catalog_links = childlink.links | where: 'type', 'catalog_link'
                                           assign collection_list_links = childlink.links | where: 'type', 'collections_link'
                                           assign collection_links = childlink.links | where: 'type', 'collection_link'
-                                          if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
+                                          assign product_links = childlink.links | where: 'type', 'product_link'
+                                          if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0 or product_links.size > 0
                                             assign render_link_image = true
                                           endif
                                         endif
@@ -449,7 +453,8 @@
                                       assign catalog_links = childlink.links | where: 'type', 'catalog_link'
                                       assign collection_list_links = childlink.links | where: 'type', 'collections_link'
                                       assign collection_links = childlink.links | where: 'type', 'collection_link'
-                                      if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
+                                      assign product_links = childlink.links | where: 'type', 'product_link'
+                                      if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0 or product_links.size > 0
                                         assign render_link_image = true
                                       endif
                                     endif

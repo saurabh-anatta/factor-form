@@ -191,7 +191,15 @@
                       <s class="cpc__compare-price">{{ block.settings.compare_price | escape }}</s>
                     {% endif %}
                   </div>
-                  <button type="button" class="cpc__add-btn">
+                  <button
+                    type="button"
+                    class="cpc__add-btn"
+                    {% if block.settings.product != blank %}
+                      data-subscription-drawer-handle="{{ block.settings.product.handle }}"
+                    {% elsif block.settings.product_handle != blank %}
+                      data-subscription-drawer-handle="{{ block.settings.product_handle }}"
+                    {% endif %}
+                  >
                     {{ block.settings.cta_text | default: 'ADD TO CART' | escape }}
                   </button>
                 </div>
@@ -1012,6 +1020,16 @@
       "type": "product-card",
       "name": "t:names.product_card_item",
       "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:settings.product"
+        },
+        {
+          "type": "text",
+          "id": "product_handle",
+          "label": "Product handle"
+        },
         {
           "type": "image_picker",
           "id": "image",

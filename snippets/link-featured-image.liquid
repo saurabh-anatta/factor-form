@@ -37,6 +37,14 @@
       | image_tag: loading: 'lazy', class: class, sizes: image_sizes
     }}
   {% endif %}
+{% elsif link.type == 'product_link' %}
+  {% if link.object.featured_image %}
+    {{
+      link.object.featured_image
+      | image_url: width: 800
+      | image_tag: loading: 'lazy', class: class, sizes: image_sizes
+    }}
+  {% endif %}
 {% elsif link.type == 'catalog_link' %}
   {% assign product_object = collections.all.products | where: 'featured_image' | first %}
   {{
@@ -44,4 +52,19 @@
     | image_url: width: 800
     | image_tag: loading: 'lazy', class: class, sizes: image_sizes
   }}
+{% else %}
+  {% comment %} Fallback for http_link, page_link, or any other type — try object image {% endcomment %}
+  {% if link.object.featured_image %}
+    {{
+      link.object.featured_image
+      | image_url: width: 800
+      | image_tag: loading: 'lazy', class: class, sizes: image_sizes
+    }}
+  {% elsif link.object.image %}
+    {{
+      link.object.image
+      | image_url: width: 800
+      | image_tag: loading: 'lazy', class: class, sizes: image_sizes
+    }}
+  {% endif %}
 {% endif %}

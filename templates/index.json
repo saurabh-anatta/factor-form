@@ -175,6 +175,8 @@
         "product-card-1": {
           "type": "product-card",
           "settings": {
+            "product": "daily-greens",
+            "product_handle": "daily-greens",
             "image": "shopify://shop_images/image-desktop-112594636.png",
             "title": "Daily Greens",
             "description": "Drink your veggies on-the-go with a refreshing twist.",
@@ -190,6 +192,8 @@
         "product-card-2": {
           "type": "product-card",
           "settings": {
+            "product": "starter-bundle",
+            "product_handle": "starter-bundle",
             "image": "shopify://shop_images/image-desktop-112594700.png",
             "title": "Starter Bundle",
             "description": "Hydration and gut health to give you energy and crush your goals",
@@ -201,6 +205,8 @@
         "product-card-3": {
           "type": "product-card",
           "settings": {
+            "product": "greens-gains-bundle",
+            "product_handle": "greens-gains-bundle",
             "image": "shopify://shop_images/agile-support-1-desktop-112594812.png",
             "title": "Greens & Gains Bundle",
             "description": "Foundation nutrition plus protein to support muscle recovery and gut health",
@@ -212,6 +218,8 @@
         "product-card-4": {
           "type": "product-card",
           "settings": {
+            "product": "immunity-bundle",
+            "product_handle": "immunity-bundle",
             "image": "shopify://shop_images/image-desktop-112594752.png",
             "title": "Immunity Bundle",
             "description": "Daily defense with probiotics, immunity vitamins & minerals, and electrolytes.",

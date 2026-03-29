@@ -44,7 +44,8 @@
     assign collection_links = parent_link.links | where: 'type', 'collection_link'
     assign catalog_links = parent_link.links | where: 'type', 'catalog_link'
     assign collection_list_links = parent_link.links | where: 'type', 'collections_link'
-    if collection_links.size == 0 and catalog_links.size == 0 and collection_list_links.size == 0
+    assign product_links = parent_link.links | where: 'type', 'product_link'
+    if collection_links.size == 0 and catalog_links.size == 0 and collection_list_links.size == 0 and product_links.size == 0
       assign menu_content_type = 'text'
     endif
   endif
