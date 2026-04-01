@@ -77,6 +77,8 @@
     "variant_button_border_width": 1,
     "variant_button_radius": 14,
     "variant_button_width": "equal-width-buttons",
+    "enable_custom_heading_font": true,
+    "custom_font_heading": "ivyoradisplay",
     "button_font_weight_secondary": "default",
     "content_for_index": [],
     "color_schemes": {
@@ -425,6 +427,8 @@
       "variant_button_border_width": 1,
       "variant_button_radius": 14,
       "variant_button_width": "equal-width-buttons",
+      "enable_custom_heading_font": true,
+      "custom_font_heading": "ivyoradisplay",
       "color_schemes": {
         "scheme-1": {
           "settings": {

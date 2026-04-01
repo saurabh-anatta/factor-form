@@ -1,5 +1,5 @@
 {% comment %}
-  Custom Font Loading — Simplon Norm (FactorForm brand font)
+  Custom Font Loading — Simplon Norm (FactorForm brand font) + IvyOraDisplay
 
   IMPORTANT: For Simplon Norm to display, the following commercial font files
   must be purchased from Swiss Typefaces, licensed, and uploaded to the theme's
@@ -11,6 +11,9 @@
 
   Until those files are present, the theme will gracefully fall back to
   Work Sans (set via Shopify font_picker in settings_data.json).
+
+  IvyOraDisplay is loaded from assets/IvyOraDisplay-Regular.woff2
+  and gated behind the enable_custom_heading_font checkbox in Theme Settings.
 {% endcomment %}
 
 <style>
@@ -38,10 +41,34 @@
     font-display: swap;
   }
 
-  :root {
-    --font-heading--family: 'Simplon Norm', var(--font-heading--family-fallback, sans-serif);
-    --font-heading--weight: 300;
-    --font-accent--family: 'Simplon Norm', var(--font-accent--family-fallback, sans-serif);
-    --font-accent--weight: 700;
+  @font-face {
+    font-family: 'IvyOraDisplay';
+    src: url('{{ "IvyOraDisplay-Regular.woff2" | asset_url }}') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
   }
+
+  :root {
+    --font-ivyoradisplay: 'IvyOraDisplay', sans-serif;
+  }
+
+  {% if settings.enable_custom_heading_font %}
+    {% case settings.custom_font_heading %}
+      {% when 'ivyoradisplay' %}
+        :root {
+          --font-heading--family: 'IvyOraDisplay', 'Simplon Norm', var(--font-heading--family-fallback, sans-serif);
+          --font-heading--weight: 400;
+          --font-accent--family: 'Simplon Norm', var(--font-accent--family-fallback, sans-serif);
+          --font-accent--weight: 700;
+        }
+    {% endcase %}
+  {% else %}
+    :root {
+      --font-heading--family: 'Simplon Norm', var(--font-heading--family-fallback, sans-serif);
+      --font-heading--weight: 300;
+      --font-accent--family: 'Simplon Norm', var(--font-accent--family-fallback, sans-serif);
+      --font-accent--weight: 700;
+    }
+  {% endif %}
 </style>

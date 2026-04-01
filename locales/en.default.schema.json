@@ -55,6 +55,8 @@
     "collection_page": "Collection page",
     "complementary_products": "Complementary products must be set up using the Search & Discovery app. [Learn more](https://help.shopify.com/manual/online-store/search-and-discovery)",
     "content_layout": "Content layout",
+    "custom_fonts": "Custom Fonts",
+    "custom_fonts_info": "Enable custom fonts to override the default Shopify fonts selected above.",
     "content_width": "Content width only applies when the section width is set to full width.",
     "copyright": "Copyright",
     "customer_account": "Customer account",
@@ -899,6 +901,9 @@
     // Collection setting for products shown before search input
     "empty_state_collection": "Empty state collection",
     "empty_state_collection_info": "Shown before a search is entered",
+    "enable_custom_heading_font": "Use custom font for headings",
+    "custom_font_heading": "Custom heading font",
+    "custom_font_heading_info": "When enabled, the heading font above will be replaced by the custom font selected below.",
     "enable_filtering": "Filters",
     "enable_grid_density": "Grid layout control",
     "enable_sorting": "Sorting",
