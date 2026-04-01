@@ -377,6 +377,28 @@
       },
       {
         "type": "header",
+        "content": "Custom Fonts"
+      },
+      {
+        "type": "paragraph",
+        "content": "Enable custom fonts to override the default Shopify fonts selected above."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_custom_heading_font",
+        "label": "Custom heading font",
+        "default": true,
+        "info": "Uses IvyOraDisplay for headings when enabled"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_custom_body_font",
+        "label": "Custom body font",
+        "default": true,
+        "info": "Uses PlusJakartaSans for body text when enabled"
+      },
+      {
+        "type": "header",
         "content": "t:content.text_presets"
       },
       {

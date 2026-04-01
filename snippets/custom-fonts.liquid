@@ -11,9 +11,14 @@
 
   Until those files are present, the theme will gracefully fall back to
   Work Sans (set via Shopify font_picker in settings_data.json).
+
+  Additional custom fonts:
+    - IvyOraDisplay-Regular.woff2 (heading override, gated by enable_custom_heading_font)
+    - PlusJakartaSans.woff        (body/subheading override, gated by enable_custom_body_font)
 {% endcomment %}
 
 <style>
+  /* Simplon Norm — brand font (always loaded) */
   @font-face {
     font-family: 'Simplon Norm';
     src: url('{{ "simplon-norm-light.woff2" | asset_url }}') format('woff2');
@@ -38,6 +43,25 @@
     font-display: swap;
   }
 
+  /* IvyOraDisplay — custom heading font */
+  @font-face {
+    font-family: 'IvyOraDisplay';
+    src: url('{{ "IvyOraDisplay-Regular.woff2" | asset_url }}') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* PlusJakartaSans — custom body font */
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('{{ "PlusJakartaSans.woff" | asset_url }}') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Simplon Norm :root overrides (always active) */
   :root {
     --font-heading--family: 'Simplon Norm', var(--font-heading--family-fallback, sans-serif);
     --font-heading--weight: 300;
@@ -45,3 +69,20 @@
     --font-accent--weight: 700;
   }
 </style>
+
+{% if settings.enable_custom_heading_font %}
+  <style>
+    :root {
+      --font-heading--family: 'IvyOraDisplay', 'Simplon Norm', var(--font-heading--family-fallback, sans-serif);
+    }
+  </style>
+{% endif %}
+
+{% if settings.enable_custom_body_font %}
+  <style>
+    :root {
+      --font-body--family: 'PlusJakartaSans', 'Plus Jakarta Sans', var(--font-body--family-fallback, sans-serif);
+      --font-subheading--family: 'PlusJakartaSans', 'Plus Jakarta Sans', var(--font-subheading--family-fallback, sans-serif);
+    }
+  </style>
+{% endif %}
