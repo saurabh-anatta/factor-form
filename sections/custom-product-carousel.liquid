@@ -142,25 +142,20 @@
                     >
                   {%- endif -%}
                 </div>
-                {%- comment -%} Badges {%- endcomment -%}
-                <div class="cpc__badges">
-                  {%- if block.settings.badge_1_text != blank -%}
-                    <span
-                      class="cpc__badge"
-                      style="--badge-bg: {{ block.settings.badge_1_color }}; --badge-text: {% if block.settings.badge_1_color == '#FFFFFF' or block.settings.badge_1_color == '#ffffff' %}#141414{% else %}#FFFFFF{% endif %};"
-                    >
-                      {{ block.settings.badge_1_text | escape }}
-                    </span>
-                  {%- endif -%}
-                  {%- if block.settings.badge_2_text != blank -%}
-                    <span
-                      class="cpc__badge"
-                      style="--badge-bg: {{ block.settings.badge_2_color }}; --badge-text: {% if block.settings.badge_2_color == '#FFFFFF' or block.settings.badge_2_color == '#ffffff' %}#141414{% else %}#FFFFFF{% endif %};"
-                    >
-                      {{ block.settings.badge_2_text | escape }}
-                    </span>
-                  {%- endif -%}
-                </div>
+                {%- comment -%} Badges from metafields {%- endcomment -%}
+                {%- if block.settings.product.metafields.custom.badges.value != blank -%}
+                  {%- for badge in block.settings.product.metafields.custom.badges.value -%}
+                    {%- if badge.label != blank -%}
+                      {%- assign badge_position = badge.position | default: 'top-left' -%}
+                      <span
+                        class="cpc__badge cpc__badge--{{ badge_position }}"
+                        style="--badge-bg: {{ badge.background_color }}; --badge-text: {{ badge.text_color }};"
+                      >
+                        {{ badge.label | escape }}
+                      </span>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
                 {%- if block.settings.show_heart -%}
                   <span class="cpc__heart" aria-hidden="true">
                     <img src="{{ 'heart-2.svg' | asset_url }}" alt="" role="presentation" width="16" height="16" loading="lazy">
@@ -498,16 +493,9 @@
   object-fit: cover;
 }
 
-.cpc__badges {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 .cpc__badge {
+  position: absolute;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   padding: 6px 12px;
@@ -520,6 +508,26 @@
   line-height: 12px;
   letter-spacing: 0.6px;
   white-space: nowrap;
+}
+
+.cpc__badge--top-left {
+  top: 8px;
+  left: 8px;
+}
+
+.cpc__badge--top-right {
+  top: 8px;
+  right: 8px;
+}
+
+.cpc__badge--bottom-left {
+  bottom: 8px;
+  left: 8px;
+}
+
+.cpc__badge--bottom-right {
+  bottom: 8px;
+  right: 8px;
 }
 
 .cpc__heart {
@@ -1062,28 +1070,6 @@
           "id": "cta_text",
           "label": "t:settings.cta_text",
           "default": "ADD TO CART"
-        },
-        {
-          "type": "text",
-          "id": "badge_1_text",
-          "label": "t:settings.badge_1_text"
-        },
-        {
-          "type": "color",
-          "id": "badge_1_color",
-          "label": "t:settings.badge_1_color",
-          "default": "#141414"
-        },
-        {
-          "type": "text",
-          "id": "badge_2_text",
-          "label": "t:settings.badge_2_text"
-        },
-        {
-          "type": "color",
-          "id": "badge_2_color",
-          "label": "t:settings.badge_2_color",
-          "default": "#EC0606"
         },
         {
           "type": "checkbox",
