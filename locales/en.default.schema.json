@@ -904,6 +904,8 @@
     "enable_custom_heading_font": "Use custom font for headings",
     "custom_font_heading": "Custom heading font",
     "custom_font_heading_info": "When enabled, the heading font above will be replaced by the custom font selected below.",
+    "enable_custom_body_font": "Use custom font for body text",
+    "custom_font_body_info": "When enabled, body and subheading fonts use the custom Plus Jakarta Sans override.",
     "enable_filtering": "Filters",
     "enable_grid_density": "Grid layout control",
     "enable_sorting": "Sorting",

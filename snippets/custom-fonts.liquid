@@ -71,4 +71,13 @@
       --font-accent--weight: 700;
     }
   {% endif %}
+
+  {% if settings.enable_custom_body_font %}
+    :root {
+      --font-body--family: 'Plus Jakarta Sans', var(--font-body--family-fallback, sans-serif);
+      --font-body--weight: 400;
+      --font-subheading--family: 'Plus Jakarta Sans', var(--font-subheading--family-fallback, sans-serif);
+      --font-subheading--weight: 600;
+    }
+  {% endif %}
 </style>

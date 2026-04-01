@@ -403,6 +403,13 @@
         "default": "ivyoradisplay"
       },
       {
+        "type": "checkbox",
+        "id": "enable_custom_body_font",
+        "label": "t:settings.enable_custom_body_font",
+        "default": true,
+        "info": "t:settings.custom_font_body_info"
+      },
+      {
         "type": "header",
         "content": "t:content.text_presets"
       },
