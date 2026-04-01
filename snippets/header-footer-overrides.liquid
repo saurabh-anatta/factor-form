@@ -63,15 +63,25 @@
      ======================================== */
 
   @media screen and (min-width: 990px) {
-    /* Override dark color scheme on submenu container and all its wrappers */
+    /* Override dark color scheme on ALL submenu elements — nuclear override */
     .menu-list__submenu,
-    .menu-list__submenu[class*="color-"] {
+    .menu-list__submenu[class*="color-"],
+    .menu-list__submenu *,
+    .overflow-menu::part(overflow) {
       --color-background: rgb(255, 255, 255) !important;
       --color-background-rgb: 255, 255, 255 !important;
+    }
+
+    .menu-list__submenu,
+    .menu-list__submenu[class*="color-"] {
       --submenu-padding-block-start: 0px !important;
       --submenu-padding-block-end: 0px !important;
+      background: #FFFFFF !important;
       background-color: #FFFFFF !important;
-      color: #141414;
+      color: #141414 !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
     }
 
     /* White background with shadow for mega menu dropdown */

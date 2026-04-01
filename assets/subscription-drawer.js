@@ -27,6 +27,18 @@ class SubscriptionDrawer extends HTMLElement {
 
   _interceptAddToCart() {
     document.addEventListener('click', (e) => {
+      // Generic trigger: data-subscription-drawer-handle (highest priority)
+      const drawerBtn = e.target.closest('[data-subscription-drawer-handle]');
+      if (drawerBtn) {
+        const handle = drawerBtn.dataset.subscriptionDrawerHandle;
+        if (handle) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.open(handle);
+          return;
+        }
+      }
+
       // PLP card add button
       const plpBtn = e.target.closest('.plp-card__add-btn');
       if (plpBtn) {
@@ -57,13 +69,6 @@ class SubscriptionDrawer extends HTMLElement {
           }
         }
       }
-
-      // Generic trigger: data-subscription-drawer-handle
-      const drawerBtn = e.target.closest('[data-subscription-drawer-handle]');
-      if (drawerBtn) {
-        e.preventDefault();
-        this.open(drawerBtn.dataset.subscriptionDrawerHandle);
-      }
     }, true); // capture phase — fires before other handlers
   }
 
@@ -93,10 +98,16 @@ class SubscriptionDrawer extends HTMLElement {
     title.textContent = '';
 
     try {
-      const [product, sellingPlanData] = await Promise.all([
-        this._fetchProduct(handle),
-        this._fetchSellingPlans(handle),
-      ]);
+      // Fetch product data — required
+      const product = await this._fetchProduct(handle);
+
+      // Fetch selling plans — optional, don't fail if unavailable
+      let sellingPlanData = null;
+      try {
+        sellingPlanData = await this._fetchSellingPlans(handle);
+      } catch {
+        // No selling plans available — continue without them
+      }
 
       this._product = product;
       this._sellingPlans = sellingPlanData?.selling_plan_groups || [];

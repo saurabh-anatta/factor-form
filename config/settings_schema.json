@@ -1354,6 +1354,60 @@
           }
         ],
         "default": "none"
+      },
+      {
+        "type": "header",
+        "content": "t:content.custom_fonts"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:content.custom_fonts_info"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_custom_heading_font",
+        "label": "t:settings.enable_custom_heading_font",
+        "default": true,
+        "info": "t:info.custom_heading_font"
+      },
+      {
+        "type": "select",
+        "id": "custom_font_heading",
+        "label": "t:settings.custom_font_heading",
+        "options": [
+          {
+            "value": "ivyoradisplay",
+            "label": "IvyOraDisplay"
+          },
+          {
+            "value": "plusjakartasans",
+            "label": "PlusJakartaSans"
+          }
+        ],
+        "default": "ivyoradisplay"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_custom_body_font",
+        "label": "t:settings.enable_custom_body_font",
+        "default": false,
+        "info": "t:info.custom_body_font"
+      },
+      {
+        "type": "select",
+        "id": "custom_font_body",
+        "label": "t:settings.custom_font_body",
+        "options": [
+          {
+            "value": "ivyoradisplay",
+            "label": "IvyOraDisplay"
+          },
+          {
+            "value": "plusjakartasans",
+            "label": "PlusJakartaSans"
+          }
+        ],
+        "default": "ivyoradisplay"
       }
     ]
   },

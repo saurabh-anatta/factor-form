@@ -11,6 +11,9 @@
 
   Until those files are present, the theme will gracefully fall back to
   Work Sans (set via Shopify font_picker in settings_data.json).
+
+  Additional custom fonts (IvyOraDisplay, PlusJakartaSans) are gated behind
+  merchant-toggleable checkboxes in Theme Settings > Typography > Custom Fonts.
 {% endcomment %}
 
 <style>
@@ -38,10 +41,46 @@
     font-display: swap;
   }
 
+  @font-face {
+    font-family: 'IvyOraDisplay';
+    src: url('{{ "IvyOraDisplay-Regular.woff2" | asset_url }}') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'PlusJakartaSans';
+    src: url('{{ "PlusJakartaSans.woff" | asset_url }}') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
   :root {
     --font-heading--family: 'Simplon Norm', var(--font-heading--family-fallback, sans-serif);
     --font-heading--weight: 300;
     --font-accent--family: 'Simplon Norm', var(--font-accent--family-fallback, sans-serif);
     --font-accent--weight: 700;
+    --font-ivyoradisplay: 'IvyOraDisplay', sans-serif;
+    --font-plusjakartasans: 'PlusJakartaSans', sans-serif;
   }
+
+  {% if settings.enable_custom_heading_font %}
+    {% case settings.custom_font_heading %}
+      {% when 'ivyoradisplay' %}
+        :root { --font-heading--family: 'IvyOraDisplay', var(--font-heading--family-fallback, sans-serif); }
+      {% when 'plusjakartasans' %}
+        :root { --font-heading--family: 'PlusJakartaSans', var(--font-heading--family-fallback, sans-serif); }
+    {% endcase %}
+  {% endif %}
+
+  {% if settings.enable_custom_body_font %}
+    {% case settings.custom_font_body %}
+      {% when 'ivyoradisplay' %}
+        :root { --font-body--family: 'IvyOraDisplay', var(--font-body--family-fallback, sans-serif); }
+      {% when 'plusjakartasans' %}
+        :root { --font-body--family: 'PlusJakartaSans', var(--font-body--family-fallback, sans-serif); }
+    {% endcase %}
+  {% endif %}
 </style>
