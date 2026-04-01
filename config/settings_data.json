@@ -9,6 +9,10 @@
  */
 {
   "current": {
+    "enable_custom_heading_font": true,
+    "custom_font_heading": "ivyoradisplay",
+    "enable_custom_body_font": true,
+    "custom_font_body": "plusjakartasans",
     "logo": "shopify://shop_images/Group.svg",
     "logo_height": 36,
     "logo_height_mobile": 28,
@@ -357,6 +361,10 @@
   },
   "presets": {
     "Default": {
+      "enable_custom_heading_font": true,
+      "custom_font_heading": "ivyoradisplay",
+      "enable_custom_body_font": true,
+      "custom_font_body": "plusjakartasans",
       "logo_height": 36,
       "logo_height_mobile": 28,
       "type_body_font": "plus_jakarta_sans_n4",

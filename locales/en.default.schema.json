@@ -68,6 +68,8 @@
     "follow_on_shop_eligiblity": "For the button to show, the Shop channel must be installed and Shop Pay activated. [Learn more](https://help.shopify.com/en/manual/online-store/themes/customizing-themes/add-shop-buttons)",
     "gift_card_form_description": "Customers can send gift cards to a recipient's email with a personal message. [Learn more](https://help.shopify.com/manual/products/gift-card-products)",
     "fonts": "Fonts",
+    "custom_fonts": "Custom Fonts",
+    "custom_fonts_info": "Enable custom fonts to override the default Shopify fonts selected above.",
     "grid": "Grid",
     "grid_layout": "Grid layout",
     "heading": "Heading",
@@ -214,6 +216,8 @@
     "work_quickly_to_ship": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
   },
   "info": {
+    "enable_custom_heading_font": "Uses IvyOraDisplay for headings",
+    "enable_custom_body_font": "Uses Plus Jakarta Sans for body text",
     "actions_display_style": "Icons are always used on mobile",
     "applies_on_image_only": "Applies to images only",
     "aspect_ratio_adjusted": "Adjusted in some layouts",
@@ -806,6 +810,10 @@
     "always_stack_buttons": "Always stack buttons",
     "aspect_ratio": "Aspect ratio",
     "custom_mobile_media": "Show different media on mobile",
+    "enable_custom_heading_font": "Custom heading font",
+    "enable_custom_body_font": "Custom body font",
+    "custom_font_heading": "Custom heading font",
+    "custom_font_body": "Custom body font",
     "stack_media_on_mobile": "Stack media",
     "auto_rotate_announcements": "Auto-rotate announcements",
     "auto_rotate_slides": "Auto-rotate slides",
