@@ -404,7 +404,7 @@
         "type": "checkbox",
         "id": "enable_custom_body_font",
         "label": "t:settings.enable_custom_body_font",
-        "default": false,
+        "default": true,
         "info": "t:content.custom_body_font_info"
       },
       {
