@@ -44,4 +44,50 @@
     --font-accent--family: 'Simplon Norm', var(--font-accent--family-fallback, sans-serif);
     --font-accent--weight: 700;
   }
+
+  @font-face {
+    font-family: 'IvyOra Display';
+    src: url('{{ "IvyOraDisplay-Regular.woff2" | asset_url }}') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Plus Jakarta Sans Custom';
+    src: url('{{ "PlusJakartaSans.woff" | asset_url }}') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  {% if settings.enable_custom_heading_font %}
+    {% case settings.custom_font_heading %}
+      {% when 'ivyoradisplay' %}
+        :root {
+          --font-heading--family: 'IvyOra Display', var(--font-heading--family-fallback, sans-serif);
+          --font-heading--weight: 400;
+        }
+      {% when 'plusjakartasans' %}
+        :root {
+          --font-heading--family: 'Plus Jakarta Sans Custom', var(--font-heading--family-fallback, sans-serif);
+          --font-heading--weight: 400;
+        }
+    {% endcase %}
+  {% endif %}
+
+  {% if settings.enable_custom_body_font %}
+    {% case settings.custom_font_body %}
+      {% when 'ivyoradisplay' %}
+        :root {
+          --font-body--family: 'IvyOra Display', var(--font-body--family-fallback, sans-serif);
+          --font-subheading--family: 'IvyOra Display', var(--font-subheading--family-fallback, sans-serif);
+        }
+      {% when 'plusjakartasans' %}
+        :root {
+          --font-body--family: 'Plus Jakarta Sans Custom', var(--font-body--family-fallback, sans-serif);
+          --font-subheading--family: 'Plus Jakarta Sans Custom', var(--font-subheading--family-fallback, sans-serif);
+        }
+    {% endcase %}
+  {% endif %}
 </style>

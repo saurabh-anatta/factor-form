@@ -13,9 +13,9 @@
       "type": "hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/main-hero-img-3-1-desktop-110524489.png",
+        "image_1": "shopify://shop_images/main-hero-img-3-1-desktop-homepage-110524489.png",
         "media_type_2": "image",
-        "image_2": "shopify://shop_images/image-1-desktop-110524490.png",
+        "image_2": "shopify://shop_images/image-1-desktop-homepage-110524490.png",
         "content_direction": "column",
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
@@ -82,7 +82,7 @@
         "review-1": {
           "type": "review-item",
           "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524516.png",
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-homepage-110524516.png",
             "quote": "\"The taste is a lot better than the greens powder I'm usually taking\"",
             "author": "Nicole B.  |  Paid review†",
             "show_play_button": true,
@@ -92,7 +92,7 @@
         "review-2": {
           "type": "review-item",
           "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524524.png",
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-homepage-110524524.png",
             "quote": "\"It's delivered right to your door, for a very fair price, so I highly recommend it\"",
             "author": "Brian L.  |  Paid review†",
             "show_play_button": true,
@@ -102,7 +102,7 @@
         "review-3": {
           "type": "review-item",
           "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524532.png",
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-homepage-110524532.png",
             "quote": "\"I feel like I have more energy and ability to focus\"",
             "author": "Omni P.  |  Paid review†",
             "show_play_button": true,
@@ -112,7 +112,7 @@
         "review-4": {
           "type": "review-item",
           "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524540.png",
+            "image": "shopify://shop_images/greens-nicole-b-1-desktop-homepage-110524540.png",
             "quote": "\"The ritual of having it first thing in the morning has been a positive\"",
             "author": "Zack S. | Paid review†",
             "show_play_button": true,
@@ -165,7 +165,7 @@
         "category-card-1": {
           "type": "category-card",
           "settings": {
-            "image": "shopify://shop_images/agile-support-1-desktop-112594627.png",
+            "image": "shopify://shop_images/agile-support-1-desktop-homepage-112594627.png",
             "title": "Gut Health",
             "description": "Superfoods and nutrients for daily digestive support",
             "cta_text": "VIEW ALL GUT HEALTH",
@@ -177,7 +177,7 @@
           "settings": {
             "product": "daily-greens",
             "product_handle": "daily-greens",
-            "image": "shopify://shop_images/image-desktop-112594636.png",
+            "image": "shopify://shop_images/image-desktop-homepage-112594636.png",
             "title": "Daily Greens",
             "description": "Drink your veggies on-the-go with a refreshing twist.",
             "price": "$47.39",
@@ -194,7 +194,7 @@
           "settings": {
             "product": "starter-bundle",
             "product_handle": "starter-bundle",
-            "image": "shopify://shop_images/image-desktop-112594700.png",
+            "image": "shopify://shop_images/image-desktop-homepage-112594700.png",
             "title": "Starter Bundle",
             "description": "Hydration and gut health to give you energy and crush your goals",
             "price": "$56.39",
@@ -207,7 +207,7 @@
           "settings": {
             "product": "greens-gains-bundle",
             "product_handle": "greens-gains-bundle",
-            "image": "shopify://shop_images/agile-support-1-desktop-112594812.png",
+            "image": "shopify://shop_images/agile-support-1-desktop-homepage-112594812.png",
             "title": "Greens & Gains Bundle",
             "description": "Foundation nutrition plus protein to support muscle recovery and gut health",
             "price": "$56.39",
@@ -220,7 +220,7 @@
           "settings": {
             "product": "immunity-bundle",
             "product_handle": "immunity-bundle",
-            "image": "shopify://shop_images/image-desktop-112594752.png",
+            "image": "shopify://shop_images/image-desktop-homepage-112594752.png",
             "title": "Immunity Bundle",
             "description": "Daily defense with probiotics, immunity vitamins & minerals, and electrolytes.",
             "price": "$56.39",
@@ -298,7 +298,7 @@
         "certified-1": {
           "type": "certified-item",
           "settings": {
-            "image": "shopify://shop_images/image-59-desktop-110864992.png",
+            "image": "shopify://shop_images/image-59-desktop-homepage-110864992.png",
             "heading": "Pure Ingredients",
             "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
           }
@@ -306,7 +306,7 @@
         "certified-2": {
           "type": "certified-item",
           "settings": {
-            "image": "shopify://shop_images/image-58-desktop-110864999.png",
+            "image": "shopify://shop_images/image-58-desktop-homepage-110864999.png",
             "heading": "Expert-Crafted Blends",
             "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
           }
@@ -314,7 +314,7 @@
         "certified-3": {
           "type": "certified-item",
           "settings": {
-            "image": "shopify://shop_images/image-60-desktop-110865006.png",
+            "image": "shopify://shop_images/image-60-desktop-homepage-110865006.png",
             "heading": "Transparent and Clean Labels",
             "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
           }
@@ -335,7 +335,7 @@
         "dietitian-1": {
           "type": "dietitian-item",
           "settings": {
-            "image": "shopify://shop_images/image-61-desktop-118265456.png",
+            "image": "shopify://shop_images/image-61-desktop-homepage-118265456.png",
             "quote": "\"A rigorous 'no list' of over 100 banned ingredients\"",
             "description": "Factor Form upholds strong nutrition and ingredient standards across all products. We ensure only high quality ingredients make it into our products",
             "author": "Kara Kash   |   Research & Development"
@@ -344,7 +344,7 @@
         "dietitian-2": {
           "type": "dietitian-item",
           "settings": {
-            "image": "shopify://shop_images/image-62-desktop-118265466.png",
+            "image": "shopify://shop_images/image-62-desktop-homepage-118265466.png",
             "quote": "\"One serving equals a whole serving of green leafy veggies\"",
             "description": "I love that the vitamin and mineral content is balanced; the daily value percentages aren't excessive",
             "author": "Carlie Williams   |   Dietitian + Personal Trainer"
@@ -353,7 +353,7 @@
         "dietitian-3": {
           "type": "dietitian-item",
           "settings": {
-            "image": "shopify://shop_images/image-63-desktop-118265476.png",
+            "image": "shopify://shop_images/image-63-desktop-homepage-118265476.png",
             "quote": "\"A good mix of B vitamins along with typical electrolytes\"",
             "description": "B Vitamins act as coenzymes when your body is metabolizing energy, so it's nice to have that in an electrolyte mix",
             "author": "Olivia Hamilton   |   Dietitian"
@@ -367,8 +367,8 @@
       "settings": {
         "heading": "FREE Daily Greens Welcome Kit worth $36",
         "description": "Turn your daily habit into a delicious ritual with a kit full of greens essentials. Free welcome kit with first time purchase of Daily Greens.",
-        "image": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-desktop-110525076.png",
-        "image_mobile": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-mobile-110526574.png",
+        "image": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-desktop-homepage-110525076.png",
+        "image_mobile": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-mobile-homepage-110526574.png",
         "badge_text": "FREE WELCOME KIT",
         "button_text": "SHOP DAILY GREENS",
         "background_color": "#E1F0E2",
