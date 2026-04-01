@@ -145,13 +145,16 @@
                 {%- comment -%} Badges from metafields {%- endcomment -%}
                 {%- if block.settings.product.metafields.custom.badges.value != blank -%}
                   {%- for badge in block.settings.product.metafields.custom.badges.value -%}
-                    {%- if badge.label != blank -%}
-                      {%- assign badge_position = badge.position | default: 'top-left' -%}
+                    {%- assign badge_label = badge.fields.label.value -%}
+                    {%- if badge_label != blank -%}
+                      {%- assign badge_position = badge.fields.position.value | default: 'top-left' -%}
+                      {%- assign badge_bg = badge.fields.background_color.value -%}
+                      {%- assign badge_text_color = badge.fields.text_color.value -%}
                       <span
                         class="cpc__badge cpc__badge--{{ badge_position }}"
-                        style="--badge-bg: {{ badge.background_color }}; --badge-text: {{ badge.text_color }};"
+                        style="--badge-bg: {{ badge_bg }}; --badge-text: {{ badge_text_color }};"
                       >
-                        {{ badge.label | escape }}
+                        {{ badge_label | escape }}
                       </span>
                     {%- endif -%}
                   {%- endfor -%}
