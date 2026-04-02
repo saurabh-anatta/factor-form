@@ -143,18 +143,19 @@
                   {%- endif -%}
                 </div>
                 {%- comment -%} Badges from metafields {%- endcomment -%}
-                {%- if block.settings.product.metafields.custom.badges.value != blank -%}
-                  {%- for badge in block.settings.product.metafields.custom.badges.value -%}
-                    {%- assign badge_label = badge.fields.label.value -%}
-                    {%- assign badge_position = badge.fields.position.value | default: 'top-left' -%}
-                    {%- assign badge_bg = badge.fields.background_color.value -%}
-                    {%- assign badge_text_color = badge.fields.text_color.value -%}
-                    {%- if badge_label != blank -%}
+                {%- assign cpc_badges = block.settings.product.metafields.custom.badges.value -%}
+                {%- if cpc_badges != blank -%}
+                  {%- for cpc_badge in cpc_badges -%}
+                    {%- assign cpc_badge_label = cpc_badge.label.value -%}
+                    {%- assign cpc_badge_position = cpc_badge.position.value | default: 'top-left' -%}
+                    {%- assign cpc_badge_bg = cpc_badge.background_color.value -%}
+                    {%- assign cpc_badge_text_color = cpc_badge.text_color.value -%}
+                    {%- if cpc_badge_label != blank -%}
                       <span
-                        class="cpc__badge cpc__badge--{{ badge_position }}"
-                        style="--badge-bg: {{ badge_bg }}; --badge-text: {{ badge_text_color }};"
+                        class="cpc__badge cpc__badge--{{ cpc_badge_position }}"
+                        style="--badge-bg: {{ cpc_badge_bg }}; --badge-text: {{ cpc_badge_text_color }};"
                       >
-                        {{ badge_label | escape }}
+                        {{ cpc_badge_label | escape }}
                       </span>
                     {%- endif -%}
                   {%- endfor -%}
