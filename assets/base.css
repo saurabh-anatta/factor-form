@@ -845,6 +845,13 @@ h2,
   }
 }
 
+@media screen and (max-width: 749px) {
+  h2 {
+    font-size: 2rem;
+    line-height: var(--line-height--heading-normal);
+  }
+}
+
 h3,
 .h3,
 .h3.h3,
