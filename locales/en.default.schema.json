@@ -478,7 +478,9 @@
     "custom_results": "Results",
     "stat_item": "Stat Item",
     "custom_ingredients": "Ingredients",
-    "ingredient_item": "Ingredient"
+    "ingredient_item": "Ingredient",
+    "custom_marquee": "Marquee",
+    "marquee_item": "Marquee item"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1316,7 +1318,10 @@
     "factor_form_check": "Factor Form",
     "others_check": "Others",
     "stat_value": "Stat value",
-    "icon": "Icon"
+    "icon": "Icon",
+    "marquee_speed": "Speed",
+    "item_text": "Text",
+    "item_image": "Image"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",

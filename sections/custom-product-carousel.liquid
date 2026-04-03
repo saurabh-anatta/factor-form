@@ -2,8 +2,6 @@
   assign color_scheme = section.settings.color_scheme
   assign heading = section.settings.heading
   assign subheading = section.settings.subheading
-  assign ticker_text = section.settings.ticker_text
-  assign ticker_color = section.settings.ticker_color
   assign bg_color = section.settings.background_color
 %}
 
@@ -14,7 +12,6 @@
       --section-padding-top: {{ section.settings.padding-block-start }}px;
       --section-padding-bottom: {{ section.settings.padding-block-end }}px;
       --cpc-bg: {{ bg_color }};
-      --cpc-ticker-color: {{ ticker_color }};
     "
   >
     {%- comment -%} Header area {%- endcomment -%}
@@ -210,23 +207,6 @@
       {%- endfor -%}
     </div>
 
-    {%- comment -%} Ticker marquee {%- endcomment -%}
-    {% if ticker_text != blank %}
-      {% assign ticker_items = ticker_text | split: '|' %}
-      <div class="cpc__ticker" aria-hidden="true">
-        <div class="cpc__ticker-track" data-ticker-track>
-          <div class="cpc__ticker-content" data-ticker-content>
-            {%- for item in ticker_items -%}
-              <span class="cpc__ticker-item">{{ item | strip | escape }}</span>
-              {%- unless forloop.last -%}
-                <span class="cpc__ticker-dot"></span>
-              {%- endunless -%}
-            {%- endfor -%}
-            <span class="cpc__ticker-dot"></span>
-          </div>
-        </div>
-      </div>
-    {% endif %}
   </div>
 </custom-product-carousel>
 
@@ -653,57 +633,6 @@
   }
 }
 
-/* Ticker */
-.cpc__ticker {
-  width: 100%;
-  overflow: hidden;
-  padding: 16px 0;
-}
-
-.cpc__ticker-track {
-  display: flex;
-  flex-direction: row;
-  width: max-content;
-  animation: cpc-ticker-scroll 30s linear infinite;
-}
-
-@keyframes cpc-ticker-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.cpc__ticker-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 24px;
-  padding-inline-end: 24px;
-}
-
-.cpc__ticker-item {
-  font-family: var(--font-accent--family);
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 18px;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  color: var(--cpc-ticker-color, #3F7057);
-  white-space: nowrap;
-}
-
-.cpc__ticker-dot {
-  display: block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--cpc-ticker-color, #3F7057);
-  flex-shrink: 0;
-}
-
 /* Mobile styles */
 @media screen and (max-width: 749px) {
   .cpc {
@@ -891,12 +820,6 @@
   }
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .cpc__ticker-track {
-    animation-play-state: paused;
-  }
-}
 {% endstylesheet %}
 
 {% schema %}
@@ -916,18 +839,6 @@
       "id": "heading",
       "label": "t:settings.heading",
       "default": "Built From Food, Designed for Results"
-    },
-    {
-      "type": "textarea",
-      "id": "ticker_text",
-      "label": "t:settings.ticker_text",
-      "default": "Grounded in Food Science | High Quality Ingredients | Flavorful Nutrition | Dietitian Approved | No Added Sugar | Keto Friendly"
-    },
-    {
-      "type": "color",
-      "id": "ticker_color",
-      "label": "t:settings.ticker_color",
-      "default": "#3F7057"
     },
     {
       "type": "color",

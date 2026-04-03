@@ -4,7 +4,6 @@ class CustomProductCarousel extends HTMLElement {
     this.prevButton = this.querySelector('[data-carousel-prev]');
     this.nextButton = this.querySelector('[data-carousel-next]');
     this.tabs = this.querySelectorAll('[data-carousel-tab]');
-    this.tickerContent = this.querySelector('[data-ticker-content]');
 
     if (!this.track) return;
 
@@ -25,8 +24,6 @@ class CustomProductCarousel extends HTMLElement {
       });
     }
 
-    this.initTicker();
-    this.respectReducedMotion();
   }
 
   disconnectedCallback() {
@@ -77,31 +74,6 @@ class CustomProductCarousel extends HTMLElement {
     }
   }
 
-  initTicker() {
-    if (!this.tickerContent) return;
-
-    const clone = this.tickerContent.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    this.tickerContent.parentNode.appendChild(clone);
-  }
-
-  respectReducedMotion() {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const tickerTrack = this.querySelector('[data-ticker-track]');
-
-    if (!tickerTrack) return;
-
-    const applyMotionPreference = (e) => {
-      if (e.matches) {
-        tickerTrack.style.animationPlayState = 'paused';
-      } else {
-        tickerTrack.style.animationPlayState = 'running';
-      }
-    };
-
-    applyMotionPreference(mediaQuery);
-    mediaQuery.addEventListener('change', applyMotionPreference);
-  }
 }
 
 customElements.define('custom-product-carousel', CustomProductCarousel);

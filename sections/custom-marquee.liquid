@@ -1,0 +1,241 @@
+{% liquid
+  assign ticker_color = section.settings.ticker_color
+  assign bg_color = section.settings.background_color
+  assign speed = section.settings.marquee_speed
+%}
+
+<custom-marquee>
+  <div
+    class="cm color-{{ section.settings.color_scheme }}"
+    style="
+      --section-padding-top: {{ section.settings.padding-block-start }}px;
+      --section-padding-bottom: {{ section.settings.padding-block-end }}px;
+      --cm-bg: {{ bg_color }};
+      --cm-ticker-color: {{ ticker_color }};
+      --cm-speed: {{ speed }}s;
+    "
+  >
+    <div class="cm__ticker" aria-hidden="true">
+      <div class="cm__ticker-track" data-ticker-track>
+        <div class="cm__ticker-content" data-ticker-content>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'marquee-item' and block.settings.text != blank -%}
+              <span class="cm__ticker-item" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 48 }}"
+                    alt=""
+                    role="presentation"
+                    width="24"
+                    height="24"
+                    loading="lazy"
+                    class="cm__ticker-image"
+                  >
+                {%- endif -%}
+                {{ block.settings.text | escape }}
+              </span>
+              <span class="cm__ticker-dot"></span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</custom-marquee>
+
+<script src="{{ 'custom-marquee.js' | asset_url }}" type="module"></script>
+
+{% stylesheet %}
+.cm {
+  padding-block-start: var(--section-padding-top, 16px);
+  padding-block-end: var(--section-padding-bottom, 16px);
+  background-color: var(--cm-bg, #F1F1EA);
+  overflow: hidden;
+}
+
+.cm__ticker {
+  width: 100%;
+  overflow: hidden;
+  padding: 16px 0;
+}
+
+.cm__ticker-track {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  animation: cm-ticker-scroll var(--cm-speed, 30s) linear infinite;
+}
+
+@keyframes cm-ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.cm__ticker-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  padding-inline-end: 24px;
+}
+
+.cm__ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--cm-ticker-color, #3F7057);
+  white-space: nowrap;
+}
+
+.cm__ticker-image {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.cm__ticker-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--cm-ticker-color, #3F7057);
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm__ticker-track {
+    animation-play-state: paused;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.custom_marquee",
+  "tag": "section",
+  "class": "custom-marquee-wrapper",
+  "settings": [
+    {
+      "type": "color",
+      "id": "ticker_color",
+      "label": "t:settings.ticker_color",
+      "default": "#3F7057"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "#F1F1EA"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "label": "t:settings.marquee_speed",
+      "min": 5,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "unit": "s"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "marquee-item",
+      "name": "t:names.marquee_item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:settings.item_text",
+          "default": "Marquee text"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.item_image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_marquee",
+      "blocks": [
+        {
+          "type": "marquee-item",
+          "settings": {
+            "text": "Grounded in Food Science"
+          }
+        },
+        {
+          "type": "marquee-item",
+          "settings": {
+            "text": "High Quality Ingredients"
+          }
+        },
+        {
+          "type": "marquee-item",
+          "settings": {
+            "text": "Flavorful Nutrition"
+          }
+        },
+        {
+          "type": "marquee-item",
+          "settings": {
+            "text": "Dietitian Approved"
+          }
+        },
+        {
+          "type": "marquee-item",
+          "settings": {
+            "text": "No Added Sugar"
+          }
+        },
+        {
+          "type": "marquee-item",
+          "settings": {
+            "text": "Keto Friendly"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
