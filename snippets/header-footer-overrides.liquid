@@ -346,6 +346,88 @@
     }
   }
 
+  /* ========================================
+     Mobile Header Layout — Match Figma Design
+     ======================================== */
+
+  /* Hide search icon on mobile */
+  @media screen and (max-width: 749px) {
+    .search-action {
+      display: none !important;
+    }
+
+    /* Override 5-column grid to 3-column: hamburger | logo (left-aligned) | actions */
+    .header__columns {
+      --header-template-columns: auto 1fr auto !important;
+      grid-template-areas: 'leftA center rightB' !important;
+      column-gap: 16px !important;
+      padding-inline: 16px !important;
+    }
+
+    /* Logo left-aligned next to hamburger */
+    .header__columns .header-logo {
+      grid-area: center !important;
+      justify-self: start;
+    }
+
+    /* Actions: flex row with 16px gap for account + cart icons */
+    .header__columns header-actions {
+      grid-area: rightB !important;
+      display: flex !important;
+      gap: 16px;
+      align-items: center;
+    }
+  }
+
+  /* Duplicate overrides for drawer mode (mirrors the @media block above) */
+  #header-component[data-menu-style='drawer'] .header__columns {
+    --header-template-columns: auto 1fr auto !important;
+    grid-template-areas: 'leftA center rightB' !important;
+    column-gap: 16px !important;
+    padding-inline: 16px !important;
+  }
+
+  #header-component[data-menu-style='drawer'] .header__columns .search-action {
+    display: none !important;
+  }
+
+  #header-component[data-menu-style='drawer'] .header__columns .header-logo {
+    grid-area: center !important;
+    justify-self: start;
+  }
+
+  #header-component[data-menu-style='drawer'] .header__columns header-actions {
+    grid-area: rightB !important;
+    display: flex !important;
+    gap: 16px;
+    align-items: center;
+  }
+
+  /* Restore desktop layout — undo drawer overrides on larger screens */
+  @media screen and (min-width: 750px) {
+    #header-component[data-menu-style='drawer'] .header__columns {
+      --header-template-columns: var(--header-left) var(--header-center) var(--header-right) !important;
+      grid-template-areas: 'left center right' !important;
+      column-gap: var(--gap-xl) !important;
+      padding-inline: revert !important;
+    }
+
+    #header-component[data-menu-style='drawer'] .header__columns .search-action {
+      display: revert !important;
+    }
+
+    #header-component[data-menu-style='drawer'] .header__columns .header-logo {
+      grid-area: revert !important;
+      justify-self: revert;
+    }
+
+    #header-component[data-menu-style='drawer'] .header__columns header-actions {
+      grid-area: revert !important;
+      display: revert !important;
+      gap: revert;
+    }
+  }
+
   /* Header: FAQ link in actions area */
   .header-actions__faq-link {
     display: none;
