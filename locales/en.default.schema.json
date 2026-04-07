@@ -154,7 +154,9 @@
     "navigation": "Navigation",
     "custom_plp_hero": "Hero banner",
     "custom_plp_style": "Style",
-    "feature_card": "Feature card"
+    "feature_card": "Feature card",
+    "custom_fonts": "Custom fonts",
+    "custom_fonts_paragraph": "Enable custom fonts to override the default Shopify fonts selected above."
   },
   "html_defaults": {
     "join_our_email_list": "<h2>Join our email list</h2>",
@@ -236,7 +238,8 @@
     "video_autoplay": "Videos will be muted by default",
     "video_external": "Use a YouTube or Vimeo URL",
     "pills_usage": "Used for applied filters, discount codes, and search suggestions",
-    "media_type_info": "Features are populated from your menu links"
+    "media_type_info": "Features are populated from your menu links",
+    "enable_custom_heading_font": "When enabled, the heading font above will be replaced by the custom font selected below."
   },
   "names": {
     "column": "Column",
@@ -989,6 +992,8 @@
     "line_height": "Line height",
     "link": "Link",
     "custom_link": "Custom link",
+    "enable_custom_heading_font": "Use custom font for headings",
+    "custom_font_heading": "Custom heading font",
     "link_preset": "Link preset",
     "links": "Links",
     "logo": "Logo",

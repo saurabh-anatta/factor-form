@@ -6,6 +6,7 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    {%- render 'theme-factory-credit' -%}
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"
@@ -30,7 +31,6 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
-    {%- render 'custom-fonts' -%}
     {%- render 'header-footer-overrides' -%}
 
     {% if request.design_mode %}
@@ -38,6 +38,7 @@
     {% endif %}
 
     {{ content_for_header }}
+    {%- render 'custom-fonts' -%}
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">

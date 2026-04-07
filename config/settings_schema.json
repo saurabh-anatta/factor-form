@@ -377,6 +377,33 @@
       },
       {
         "type": "header",
+        "content": "t:content.custom_fonts"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:content.custom_fonts_paragraph"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_custom_heading_font",
+        "label": "t:settings.enable_custom_heading_font",
+        "default": true,
+        "info": "t:info.enable_custom_heading_font"
+      },
+      {
+        "type": "select",
+        "id": "custom_font_heading",
+        "label": "t:settings.custom_font_heading",
+        "options": [
+          {
+            "value": "ivyoradisplay",
+            "label": "IvyOraDisplay"
+          }
+        ],
+        "default": "ivyoradisplay"
+      },
+      {
+        "type": "header",
         "content": "t:content.text_presets"
       },
       {
