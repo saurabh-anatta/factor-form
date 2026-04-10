@@ -428,40 +428,4 @@
     }
   }
 
-  /* Header: FAQ link in actions area */
-  .header-actions__faq-link {
-    display: none;
-  }
-
-  @media screen and (min-width: 750px) {
-    .header-actions__faq-link {
-      display: flex;
-      align-items: center;
-      font-size: var(--header-actions-font-size, 0.875rem);
-      font-family: var(--header-actions-font-family, var(--font-body--family));
-      font-weight: var(--header-actions-font-weight, var(--font-body--weight));
-      text-transform: var(--header-actions-text-case, none);
-      text-decoration: none;
-      color: inherit;
-      white-space: nowrap;
-    }
-
-    .header-actions__faq-link:hover {
-      opacity: 0.7;
-    }
-  }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const headerActions = document.querySelector('header-actions');
-    if (!headerActions) return;
-
-    /* Inject FAQ link before account/cart */
-    const faqLink = document.createElement('a');
-    faqLink.href = '/pages/faqs';
-    faqLink.className = 'header-actions__faq-link header-actions__action header-actions__text-style';
-    faqLink.textContent = 'FAQs';
-    headerActions.insertBefore(faqLink, headerActions.firstChild);
-  });
-</script>
