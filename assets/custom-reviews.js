@@ -1,4 +1,6 @@
 class CustomReviewsCarousel extends HTMLElement {
+  static AUTOPLAY_DURATION = 5000;
+
   connectedCallback() {
     this.track = this.querySelector('[data-reviews-track]');
     this.dots = this.querySelectorAll('[data-reviews-dot]');
@@ -9,25 +11,45 @@ class CustomReviewsCarousel extends HTMLElement {
 
     if (!this.track || this.dots.length === 0 || this.items.length === 0) return;
 
+    this.activeIndex = 0;
+    this.autoplayTimer = null;
     this.scrollTimeout = null;
+    this.isUserScrolling = false;
+
     this.handleScroll = this.handleScroll.bind(this);
     this.track.addEventListener('scroll', this.handleScroll, { passive: true });
 
+    // Dot click navigation
     for (const dot of this.dots) {
       dot.addEventListener('click', (event) => {
         const index = parseInt(event.currentTarget.dataset.reviewsDot, 10);
-        const targetItem = this.items[index];
-
-        if (targetItem) {
-          this.track.scrollTo({
-            left: targetItem.offsetLeft - this.track.offsetLeft,
-            behavior: 'smooth'
-          });
-        }
+        this.goToSlide(index);
       });
     }
 
-    this.updateActiveDot();
+    // Touch interaction pauses then restarts autoplay
+    this.track.addEventListener('touchstart', () => {
+      this.isUserScrolling = true;
+      this.stopAutoplay();
+    }, { passive: true });
+
+    this.track.addEventListener('touchend', () => {
+      this.isUserScrolling = false;
+      this.startAutoplay();
+    }, { passive: true });
+
+    this.updateActiveDot(0);
+    this.startAutoplay();
+
+    // Pause when not visible
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        this.startAutoplay();
+      } else {
+        this.stopAutoplay();
+      }
+    }, { threshold: 0.3 });
+    this.intersectionObserver.observe(this);
 
     // Video popup handling
     const playButtons = this.querySelectorAll('.custom-reviews__play[data-video-url]');
@@ -66,8 +88,42 @@ class CustomReviewsCarousel extends HTMLElement {
       this.track.removeEventListener('scroll', this.handleScroll);
     }
 
+    this.stopAutoplay();
+
     if (this.scrollTimeout) {
       clearTimeout(this.scrollTimeout);
+    }
+
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
+    }
+  }
+
+  goToSlide(index) {
+    const targetItem = this.items[index];
+    if (!targetItem) return;
+
+    this.track.scrollTo({
+      left: targetItem.offsetLeft - this.track.offsetLeft,
+      behavior: 'smooth'
+    });
+  }
+
+  startAutoplay() {
+    this.stopAutoplay();
+
+    if (window.matchMedia('(max-width: 749px)').matches) {
+      this.autoplayTimer = setTimeout(() => {
+        const nextIndex = (this.activeIndex + 1) % this.items.length;
+        this.goToSlide(nextIndex);
+      }, CustomReviewsCarousel.AUTOPLAY_DURATION);
+    }
+  }
+
+  stopAutoplay() {
+    if (this.autoplayTimer) {
+      clearTimeout(this.autoplayTimer);
+      this.autoplayTimer = null;
     }
   }
 
@@ -77,16 +133,16 @@ class CustomReviewsCarousel extends HTMLElement {
     }
 
     this.scrollTimeout = setTimeout(() => {
-      this.updateActiveDot();
+      this.updateActiveDotFromScroll();
     }, 50);
   }
 
-  updateActiveDot() {
+  updateActiveDotFromScroll() {
     if (!this.track || this.items.length === 0) return;
 
     const scrollLeft = this.track.scrollLeft;
     const trackWidth = this.track.offsetWidth;
-    let activeIndex = 0;
+    let newIndex = 0;
     let minDistance = Infinity;
 
     for (let i = 0; i < this.items.length; i++) {
@@ -97,14 +153,34 @@ class CustomReviewsCarousel extends HTMLElement {
 
       if (distance < minDistance) {
         minDistance = distance;
-        activeIndex = i;
+        newIndex = i;
       }
     }
 
+    if (newIndex !== this.activeIndex) {
+      this.updateActiveDot(newIndex);
+      this.startAutoplay();
+    }
+  }
+
+  updateActiveDot(index) {
+    this.activeIndex = index;
+
     for (const dot of this.dots) {
       const dotIndex = parseInt(dot.dataset.reviewsDot, 10);
-      dot.classList.toggle('custom-reviews__dot--active', dotIndex === activeIndex);
-      dot.setAttribute('aria-current', dotIndex === activeIndex ? 'true' : 'false');
+      const isActive = dotIndex === index;
+      dot.classList.toggle('custom-reviews__dot--active', isActive);
+      dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+
+      // Restart animation by forcing reflow on the indicator
+      if (isActive) {
+        const indicator = dot.querySelector('.custom-reviews__dot-indicator');
+        if (indicator) {
+          indicator.style.animation = 'none';
+          indicator.offsetHeight; // force reflow
+          indicator.style.animation = '';
+        }
+      }
     }
   }
 
@@ -124,6 +200,8 @@ class CustomReviewsCarousel extends HTMLElement {
 
     const videoId = this.getYouTubeId(videoUrl);
     if (!videoId) return;
+
+    this.stopAutoplay();
 
     this.dialogVideo.innerHTML = `<iframe
       src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1"
@@ -146,6 +224,8 @@ class CustomReviewsCarousel extends HTMLElement {
       this.activePlayButton.focus();
       this.activePlayButton = null;
     }
+
+    this.startAutoplay();
   }
 }
 

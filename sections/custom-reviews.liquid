@@ -115,6 +115,7 @@
 custom-reviews-carousel {
   display: block;
   overflow: hidden;
+  --reviews-autoplay-duration: 5s;
 }
 
 .custom-reviews {
@@ -427,14 +428,31 @@ custom-reviews-carousel {
     height: 8px;
     border-radius: 50%;
     background-color: #80806F;
-    transition: all 0.2s ease;
+    transition: width 0.3s ease, border-radius 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
 
   .custom-reviews__dot--active .custom-reviews__dot-indicator {
     width: 24px;
-    height: 8px;
     border-radius: 4px;
-    background: linear-gradient(to right, #FFFFFF 54%, #80806F 54%);
+    background-color: #80806F;
+  }
+
+  .custom-reviews__dot--active .custom-reviews__dot-indicator::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 0%;
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    animation: reviewsDotFill var(--reviews-autoplay-duration, 5s) linear forwards;
+  }
+
+  @keyframes reviewsDotFill {
+    from { width: 0%; }
+    to { width: 100%; }
   }
 
   .custom-reviews__dialog-circle {
