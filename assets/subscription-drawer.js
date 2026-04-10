@@ -441,9 +441,19 @@ class SubscriptionDrawer extends HTMLElement {
     btn.disabled = true;
     btn.textContent = 'Adding...';
 
+    // Collect section IDs from cart-items-component elements so Shopify
+    // returns updated HTML for the cart drawer in the response
+    const sectionIds = [];
+    for (const el of document.querySelectorAll('cart-items-component')) {
+      if (el.dataset.sectionId) sectionIds.push(el.dataset.sectionId);
+    }
+
     const cartBody = { id: variant.id, quantity: 1 };
     if (this._sellingPlanId) {
       cartBody.selling_plan = this._sellingPlanId;
+    }
+    if (sectionIds.length) {
+      cartBody.sections = sectionIds.join(',');
     }
 
     try {
@@ -455,21 +465,32 @@ class SubscriptionDrawer extends HTMLElement {
 
       if (!resp.ok) throw new Error('Add to cart failed');
 
-      // Update cart count
-      const cartResp = await fetch('/cart.js');
-      const cartData = await cartResp.json();
-      for (const b of document.querySelectorAll('[data-cart-count]')) {
-        b.textContent = cartData.item_count;
-      }
+      const response = await resp.json();
 
-      // Close subscription drawer and open cart drawer
+      // Dispatch the theme's cart:update event so cart-items-component
+      // morphs its HTML and the cart drawer auto-opens
+      const cartUpdateEvent = new CustomEvent('cart:update', {
+        bubbles: true,
+        detail: {
+          resource: response,
+          sourceId: 'subscription-drawer',
+          data: {
+            source: 'subscription-drawer',
+            itemCount: 1,
+            sections: response.sections || {},
+          },
+        },
+      });
+      document.dispatchEvent(cartUpdateEvent);
+
+      // Close subscription drawer
       this.close();
       btn.disabled = false;
       btn.textContent = originalText;
 
+      // Open the cart drawer (it now has fresh HTML from the morph)
       const cartDrawer = document.querySelector('cart-drawer-component');
       if (cartDrawer) {
-        // Refresh cart drawer contents before opening
         cartDrawer.open();
       }
     } catch {
