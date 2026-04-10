@@ -112,12 +112,12 @@ class CustomReviewsCarousel extends HTMLElement {
   startAutoplay() {
     this.stopAutoplay();
 
-    if (window.matchMedia('(max-width: 749px)').matches) {
-      this.autoplayTimer = setTimeout(() => {
-        const nextIndex = (this.activeIndex + 1) % this.items.length;
-        this.goToSlide(nextIndex);
-      }, CustomReviewsCarousel.AUTOPLAY_DURATION);
-    }
+    this.autoplayTimer = setTimeout(() => {
+      const nextIndex = (this.activeIndex + 1) % this.items.length;
+      this.goToSlide(nextIndex);
+      this.updateActiveDot(nextIndex);
+      this.startAutoplay();
+    }, CustomReviewsCarousel.AUTOPLAY_DURATION);
   }
 
   stopAutoplay() {
