@@ -162,16 +162,18 @@
   .custom-dietitians {
     padding-block-start: 48px;
     padding-block-end: 48px;
-    padding-inline: 16px;
+    padding-inline: 0;
+    overflow: hidden;
   }
 
   .custom-dietitians__container {
-    gap: 32px;
+    gap: 24px;
     align-items: flex-start;
   }
 
   .custom-dietitians__header {
     align-items: flex-start;
+    padding-inline: 16px;
   }
 
   .custom-dietitians__heading {
@@ -183,13 +185,26 @@
   }
 
   .custom-dietitians__cards {
-    flex-direction: column;
-    gap: 24px;
+    flex-direction: row;
+    gap: 16px;
     max-width: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-inline-start: 16px;
+    padding-inline: 16px;
+    scrollbar-width: none;
+  }
+
+  .custom-dietitians__cards::-webkit-scrollbar {
+    display: none;
   }
 
   .custom-dietitians__card {
-    max-width: none;
+    min-width: 272px;
+    max-width: 272px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
   }
 }
 {% endstylesheet %}
