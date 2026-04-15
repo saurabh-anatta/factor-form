@@ -285,7 +285,7 @@
       "type": "custom-benefits",
       "settings": {
         "heading": "Why Factor Form",
-        "background_color": "#E1F0E2",
+        "color_scheme": "scheme-3",
         "padding-block-start": 80,
         "padding-block-end": 80
       },

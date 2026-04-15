@@ -1,9 +1,8 @@
 <div
-  class="custom-benefits"
+  class="custom-benefits color-{{ section.settings.color_scheme }}"
   style="
     --section-padding-top: {{ section.settings.padding-block-start }}px;
     --section-padding-bottom: {{ section.settings.padding-block-end }}px;
-    --benefits-bg: {{ section.settings.background_color }};
   "
 >
   <div class="custom-benefits__container">
@@ -58,7 +57,7 @@
   padding-block-start: var(--section-padding-top, 80px);
   padding-block-end: var(--section-padding-bottom, 80px);
   padding-inline: 64px;
-  background-color: var(--benefits-bg, #E1F0E2);
+  background-color: rgb(var(--color-background));
 }
 
 .custom-benefits__container {
@@ -71,7 +70,7 @@
 }
 
 .custom-benefits__heading {
-  color: #141414;
+  color: rgb(var(--color-foreground-heading));
   text-align: center;
   margin: 0;
 }
@@ -120,13 +119,13 @@
   font-size: 18px;
   line-height: 28px;
   letter-spacing: 0;
-  color: #141414;
+  color: rgb(var(--color-foreground-heading));
   text-align: center;
   margin: 0;
 }
 
 .custom-benefits__description {
-  color: #141414;
+  color: rgb(var(--color-foreground));
   text-align: center;
   margin: 0;
 }
@@ -206,12 +205,6 @@
       "id": "heading",
       "label": "t:settings.heading",
       "default": "Why Factor Form"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "t:settings.background_color",
-      "default": "#E1F0E2"
     },
     {
       "type": "color_scheme",
