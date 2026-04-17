@@ -163,7 +163,7 @@
     padding-block-start: 48px;
     padding-block-end: 48px;
     padding-inline: 0;
-    overflow: hidden;
+    overflow-x: clip;
   }
 
   .custom-dietitians__container {
@@ -185,11 +185,12 @@
   }
 
   .custom-dietitians__cards {
+    display: flex;
     flex-direction: row;
     gap: 16px;
     max-width: none;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
     scroll-padding-inline-start: 16px;
     padding-inline: 16px;
