@@ -25,6 +25,16 @@
   assign heading_id = 'FhBestsellersHeading-' | append: section.id
   assign tab_blocks = section.blocks | where: 'type', 'tab'
   assign card_blocks = section.blocks | where: 'type', 'collection_card'
+  assign review_blocks = section.blocks | where: 'type', 'review'
+  assign static_count = card_blocks.size | plus: review_blocks.size
+  assign modifier = ''
+  if tab_blocks.size == 0
+    if review_blocks.size > 0
+      assign modifier = ' fh-bestsellers--reviews'
+    elsif card_blocks.size > 0
+      assign modifier = ' fh-bestsellers--cards'
+    endif
+  endif
   assign pill_tags = section.settings.pill_tags | split: ','
   assign badge_tag = section.settings.badge_tag | strip | downcase
   assign image_label_tag = section.settings.image_label_tag | strip | downcase
@@ -32,7 +42,7 @@
 
 <fh-bestsellers
   id="FhBestsellers-{{ section.id }}"
-  class="fh-bestsellers{% if card_blocks.size > 0 and tab_blocks.size == 0 %} fh-bestsellers--cards{% endif %}"
+  class="fh-bestsellers{{ modifier }}"
   aria-labelledby="{{ heading_id }}"
 >
   <div class="fh-bestsellers__inner">
@@ -303,7 +313,7 @@
       </div>
     {%- endfor -%}
 
-    {%- if card_blocks.size > 0 and tab_blocks.size == 0 -%}
+    {%- if static_count > 0 and tab_blocks.size == 0 -%}
       <div
         class="fh-bestsellers__panel"
         ref="panels[]"
@@ -316,7 +326,72 @@
           tabindex="-1"
           ref="tracks[]"
         >
-          {%- for block in card_blocks -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'tab' -%}{%- continue -%}{%- endif -%}
+            {%- assign slide_label = forloop.index | append: ' of ' | append: static_count -%}
+            {%- if block.type == 'review' -%}
+              {%- assign review_product = block.settings.product -%}
+              <div
+                class="fh-bestsellers__slide fh-bestsellers__review"
+                role="group"
+                aria-roledescription="slide"
+                aria-label="{{ slide_label }}"
+                {{ block.shopify_attributes }}
+              >
+                <figure class="fh-bestsellers__review-body">
+                  {%- if block.settings.title != blank -%}
+                    <p class="fh-bestsellers__review-title">{{ block.settings.title | escape }}</p>
+                  {%- endif -%}
+                  <span
+                    class="fh-bestsellers__review-stars"
+                    role="img"
+                    aria-label="{{ block.settings.rating }} out of 5 stars"
+                  >
+                    {%- for i in (1..5) -%}
+                      <svg
+                        class="fh-bestsellers__review-star{% if i > block.settings.rating %} fh-bestsellers__review-star--empty{% endif %}"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path d="M7 10.074 10.605 12.25l-.957-4.101 3.185-2.759-4.194-.356L7 1.167 5.361 5.034l-4.194.356 3.185 2.759L3.395 12.25 7 10.074Z" fill="currentColor"/>
+                      </svg>
+                    {%- endfor -%}
+                  </span>
+                  <blockquote class="fh-bestsellers__review-quote">
+                    <p>“{{ block.settings.quote | escape }}”</p>
+                  </blockquote>
+                  {%- if block.settings.author != blank -%}
+                    <figcaption class="fh-bestsellers__review-author">
+                      <span aria-hidden="true">–</span>
+                      {{ block.settings.author | escape }}
+                    </figcaption>
+                  {%- endif -%}
+                </figure>
+                {%- if review_product != blank -%}
+                  <a href="{{ review_product.url }}" class="fh-bestsellers__review-product">
+                    <span class="fh-bestsellers__review-product-media">
+                      {%- if review_product.featured_image != blank -%}
+                        {{
+                          review_product.featured_image
+                          | image_url: width: 128
+                          | image_tag: loading: 'lazy', width: 64, height: 64, alt: ''
+                        }}
+                      {%- endif -%}
+                    </span>
+                    <span class="fh-bestsellers__review-product-text">
+                      <span class="fh-bestsellers__review-product-title">{{ review_product.title | escape }}</span>
+                      <span class="fh-bestsellers__review-product-cta">
+                        {{- block.settings.product_cta | default: 'Shop now' | escape }} - {{ review_product.price | money_without_trailing_zeros -}}
+                      </span>
+                    </span>
+                  </a>
+                {%- endif -%}
+              </div>
+              {%- continue -%}
+            {%- endif -%}
             {%- liquid
               assign card_collection = block.settings.collection
               assign card_url = block.settings.link
@@ -331,7 +406,6 @@
               if card_image == blank and card_collection != blank
                 assign card_image = card_collection.featured_image
               endif
-              assign slide_label = forloop.index | append: ' of ' | append: forloop.length
             -%}
             <div
               class="fh-bestsellers__slide fh-bestsellers__card"
@@ -465,6 +539,54 @@
   ],
   "blocks": [
     {
+      "type": "review",
+      "name": "Review card",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Review cards show when the section has no tabs."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Perfect fit!"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Great quality and a great fit."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Customer name"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Reviewed product"
+        },
+        {
+          "type": "text",
+          "id": "product_cta",
+          "label": "Product link text",
+          "default": "Shop now"
+        }
+      ]
+    },
+    {
       "type": "collection_card",
       "name": "Collection card",
       "settings": [
@@ -525,6 +647,22 @@
     }
   ],
   "presets": [
+    {
+      "name": "Reviews carousel",
+      "settings": {
+        "heading": "Over 75,000 Five Star Reviews",
+        "heading_letter_spacing": -0.8,
+        "background_color": "#FFFFFF",
+        "padding_top": 40,
+        "padding_bottom": 16
+      },
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    },
     {
       "name": "Shop by activity",
       "settings": {

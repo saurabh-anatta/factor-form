@@ -397,3 +397,180 @@
   outline: 2px solid var(--fh-navy);
   outline-offset: -2px;
 }
+
+/* ---------- Review card mode ("Over 75,000 Five Star Reviews", Figma node 1-1366) ---------- */
+.fh-bestsellers--reviews {
+  --fh-bs-card: 440px;
+  --fh-bs-gap: 32px;
+  --fh-review-text: #223d72;
+}
+
+.fh-bestsellers--reviews .fh-bestsellers__inner {
+  padding-inline-start: 64px;
+  padding-block-end: 0;
+
+  @media screen and (max-width: 749px) {
+    padding-inline-start: 16px;
+  }
+}
+
+.fh-bestsellers--reviews .fh-bestsellers__header {
+  align-items: center;
+}
+
+.fh-bestsellers--reviews .fh-bestsellers__arrows {
+  padding-inline-end: 64px;
+  padding-block-end: 0;
+
+  @media screen and (max-width: 749px) {
+    padding-inline-end: 16px;
+  }
+}
+
+.fh-bestsellers--reviews .fh-bestsellers__panel {
+  margin-block-start: 32px;
+}
+
+/* Figma keeps 64px of room after the last card */
+.fh-bestsellers--reviews .fh-bestsellers__slide:last-child {
+  margin-inline-end: 64px;
+
+  @media screen and (max-width: 749px) {
+    margin-inline-end: 16px;
+  }
+}
+
+.fh-bestsellers__review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 360px;
+  padding: 32px 24px;
+  background: var(--fh-sand);
+  color: var(--fh-navy);
+  text-align: center;
+
+  @media screen and (max-width: 749px) {
+    width: 84vw;
+    padding: 24px 16px;
+  }
+}
+
+.fh-bestsellers__review-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+}
+
+.fh-bestsellers__review-title {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.fh-bestsellers__review-stars {
+  display: inline-flex;
+  gap: 4px;
+  color: var(--fh-navy);
+}
+
+.fh-bestsellers__review-star {
+  display: block;
+}
+
+.fh-bestsellers__review-star--empty {
+  opacity: 0.25;
+}
+
+.fh-bestsellers__review-quote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: var(--fh-bs-heading-font);
+  font-size: 20px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 28px;
+  letter-spacing: -0.4px;
+  color: var(--fh-review-text);
+}
+
+.fh-bestsellers__review-quote p {
+  margin: 0;
+}
+
+.fh-bestsellers__review-author {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.fh-bestsellers__review-author span {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.fh-bestsellers__review-product {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 282px;
+  max-width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--fh-navy);
+  text-align: start;
+  text-decoration: none;
+}
+
+.fh-bestsellers__review-product-media {
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  background: var(--fh-sand);
+}
+
+.fh-bestsellers__review-product-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fh-bestsellers__review-product-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.fh-bestsellers__review-product-title {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.fh-bestsellers__review-product-cta {
+  align-self: flex-start;
+  font-size: 14px;
+  line-height: 20px;
+  border-block-end: 1px solid currentColor;
+}
+
+.fh-bestsellers__review-product:hover .fh-bestsellers__review-product-cta {
+  border-block-end-color: transparent;
+}
+
+.fh-bestsellers__review-product:focus-visible {
+  outline: 2px solid var(--fh-navy);
+  outline-offset: 2px;
+}
