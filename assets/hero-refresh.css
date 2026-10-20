@@ -5,13 +5,13 @@
 */
 
 .hero--fh {
-  --hero-min-height: 672px;
+  --hero-min-height: var(--fh-hero-height, 672px);
   --fh-hero-text: #fff;
   --fh-hero-navy: #00165a;
 }
 
 .hero--fh .hero__container {
-  min-height: 672px;
+  min-height: var(--fh-hero-height, 672px);
 
   @media screen and (max-width: 749px) {
     min-height: 560px;

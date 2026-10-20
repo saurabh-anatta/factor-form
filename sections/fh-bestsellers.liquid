@@ -16,12 +16,15 @@
     --fh-bs-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
     --fh-bs-padding-top: {{ section.settings.padding_top }}px;
     --fh-bs-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --fh-bs-background: {{ section.settings.background_color }};
+    --fh-bs-heading-tracking: {{ section.settings.heading_letter_spacing }}px;
   }
 {% endstyle %}
 
 {%- liquid
   assign heading_id = 'FhBestsellersHeading-' | append: section.id
   assign tab_blocks = section.blocks | where: 'type', 'tab'
+  assign card_blocks = section.blocks | where: 'type', 'collection_card'
   assign pill_tags = section.settings.pill_tags | split: ','
   assign badge_tag = section.settings.badge_tag | strip | downcase
   assign image_label_tag = section.settings.image_label_tag | strip | downcase
@@ -29,7 +32,7 @@
 
 <fh-bestsellers
   id="FhBestsellers-{{ section.id }}"
-  class="fh-bestsellers"
+  class="fh-bestsellers{% if card_blocks.size > 0 and tab_blocks.size == 0 %} fh-bestsellers--cards{% endif %}"
   aria-labelledby="{{ heading_id }}"
 >
   <div class="fh-bestsellers__inner">
@@ -299,12 +302,77 @@
         </div>
       </div>
     {%- endfor -%}
+
+    {%- if card_blocks.size > 0 and tab_blocks.size == 0 -%}
+      <div
+        class="fh-bestsellers__panel"
+        ref="panels[]"
+      >
+        <div
+          class="fh-bestsellers__track"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="{{ section.settings.heading | escape }}"
+          tabindex="-1"
+          ref="tracks[]"
+        >
+          {%- for block in card_blocks -%}
+            {%- liquid
+              assign card_collection = block.settings.collection
+              assign card_url = block.settings.link
+              if card_url == blank and card_collection != blank
+                assign card_url = card_collection.url
+              endif
+              assign card_title = block.settings.title
+              if card_title == blank and card_collection != blank
+                assign card_title = card_collection.title
+              endif
+              assign card_image = block.settings.image
+              if card_image == blank and card_collection != blank
+                assign card_image = card_collection.featured_image
+              endif
+              assign slide_label = forloop.index | append: ' of ' | append: forloop.length
+            -%}
+            <div
+              class="fh-bestsellers__slide fh-bestsellers__card"
+              role="group"
+              aria-roledescription="slide"
+              aria-label="{{ slide_label }}"
+              {{ block.shopify_attributes }}
+            >
+              <a
+                href="{{ card_url | default: '#' }}"
+                class="fh-bestsellers__card-link"
+              >
+                <span class="fh-bestsellers__media fh-bestsellers__card-media">
+                  {%- if card_image != blank -%}
+                    {{
+                      card_image
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '388, 600, 776, 800',
+                        sizes: '(min-width: 750px) 388px, 72vw',
+                        class: 'fh-bestsellers__image',
+                        alt: ''
+                    }}
+                  {%- else -%}
+                    {{ 'collection-apparel-1' | placeholder_svg_tag: 'fh-bestsellers__image' }}
+                  {%- endif -%}
+                </span>
+                <span class="fh-bestsellers__card-title">{{ card_title | escape }}</span>
+              </a>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 </fh-bestsellers>
 
 {% schema %}
 {
-  "name": "Shop bestsellers",
+  "name": "Carousel (refresh 2026)",
   "tag": "section",
   "class": "section-fh-bestsellers",
   "settings": [
@@ -319,6 +387,22 @@
       "id": "heading_font",
       "label": "Heading font",
       "default": "playfair_display_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Heading letter spacing",
+      "min": -2,
+      "max": 2,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFFFFF"
     },
     {
       "type": "header",
@@ -381,6 +465,38 @@
   ],
   "blocks": [
     {
+      "type": "collection_card",
+      "name": "Collection card",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Collection cards show when the section has no tabs."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Used for the link, and for the image/title when they are empty"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Overrides the collection link"
+        }
+      ]
+    },
+    {
       "type": "tab",
       "name": "Tab",
       "limit": 6,
@@ -409,6 +525,22 @@
     }
   ],
   "presets": [
+    {
+      "name": "Shop by activity",
+      "settings": {
+        "heading": "Shop by activity",
+        "heading_letter_spacing": -0.8,
+        "background_color": "#F4F0ED",
+        "padding_top": 40,
+        "padding_bottom": 40
+      },
+      "blocks": [
+        { "type": "collection_card", "settings": { "title": "Collection 1" } },
+        { "type": "collection_card", "settings": { "title": "Collection 2" } },
+        { "type": "collection_card", "settings": { "title": "Collection 3" } },
+        { "type": "collection_card", "settings": { "title": "Collection 4" } }
+      ]
+    },
     {
       "name": "Shop bestsellers",
       "blocks": [

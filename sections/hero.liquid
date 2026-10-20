@@ -453,6 +453,7 @@
     {{ section.settings.refresh_heading_font | font_face: font_display: 'swap' }}
     #Hero-{{ section.id }} {
       --fh-hero-heading-font: {{ section.settings.refresh_heading_font.family }}, {{ section.settings.refresh_heading_font.fallback_families }};
+      --fh-hero-height: {{ section.settings.refresh_min_height | default: 672 | at_least: 320 }}px;
     }
   {% endstyle %}
   {{ 'hero-refresh.css' | asset_url | stylesheet_tag }}
@@ -805,6 +806,13 @@
       "id": "refresh_heading_font",
       "label": "Hero heading font",
       "default": "playfair_display_n4"
+    },
+    {
+      "type": "number",
+      "id": "refresh_min_height",
+      "label": "Design refresh height (px)",
+      "info": "Desktop height when design refresh is on",
+      "default": 672
     },
     {
       "type": "header",

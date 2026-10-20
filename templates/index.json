@@ -30,7 +30,8 @@
         "padding-block-start": 0,
         "padding-block-end": 0,
         "stack_media_on_mobile": false,
-        "custom_mobile_media": false
+        "custom_mobile_media": false,
+        "refresh_min_height": 672
       },
       "blocks": {
         "fh_eyebrow": {
@@ -596,11 +597,211 @@
         "padding_top": 25,
         "padding_bottom": 25
       }
+    },
+    "fh-new-arrivals": {
+      "type": "hero",
+      "settings": {
+        "design_refresh": true,
+        "refresh_heading_font": "playfair_display_n4",
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/fh-new-arrivals.jpg",
+        "content_direction": "column",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "custom",
+        "section_height_custom": 70,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000066",
+        "overlay_style": "solid",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "refresh_min_height": 661
+      },
+      "blocks": {
+        "fh_heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>New Arrivals</h2>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "h2",
+            "color": "#FFFFFF"
+          }
+        },
+        "fh_subheading": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Check out our newest drops.</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "paragraph",
+            "color": "#FFFFFF"
+          }
+        },
+        "fh_button": {
+          "type": "button",
+          "settings": {
+            "label": "Shop men’s New arrivals",
+            "link": "shopify://collections/all",
+            "style_class": "button"
+          }
+        }
+      },
+      "block_order": [
+        "fh_heading",
+        "fh_subheading",
+        "fh_button"
+      ]
+    },
+    "fh-elevated-essentials": {
+      "type": "hero",
+      "settings": {
+        "design_refresh": true,
+        "refresh_heading_font": "playfair_display_n4",
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/fh-elevated-essentials.jpg",
+        "content_direction": "column",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "custom",
+        "section_height_custom": 70,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000066",
+        "overlay_style": "solid",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "refresh_min_height": 641
+      },
+      "blocks": {
+        "fh_heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Elevated Essentials</h2>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "h2",
+            "color": "#FFFFFF"
+          }
+        },
+        "fh_subheading": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Check out our newest drops and all time favorites.</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "paragraph",
+            "color": "#FFFFFF"
+          }
+        },
+        "fh_button": {
+          "type": "button",
+          "settings": {
+            "label": "Shop men’s essentials",
+            "link": "shopify://collections/all",
+            "style_class": "button"
+          }
+        }
+      },
+      "block_order": [
+        "fh_heading",
+        "fh_subheading",
+        "fh_button"
+      ]
+    },
+    "fh-shop-by-activity": {
+      "type": "fh-bestsellers",
+      "blocks": {
+        "card_beach_towels": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/fh-activity-beach-towels.jpg",
+            "title": "Beach towels",
+            "link": "shopify://collections/all"
+          }
+        },
+        "card_all_swim": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/fh-activity-all-swim.jpg",
+            "title": "All Swim",
+            "link": "shopify://collections/all"
+          }
+        },
+        "card_new_arrivals": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/fh-activity-new-arrivals.jpg",
+            "title": "All New Arrivals",
+            "link": "shopify://collections/all"
+          }
+        },
+        "card_sweatshirts": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/fh-activity-sweatshirts.jpg",
+            "title": "Men's Sweatshirts & Hoodies",
+            "link": "shopify://collections/all"
+          }
+        },
+        "card_upf50": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/fh-activity-upf50.jpg",
+            "title": "UPF 50 Styles",
+            "link": "shopify://collections/all"
+          }
+        },
+        "card_kids": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/fh-activity-kids.jpg",
+            "title": "Kids' Collection",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "card_beach_towels",
+        "card_all_swim",
+        "card_new_arrivals",
+        "card_sweatshirts",
+        "card_upf50",
+        "card_kids"
+      ],
+      "settings": {
+        "heading": "Shop by activity",
+        "heading_font": "playfair_display_n4",
+        "heading_letter_spacing": -0.8,
+        "background_color": "#F4F0ED",
+        "badge_tag": "Bestseller",
+        "auto_badge_count": 0,
+        "image_label_tag": "Personalize It",
+        "pill_tags": "Bundle & Save, Personalize It",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
     "hero",
     "fh-bestsellers",
+    "fh-new-arrivals",
+    "fh-shop-by-activity",
+    "fh-elevated-essentials",
     "reviews",
     "product-carousel",
     "marquee",
