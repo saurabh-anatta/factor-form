@@ -12,490 +12,501 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "design_refresh": true,
+        "refresh_heading_font": "playfair_display_n4",
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/main-hero-img-3-1-desktop-110524489.png",
-        "media_type_2": "image",
-        "image_2": "shopify://shop_images/image-1-desktop-110524490.png",
+        "image_1": "shopify://shop_images/fh-hero-made-to-move.jpg",
         "content_direction": "column",
-        "horizontal_alignment_flex_direction_column": "flex-start",
+        "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 8,
+        "gap": 0,
         "section_width": "full-width",
-        "section_height": "medium",
+        "section_height": "custom",
+        "section_height_custom": 70,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "refresh_min_height": 672
+      },
+      "blocks": {
+        "fh_eyebrow": {
+          "type": "text",
+          "settings": {
+            "text": "<p>★★★★★ Over 75,000 5 Star reviews</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "paragraph",
+            "color": "#FFFFFF"
+          }
+        },
+        "fh_heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>Made to move</h1>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "h1",
+            "color": "#FFFFFF"
+          }
+        },
+        "fh_subheading": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Breathable comfort engineered for every adventure.</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "paragraph",
+            "color": "#FFFFFF"
+          }
+        },
+        "fh_button": {
+          "type": "button",
+          "settings": {
+            "label": "Shop Men’s swim",
+            "link": "shopify://collections/all",
+            "style_class": "button"
+          }
+        }
+      },
+      "block_order": [
+        "fh_eyebrow",
+        "fh_heading",
+        "fh_subheading",
+        "fh_button"
+      ]
+    },
+    "fh-bestsellers": {
+      "type": "fh-bestsellers",
+      "blocks": {
+        "tab_men": {
+          "type": "tab",
+          "settings": {
+            "label": "Men",
+            "collection": "men",
+            "limit": 12
+          }
+        },
+        "tab_women": {
+          "type": "tab",
+          "settings": {
+            "label": "Women",
+            "collection": "women",
+            "limit": 12
+          }
+        },
+        "tab_jewelry": {
+          "type": "tab",
+          "settings": {
+            "label": "Jewelry",
+            "collection": "jewelery",
+            "limit": 12
+          }
+        }
+      },
+      "block_order": [
+        "tab_men",
+        "tab_women",
+        "tab_jewelry"
+      ],
+      "settings": {
+        "heading": "Shop bestsellers",
+        "heading_font": "playfair_display_n4",
+        "badge_tag": "Bestseller",
+        "auto_badge_count": 0,
+        "image_label_tag": "Personalize It",
+        "pill_tags": "Bundle & Save, Personalize It",
+        "padding_top": 25,
+        "padding_bottom": 25
+      }
+    },
+    "fh-new-arrivals": {
+      "type": "hero",
+      "settings": {
+        "design_refresh": true,
+        "refresh_heading_font": "playfair_display_n4",
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/fh-new-arrivals.jpg",
+        "content_direction": "column",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "custom",
+        "section_height_custom": 70,
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
         "overlay_color": "#00000066",
         "overlay_style": "solid",
         "padding-block-start": 0,
         "padding-block-end": 0,
-        "stack_media_on_mobile": true,
-        "custom_mobile_media": true,
-        "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/main-hero-img-3-1-desktop-91051018.png",
-        "media_type_2_mobile": "image",
-        "image_2_mobile": "shopify://shop_images/image-1-desktop-91051020.png"
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "refresh_min_height": 661
       },
       "blocks": {
-        "heading": {
+        "fh_heading": {
           "type": "text",
           "settings": {
-            "text": "<h1>Your Daily Greens, Reinvented</h1>",
+            "text": "<h2>New Arrivals</h2>",
             "width": "100%",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h1",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "h2",
             "color": "#FFFFFF"
           }
         },
-        "description": {
+        "fh_subheading": {
           "type": "text",
           "settings": {
-            "text": "<p>Better taste. Better routine. Better you.</p>",
+            "text": "<p>Check out our newest drops.</p>",
             "width": "100%",
-            "max_width": "narrow",
-            "alignment": "left",
+            "max_width": "none",
+            "alignment": "center",
             "type_preset": "paragraph",
-            "color": "#FFFFFF",
-            "padding-block-end": 24
+            "color": "#FFFFFF"
           }
         },
-        "button": {
+        "fh_button": {
           "type": "button",
           "settings": {
-            "label": "Shop Now",
+            "label": "Shop men’s New arrivals",
             "link": "shopify://collections/all",
             "style_class": "button"
           }
         }
       },
-      "block_order": ["heading", "description", "button"]
+      "block_order": [
+        "fh_heading",
+        "fh_subheading",
+        "fh_button"
+      ]
     },
-    "reviews": {
-      "type": "custom-reviews",
+    "fh-elevated-essentials": {
+      "type": "hero",
       "settings": {
-        "heading": "Over 5,000 5-stars reviews on Trustpilot",
+        "design_refresh": true,
+        "refresh_heading_font": "playfair_display_n4",
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/fh-elevated-essentials.jpg",
+        "content_direction": "column",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "custom",
+        "section_height_custom": 70,
         "color_scheme": "scheme-5",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      },
-      "blocks": {
-        "review-1": {
-          "type": "review-item",
-          "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524516.png",
-            "quote": "\"The taste is a lot better than the greens powder I'm usually taking\"",
-            "author": "Nicole B.  |  Paid review†",
-            "show_play_button": true,
-            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          }
-        },
-        "review-2": {
-          "type": "review-item",
-          "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524524.png",
-            "quote": "\"It's delivered right to your door, for a very fair price, so I highly recommend it\"",
-            "author": "Brian L.  |  Paid review†",
-            "show_play_button": true,
-            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          }
-        },
-        "review-3": {
-          "type": "review-item",
-          "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524532.png",
-            "quote": "\"I feel like I have more energy and ability to focus\"",
-            "author": "Omni P.  |  Paid review†",
-            "show_play_button": true,
-            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          }
-        },
-        "review-4": {
-          "type": "review-item",
-          "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524540.png",
-            "quote": "\"The ritual of having it first thing in the morning has been a positive\"",
-            "author": "Zack S. | Paid review†",
-            "show_play_button": true,
-            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          }
-        }
-      },
-      "block_order": ["review-1", "review-2", "review-3", "review-4"]
-    },
-    "product-carousel": {
-      "type": "custom-product-carousel",
-      "settings": {
-        "subheading": "brought to you by",
-        "heading": "Built From Food, Designed for Results",
-        "background_color": "#F1F1EA",
-        "padding-block-start": 64,
-        "padding-block-end": 0
-      },
-      "blocks": {
-        "tab-1": {
-          "type": "tab",
-          "settings": {
-            "label": "Gut Health",
-            "is_active": true
-          }
-        },
-        "tab-2": {
-          "type": "tab",
-          "settings": {
-            "label": "Recovery",
-            "is_active": false
-          }
-        },
-        "tab-3": {
-          "type": "tab",
-          "settings": {
-            "label": "Immunity",
-            "is_active": false
-          }
-        },
-        "tab-4": {
-          "type": "tab",
-          "settings": {
-            "label": "Energy & Focus",
-            "is_active": false
-          }
-        },
-        "category-card-1": {
-          "type": "category-card",
-          "settings": {
-            "image": "shopify://shop_images/agile-support-1-desktop-112594627.png",
-            "title": "Gut Health",
-            "description": "Superfoods and nutrients for daily digestive support",
-            "cta_text": "VIEW ALL GUT HEALTH",
-            "mobile_cta_text": "VIEW ALL"
-          }
-        },
-        "product-card-1": {
-          "type": "product-card",
-          "settings": {
-            "product": "daily-greens",
-            "product_handle": "daily-greens",
-            "image": "shopify://shop_images/image-desktop-112594636.png",
-            "title": "Daily Greens",
-            "description": "Drink your veggies on-the-go with a refreshing twist.",
-            "price": "$47.39",
-            "compare_price": "$78.99",
-            "cta_text": "ADD TO CART",
-            "badge_1_text": "FREE WELCOME KIT",
-            "badge_1_color": "#141414",
-            "badge_2_text": "40% OFF FIRST ORDER",
-            "badge_2_color": "#EC0606"
-          }
-        },
-        "product-card-2": {
-          "type": "product-card",
-          "settings": {
-            "product": "starter-bundle",
-            "product_handle": "starter-bundle",
-            "image": "shopify://shop_images/image-desktop-112594700.png",
-            "title": "Starter Bundle",
-            "description": "Hydration and gut health to give you energy and crush your goals",
-            "price": "$56.39",
-            "compare_price": "$93.98",
-            "cta_text": "ADD TO CART"
-          }
-        },
-        "product-card-3": {
-          "type": "product-card",
-          "settings": {
-            "product": "greens-gains-bundle",
-            "product_handle": "greens-gains-bundle",
-            "image": "shopify://shop_images/agile-support-1-desktop-112594812.png",
-            "title": "Greens & Gains Bundle",
-            "description": "Foundation nutrition plus protein to support muscle recovery and gut health",
-            "price": "$56.39",
-            "compare_price": "$93.98",
-            "cta_text": "ADD TO CART"
-          }
-        },
-        "product-card-4": {
-          "type": "product-card",
-          "settings": {
-            "product": "immunity-bundle",
-            "product_handle": "immunity-bundle",
-            "image": "shopify://shop_images/image-desktop-112594752.png",
-            "title": "Immunity Bundle",
-            "description": "Daily defense with probiotics, immunity vitamins & minerals, and electrolytes.",
-            "price": "$56.39",
-            "compare_price": "$93.98",
-            "cta_text": "ADD TO CART",
-            "badge_1_text": "BESTSELLER",
-            "badge_1_color": "#FFFFFF",
-            "show_heart": true
-          }
-        }
-      },
-      "block_order": ["tab-1", "tab-2", "tab-3", "tab-4", "category-card-1", "product-card-1", "product-card-2", "product-card-3", "product-card-4"]
-    },
-    "marquee": {
-      "type": "custom-marquee",
-      "settings": {
-        "ticker_color": "#3F7057",
-        "background_color": "#F1F1EA",
-        "marquee_speed": 30,
-        "padding-block-start": 16,
-        "padding-block-end": 0
-      },
-      "blocks": {
-        "marquee-item-1": {
-          "type": "marquee-item",
-          "settings": {
-            "text": "Grounded in Food Science"
-          }
-        },
-        "marquee-item-2": {
-          "type": "marquee-item",
-          "settings": {
-            "text": "High Quality Ingredients"
-          }
-        },
-        "marquee-item-3": {
-          "type": "marquee-item",
-          "settings": {
-            "text": "Flavorful Nutrition"
-          }
-        },
-        "marquee-item-4": {
-          "type": "marquee-item",
-          "settings": {
-            "text": "Dietitian Approved"
-          }
-        },
-        "marquee-item-5": {
-          "type": "marquee-item",
-          "settings": {
-            "text": "No Added Sugar"
-          }
-        },
-        "marquee-item-6": {
-          "type": "marquee-item",
-          "settings": {
-            "text": "Keto Friendly"
-          }
-        }
-      },
-      "block_order": ["marquee-item-1", "marquee-item-2", "marquee-item-3", "marquee-item-4", "marquee-item-5", "marquee-item-6"]
-    },
-    "benefits": {
-      "type": "custom-benefits",
-      "settings": {
-        "heading": "Why Factor Form",
-        "background_color": "#E1F0E2",
-        "padding-block-start": 80,
-        "padding-block-end": 80
-      },
-      "blocks": {
-        "benefit-1": {
-          "type": "benefit-item",
-          "settings": {
-            "heading": "More Flexibility",
-            "description": "Build a personalized wellness routine with targeted formulas for gut health, immunity, recovery, and more",
-            "description_mobile": "Create your perfect routine with targeted wellness products",
-            "icon_desktop": "icon-1-nutrition-all-in-one-place-2.svg",
-            "icon_mobile": "icon-1-nutrition-all-in-one-place.svg"
-          }
-        },
-        "benefit-2": {
-          "type": "benefit-item",
-          "settings": {
-            "heading": "More Quality",
-            "description": "Made with no added sugar, our products are keto-friendly and free of unnecessary ingredients",
-            "description_mobile": "No added sugar\u2014keto-friendly and free of unnecessary ingredients",
-            "icon_desktop": "icon-2-quality-ingredients-2.svg",
-            "icon_mobile": "icon-2-quality-ingredients.svg"
-          }
-        },
-        "benefit-3": {
-          "type": "benefit-item",
-          "settings": {
-            "heading": "More Nutrition",
-            "description": "Enjoy dietitian-approved formulas packed with premium, nutritional ingredients.",
-            "description_mobile": "Dietitian-approved formulas made with premium, nutrient-rich ingredients",
-            "icon_desktop": "icon-3-b-food-first-nutrition-2.svg",
-            "icon_mobile": "icon-3-b-food-first-nutrition.svg"
-          }
-        },
-        "benefit-4": {
-          "type": "benefit-item",
-          "settings": {
-            "heading": "More Convenience",
-            "description": "Take your life on the go with our single-serving packets you can tuck in your bag, car, or suitcase.",
-            "description_mobile": "Grab-and-go packets designed for life on the move",
-            "icon_desktop": "icon-4-designed-for-on-the-go-2.svg",
-            "icon_mobile": "icon-4-designed-for-on-the-go.svg"
-          }
-        }
-      },
-      "block_order": ["benefit-1", "benefit-2", "benefit-3", "benefit-4"]
-    },
-    "certified": {
-      "type": "custom-certified",
-      "settings": {
-        "heading": "The Factor Standard",
-        "background_color": "#FFFFFF",
-        "padding-block-start": 80,
-        "padding-block-end": 80
-      },
-      "blocks": {
-        "certified-1": {
-          "type": "certified-item",
-          "settings": {
-            "image": "shopify://shop_images/image-59-desktop-110864992.png",
-            "heading": "Pure Ingredients",
-            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
-          }
-        },
-        "certified-2": {
-          "type": "certified-item",
-          "settings": {
-            "image": "shopify://shop_images/image-58-desktop-110864999.png",
-            "heading": "Expert-Crafted Blends",
-            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
-          }
-        },
-        "certified-3": {
-          "type": "certified-item",
-          "settings": {
-            "image": "shopify://shop_images/image-60-desktop-110865006.png",
-            "heading": "Transparent and Clean Labels",
-            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
-          }
-        }
-      },
-      "block_order": ["certified-1", "certified-2", "certified-3"]
-    },
-    "dietitians": {
-      "type": "custom-dietitians",
-      "settings": {
-        "heading": "Backed By Factor Dietitians",
-        "description": "Formulated with guidance from Factor\u2019s in-house dietitians to help you meet your wellness goals with confidence",
-        "background_color": "#F1F1EA",
-        "padding-block-start": 80,
-        "padding-block-end": 80
-      },
-      "blocks": {
-        "dietitian-1": {
-          "type": "dietitian-item",
-          "settings": {
-            "image": "shopify://shop_images/image-61-desktop-118265456.png",
-            "quote": "\"A rigorous 'no list' of over 100 banned ingredients\"",
-            "description": "Factor Form upholds strong nutrition and ingredient standards across all products. We ensure only high quality ingredients make it into our products",
-            "author": "Kara Kash   |   Research & Development"
-          }
-        },
-        "dietitian-2": {
-          "type": "dietitian-item",
-          "settings": {
-            "image": "shopify://shop_images/image-62-desktop-118265466.png",
-            "quote": "\"One serving equals a whole serving of green leafy veggies\"",
-            "description": "I love that the vitamin and mineral content is balanced; the daily value percentages aren't excessive",
-            "author": "Carlie Williams   |   Dietitian + Personal Trainer"
-          }
-        },
-        "dietitian-3": {
-          "type": "dietitian-item",
-          "settings": {
-            "image": "shopify://shop_images/image-63-desktop-118265476.png",
-            "quote": "\"A good mix of B vitamins along with typical electrolytes\"",
-            "description": "B Vitamins act as coenzymes when your body is metabolizing energy, so it's nice to have that in an electrolyte mix",
-            "author": "Olivia Hamilton   |   Dietitian"
-          }
-        }
-      },
-      "block_order": ["dietitian-1", "dietitian-2", "dietitian-3"]
-    },
-    "feature": {
-      "type": "custom-feature",
-      "settings": {
-        "heading": "FREE Daily Greens Welcome Kit worth $36",
-        "description": "Turn your daily habit into a delicious ritual with a kit full of greens essentials. Free welcome kit with first time purchase of Daily Greens.",
-        "image": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-desktop-110525076.png",
-        "image_mobile": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-mobile-110526574.png",
-        "badge_text": "FREE WELCOME KIT",
-        "button_text": "SHOP DAILY GREENS",
-        "background_color": "#E1F0E2",
+        "toggle_overlay": true,
+        "overlay_color": "#00000066",
+        "overlay_style": "solid",
         "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-end": 0,
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "refresh_min_height": 641
       },
       "blocks": {
-        "feature-item-1": {
-          "type": "feature-item",
+        "fh_heading": {
+          "type": "text",
           "settings": {
-            "heading": "Shaker bottle",
-            "free_label": "FREE",
-            "description": "Premium bottle to mix and carry your greens",
-            "price": "$20.00"
+            "text": "<h2>Elevated Essentials</h2>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "h2",
+            "color": "#FFFFFF"
           }
         },
-        "feature-item-2": {
-          "type": "feature-item",
+        "fh_subheading": {
+          "type": "text",
           "settings": {
-            "heading": "Full-size samples (3)",
-            "free_label": "FREE",
-            "description": "3 product samples free with every first order",
-            "price": "$10.00"
+            "text": "<p>Check out our newest drops and all time favorites.</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "paragraph",
+            "color": "#FFFFFF"
           }
         },
-        "feature-item-3": {
-          "type": "feature-item",
+        "fh_button": {
+          "type": "button",
           "settings": {
-            "heading": "Shipping",
-            "free_label": "FREE",
-            "description": "Free shipping on orders above $50",
-            "price": "$5.99"
+            "label": "Shop men’s essentials",
+            "link": "shopify://collections/all",
+            "style_class": "button"
           }
         }
       },
-      "block_order": ["feature-item-1", "feature-item-2", "feature-item-3"]
+      "block_order": [
+        "fh_heading",
+        "fh_subheading",
+        "fh_button"
+      ]
     },
-    "faqs": {
-      "type": "custom-faqs",
-      "settings": {
-        "heading": "Frequently Asked Questions",
-        "background_color": "#FFFFFF",
-        "padding-block-start": 80,
-        "padding-block-end": 80
-      },
+    "fh-shop-by-activity": {
+      "type": "fh-bestsellers",
       "blocks": {
-        "faq-1": {
-          "type": "faq-item",
+        "card_beach_towels": {
+          "type": "collection_card",
           "settings": {
-            "question": "What makes Factor Form products different?",
-            "answer": "Factor Form products are built with clean, science-backed ingredients chosen for real, functional benefits; not trends or fillers. Each formula is optimised for daily performance, energy, and recovery. You get products that are effective, transparent, and designed to fit effortlessly into your routine."
+            "image": "shopify://shop_images/fh-activity-beach-towels.jpg",
+            "title": "Beach towels",
+            "link": "shopify://collections/all"
           }
         },
-        "faq-2": {
-          "type": "faq-item",
+        "card_all_swim": {
+          "type": "collection_card",
           "settings": {
-            "question": "Are Factor Form products third-party tested?"
+            "image": "shopify://shop_images/fh-activity-all-swim.jpg",
+            "title": "All Swim",
+            "link": "shopify://collections/all"
           }
         },
-        "faq-3": {
-          "type": "faq-item",
+        "card_new_arrivals": {
+          "type": "collection_card",
           "settings": {
-            "question": "Are Factor Form products safe to use together?"
+            "image": "shopify://shop_images/fh-activity-new-arrivals.jpg",
+            "title": "All New Arrivals",
+            "link": "shopify://collections/all"
           }
         },
-        "faq-4": {
-          "type": "faq-item",
+        "card_sweatshirts": {
+          "type": "collection_card",
           "settings": {
-            "question": "Do you ship internationally?"
+            "image": "shopify://shop_images/fh-activity-sweatshirts.jpg",
+            "title": "Men's Sweatshirts & Hoodies",
+            "link": "shopify://collections/all"
           }
         },
-        "faq-5": {
-          "type": "faq-item",
+        "card_upf50": {
+          "type": "collection_card",
           "settings": {
-            "question": "What is your return policy?"
+            "image": "shopify://shop_images/fh-activity-upf50.jpg",
+            "title": "UPF 50 Styles",
+            "link": "shopify://collections/all"
+          }
+        },
+        "card_kids": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/fh-activity-kids.jpg",
+            "title": "Kids' Collection",
+            "link": "shopify://collections/all"
           }
         }
       },
-      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"]
+      "block_order": [
+        "card_beach_towels",
+        "card_all_swim",
+        "card_new_arrivals",
+        "card_sweatshirts",
+        "card_upf50",
+        "card_kids"
+      ],
+      "settings": {
+        "heading": "Shop by activity",
+        "heading_font": "playfair_display_n4",
+        "heading_letter_spacing": -0.8,
+        "background_color": "#F4F0ED",
+        "badge_tag": "Bestseller",
+        "auto_badge_count": 0,
+        "image_label_tag": "Personalize It",
+        "pill_tags": "Bundle & Save, Personalize It",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "fh-reviews": {
+      "type": "fh-bestsellers",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "title": "Perfect Bathing Suit!",
+            "rating": 5,
+            "quote": "Great fit, the seersucker looks sharp but relaxed, love the material. High quality.",
+            "author": "David D.",
+            "product": "ocean-blue-shirt",
+            "product_cta": "Shop now"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "title": "So Comfortable and Soft!",
+            "rating": 5,
+            "quote": "This shirt is ideal for lounge days by the pool or beach. Great fit, soft and still stylish",
+            "author": "Craig S.",
+            "product": "white-cotton-shirt",
+            "product_cta": "Shop now"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "title": "So Comfortable and Soft!",
+            "rating": 5,
+            "quote": "This shirt is ideal for lounge days by the pool or beach. Great fit, soft and still stylish",
+            "author": "Craig S.",
+            "product": "white-cotton-shirt",
+            "product_cta": "Shop now"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "title": "Comfortable and Stylish",
+            "rating": 5,
+            "quote": "Trunks are very comfortable and love the inner liner. Would buy again",
+            "author": "Owen S.",
+            "product": "chequered-red-shirt",
+            "product_cta": "Shop now"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "title": "Comfortable and Stylish",
+            "rating": 5,
+            "quote": "Trunks are very comfortable and love the inner liner. Would buy again",
+            "author": "Owen S.",
+            "product": "chequered-red-shirt",
+            "product_cta": "Shop now"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ],
+      "settings": {
+        "heading": "Over 75,000 Five Star Reviews",
+        "heading_font": "playfair_display_n4",
+        "heading_letter_spacing": -0.8,
+        "background_color": "#FFFFFF",
+        "badge_tag": "Bestseller",
+        "auto_badge_count": 0,
+        "image_label_tag": "Personalize It",
+        "pill_tags": "Bundle & Save, Personalize It",
+        "padding_top": 40,
+        "padding_bottom": 16
+      }
+    },
+    "fh-promo-tiles": {
+      "type": "fh-promo-tiles",
+      "blocks": {
+        "tile_bundle": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/fh-tile-bundle-save.jpg",
+            "overlay_opacity": 0,
+            "heading": "Bundle & Save",
+            "text": "Buy more of what you love, for less.",
+            "link_label": "Shop Bundles",
+            "link": "shopify://collections/all"
+          }
+        },
+        "tile_personalized": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/fh-tile-personalized.jpg",
+            "overlay_opacity": 15,
+            "heading": "Make it Personalized",
+            "text": "Explore our eligible styles, customizable with up to three initials or our new icons.",
+            "link_label": "Shop Personalized",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "tile_bundle",
+        "tile_personalized"
+      ],
+      "settings": {
+        "heading_font": "playfair_display_n4",
+        "columns": 2,
+        "background_color": "#FFFFFF",
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
+    "fh-instagram": {
+      "type": "fh-instagram",
+      "blocks": {
+        "post_1": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/fh-ig-1.jpg",
+            "link": "https://www.instagram.com/fairharborclothing/",
+            "is_video": false,
+            "label": ""
+          }
+        },
+        "post_2": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/fh-ig-2.jpg",
+            "link": "https://www.instagram.com/fairharborclothing/",
+            "is_video": true,
+            "label": ""
+          }
+        },
+        "post_3": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/fh-ig-3.jpg",
+            "link": "https://www.instagram.com/fairharborclothing/",
+            "is_video": true,
+            "label": ""
+          }
+        },
+        "post_4": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/fh-ig-4.jpg",
+            "link": "https://www.instagram.com/fairharborclothing/",
+            "is_video": true,
+            "label": ""
+          }
+        }
+      },
+      "block_order": [
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4"
+      ],
+      "settings": {
+        "heading": "Find us in the Wild",
+        "handle": "@FairHarborClothing",
+        "handle_link": "https://www.instagram.com/fairharborclothing/",
+        "heading_font": "playfair_display_n4",
+        "columns": 4,
+        "bar_color": "#223D72",
+        "heading_color": "#FFFFFF",
+        "handle_color": "#C8D5E4"
+      }
     }
   },
-  "order": ["hero", "reviews", "product-carousel", "marquee", "benefits", "certified", "dietitians", "feature", "faqs"]
+  "order": [
+    "hero",
+    "fh-bestsellers",
+    "fh-new-arrivals",
+    "fh-shop-by-activity",
+    "fh-elevated-essentials",
+    "fh-reviews",
+    "fh-promo-tiles",
+    "fh-instagram"
+  ]
 }

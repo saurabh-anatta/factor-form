@@ -424,10 +424,93 @@
         "color_scheme": "scheme-5",
         "padding-block-start": 56,
         "padding-block-end": 56
+      },
+      "disabled": true
+    },
+    "fh_footer": {
+      "type": "fh-footer",
+      "blocks": {
+        "value_comfort": {
+          "type": "value",
+          "settings": {
+            "icon": "shopify://shop_images/fh-footer-signature-comfort.png",
+            "text": "Signature Comfort"
+          }
+        },
+        "value_essentials": {
+          "type": "value",
+          "settings": {
+            "icon": "shopify://shop_images/fh-footer-elevated-essentials.png",
+            "text": "Elevated Essentials"
+          }
+        },
+        "value_elements": {
+          "type": "value",
+          "settings": {
+            "icon": "shopify://shop_images/fh-footer-made-by-elements.png",
+            "text": "Made by the Elements"
+          }
+        },
+        "value_versatility": {
+          "type": "value",
+          "settings": {
+            "icon": "shopify://shop_images/fh-footer-effortless-versatility.png",
+            "text": "Effortless Versatility"
+          }
+        },
+        "column_shop": {
+          "type": "column",
+          "settings": {
+            "heading": "Shop",
+            "menu": "fh-footer-shop"
+          }
+        },
+        "column_about": {
+          "type": "column",
+          "settings": {
+            "heading": "About",
+            "menu": "fh-footer-about"
+          }
+        },
+        "column_care": {
+          "type": "column",
+          "settings": {
+            "heading": "Customer Care",
+            "menu": "fh-footer-care"
+          }
+        }
+      },
+      "block_order": [
+        "value_comfort",
+        "value_essentials",
+        "value_elements",
+        "value_versatility",
+        "column_shop",
+        "column_about",
+        "column_care"
+      ],
+      "settings": {
+        "heading_font": "playfair_display_n4",
+        "background_color": "#F4F0ED",
+        "show_newsletter": true,
+        "newsletter_heading": "UNLOCK 15% OFF",
+        "newsletter_text": "Get early access to new drops, exclusive deals and more.",
+        "newsletter_placeholder": "Email address",
+        "newsletter_success": "Thanks for subscribing!",
+        "social_facebook": "https://www.facebook.com/fairharborclothing",
+        "social_pinterest": "https://www.pinterest.com/fairharborclothing/",
+        "social_linkedin": "https://www.linkedin.com/company/fair-harbor-clothing",
+        "social_instagram": "https://www.instagram.com/fairharborclothing/",
+        "badge_image": "shopify://shop_images/fh-footer-certification.png",
+        "badge_alt": "Certification badge",
+        "badge_link": "",
+        "copyright_name": "Fair Harbor",
+        "legal_menu": "fh-footer-legal"
       }
     }
   },
   "order": [
+    "fh_footer",
     "footer_section"
   ]
 }

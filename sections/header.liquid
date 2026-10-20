@@ -160,6 +160,10 @@
     assign class = class | append: ' ' | append: collapse_header_paddings_class
   endif
 
+  if section.settings.design_refresh
+    assign class = class | append: ' header--fh'
+  endif
+
   # Determine transparent background value
   assign top_transparent = false
   assign bottom_transparent = false
@@ -286,6 +290,17 @@
     "url": {{ request.origin | append: page.url | json }}
   }
 </script>
+
+{% if section.settings.design_refresh %}
+  {% style %}
+    {{ section.settings.refresh_font | font_face: font_display: 'swap' }}
+    :root {
+      --fh-font-family: {{ section.settings.refresh_font.family }}, {{ section.settings.refresh_font.fallback_families }};
+      --fh-sale-color: {{ section.settings.sale_link_color }};
+    }
+  {% endstyle %}
+  {{ 'header-refresh.css' | asset_url | stylesheet_tag }}
+{% endif %}
 
 <header-component
   id="header-component"
@@ -1121,6 +1136,28 @@
   "tag": "header",
   "class": "header-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Design refresh 2026"
+    },
+    {
+      "type": "checkbox",
+      "id": "design_refresh",
+      "label": "Enable design refresh 2026 header",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "refresh_font",
+      "label": "Header font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "color",
+      "id": "sale_link_color",
+      "label": "Sale link and cart badge color",
+      "default": "#AF5312"
+    },
     {
       "type": "header",
       "content": "t:content.logo"

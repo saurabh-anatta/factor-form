@@ -1,0 +1,121 @@
+/*
+  Hero design refresh 2026 (Figma: Anatta x FH Design Refresh 2026, node 1-7)
+  Applies only when "Design refresh 2026" is enabled on a hero section.
+  Blocks are targeted by their JSON key suffix: __fh_eyebrow, __fh_heading, __fh_subheading.
+*/
+
+.hero--fh {
+  --hero-min-height: var(--fh-hero-height, 672px);
+  --fh-hero-text: #fff;
+  --fh-hero-navy: #00165a;
+}
+
+.hero--fh .hero__container {
+  min-height: var(--fh-hero-height, 672px);
+
+  @media screen and (max-width: 749px) {
+    min-height: 560px;
+  }
+}
+
+/* 64px inner padding, content centred both ways */
+.hero--fh .hero__content-wrapper {
+  padding: 64px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  @media screen and (max-width: 749px) {
+    padding: 48px 24px;
+  }
+}
+
+.hero--fh .text-block {
+  color: var(--fh-hero-text);
+  text-align: center;
+  margin-inline: auto;
+}
+
+/* Eyebrow: 12/16, bold, uppercase, 2px tracking */
+.hero--fh [class*='__fh_eyebrow'],
+.hero--fh [class*='__fh_eyebrow'] > * {
+  font-family: var(--fh-font-family, var(--font-body--family));
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Heading: 96/104 serif, -2.88px tracking */
+.hero--fh [class*='__fh_heading'],
+.hero--fh [class*='__fh_heading'] > * {
+  font-family: var(--fh-hero-heading-font, var(--font-heading--family));
+  font-size: 96px;
+  font-weight: 400;
+  line-height: 104px;
+  letter-spacing: -2.88px;
+  margin: 0;
+  padding-block-start: 8px;
+
+  @media screen and (max-width: 749px) {
+    font-size: 56px;
+    line-height: 60px;
+    letter-spacing: -1.68px;
+  }
+}
+
+/* Subheading: 18/28 */
+.hero--fh [class*='__fh_subheading'],
+.hero--fh [class*='__fh_subheading'] > * {
+  font-family: var(--fh-font-family, var(--font-body--family));
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0;
+  margin: 0;
+  padding-block-start: 8px;
+
+  @media screen and (max-width: 749px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+/* CTA: white pill, 48px tall, 32px side padding, navy 12/16 bold uppercase */
+.hero--fh [class*='__fh_subheading'] {
+  margin-block-end: 24px;
+}
+
+.hero--fh .button {
+  --button-color: var(--fh-hero-navy);
+  --button-background-color: #fff;
+  --button-border-color: #fff;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 4px 32px;
+  border: 0;
+  border-radius: 9999px;
+  background-color: #fff;
+  color: var(--fh-hero-navy);
+  font-family: var(--fh-font-family, var(--font-body--family));
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.hero--fh .button:is(:hover, :focus-visible) {
+  --button-color: #fff;
+  --button-background-color: var(--fh-hero-navy);
+
+  background-color: var(--fh-hero-navy);
+  color: #fff;
+}

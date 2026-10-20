@@ -1,0 +1,439 @@
+{%- comment -%}
+  Footer (Design refresh 2026, Figma node 1-1774)
+  Value-prop row, newsletter + socials + badge, link columns, legal row.
+{%- endcomment -%}
+
+{{ 'fh-footer.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  {{ section.settings.heading_font | font_face: font_display: 'swap' }}
+  #FhFooter-{{ section.id }} {
+    --fh-ft-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --fh-ft-background: {{ section.settings.background_color }};
+  }
+{% endstyle %}
+
+{%- liquid
+  assign value_blocks = section.blocks | where: 'type', 'value'
+  assign column_blocks = section.blocks | where: 'type', 'column'
+  assign form_id = 'FhFooterNewsletter-' | append: section.id
+-%}
+
+<div
+  id="FhFooter-{{ section.id }}"
+  class="fh-footer"
+>
+  {%- if value_blocks.size > 0 -%}
+    <ul class="fh-footer__values">
+      {%- for block in value_blocks -%}
+        <li
+          class="fh-footer__value"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.icon != blank -%}
+            {{
+              block.settings.icon
+              | image_url: width: 144
+              | image_tag: loading: 'lazy', class: 'fh-footer__value-icon', alt: ''
+            }}
+          {%- endif -%}
+          <span class="fh-footer__value-text">{{ block.settings.text | escape }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+  <div class="fh-footer__main">
+    <div class="fh-footer__aside">
+      {%- if section.settings.show_newsletter -%}
+        <div class="fh-footer__newsletter">
+          {%- if section.settings.newsletter_heading != blank -%}
+            <h2 class="fh-footer__newsletter-heading">{{ section.settings.newsletter_heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.newsletter_text != blank -%}
+            <p class="fh-footer__newsletter-text">{{ section.settings.newsletter_text | escape }}</p>
+          {%- endif -%}
+          {%- form 'customer', id: form_id, class: 'fh-footer__form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="fh-footer__field">
+              <label
+                for="{{ form_id }}-email"
+                class="visually-hidden"
+              >
+                {{- section.settings.newsletter_placeholder | default: 'Email address' | escape -}}
+              </label>
+              <input
+                id="{{ form_id }}-email"
+                type="email"
+                name="contact[email]"
+                class="fh-footer__input"
+                value="{{ form.email }}"
+                autocomplete="email"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                required
+                placeholder="{{ section.settings.newsletter_placeholder | escape }}"
+                {% if form.errors %}
+                  aria-invalid="true"
+                  aria-describedby="{{ form_id }}-status"
+                {% elsif form.posted_successfully? %}
+                  aria-describedby="{{ form_id }}-status"
+                {% endif %}
+              >
+              <button
+                type="submit"
+                class="fh-footer__submit"
+                aria-label="Subscribe to newsletter"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M18 16l4-4-4-4M22 12H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            {%- if form.errors -%}
+              <p
+                id="{{ form_id }}-status"
+                class="fh-footer__form-status fh-footer__form-status--error"
+                role="alert"
+              >
+                {{ form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email }}
+              </p>
+            {%- elsif form.posted_successfully? -%}
+              <p
+                id="{{ form_id }}-status"
+                class="fh-footer__form-status"
+                role="status"
+              >
+                {{ section.settings.newsletter_success | escape }}
+              </p>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+
+      {%- liquid
+        assign has_social = false
+        if section.settings.social_facebook != blank or section.settings.social_pinterest != blank or section.settings.social_linkedin != blank or section.settings.social_instagram != blank
+          assign has_social = true
+        endif
+      -%}
+      {%- if has_social -%}
+        <ul class="fh-footer__social">
+          {%- if section.settings.social_facebook != blank -%}
+            <li>
+              <a
+                href="{{ section.settings.social_facebook }}"
+                class="fh-footer__social-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Visit our Facebook page (opens in a new tab)"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M6.5 10v4h3v7h4v-7h3l1-4h-4V8c0-.545.455-1 1-1h3V3h-3c-2.723 0-5 2.277-5 5v2h-3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.social_pinterest != blank -%}
+            <li>
+              <a
+                href="{{ section.settings.social_pinterest }}"
+                class="fh-footer__social-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Visit our Pinterest page (opens in a new tab)"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M7.452 13.18c-1.108-2.262.4-6.668 5.472-5.948 5.586.794 4.581 9.478-.077 9.139-1.474-.108-2.031-1.33-2.177-2.577m0 0c-.11-.946.016-1.907.16-2.41.244-.857.649-.74.353.393-.144.552-.32 1.245-.513 2.017Zm0 0c-.514 2.06-1.15 4.685-1.63 6.708" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.social_linkedin != blank -%}
+            <li>
+              <a
+                href="{{ section.settings.social_linkedin }}"
+                class="fh-footer__social-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Visit our LinkedIn page (opens in a new tab)"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M16.5 3h-9A4.5 4.5 0 0 0 3 7.5v9A4.5 4.5 0 0 0 7.5 21h9a4.5 4.5 0 0 0 4.5-4.5v-9A4.5 4.5 0 0 0 16.5 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16.375V10.75m4 5.625V13.5m0 0v-2.75m0 2.75c0-1.288 1.222-2 2.4-2 1.6 0 1.6 1.375 1.6 2.875v2M8 7.625v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.social_instagram != blank -%}
+            <li>
+              <a
+                href="{{ section.settings.social_instagram }}"
+                class="fh-footer__social-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Visit our Instagram page (opens in a new tab)"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M16.5 3h-9A4.5 4.5 0 0 0 3 7.5v9A4.5 4.5 0 0 0 7.5 21h9a4.5 4.5 0 0 0 4.5-4.5v-9A4.5 4.5 0 0 0 16.5 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.462 11.487a3.5 3.5 0 1 1-6.925 1.07 3.5 3.5 0 0 1 6.925-1.07ZM17 6.5h.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.badge_image != blank -%}
+        {%- if section.settings.badge_link != blank -%}
+          <a
+            href="{{ section.settings.badge_link }}"
+            class="fh-footer__badge"
+          >
+        {%- else -%}
+          <div class="fh-footer__badge">
+        {%- endif -%}
+        {{
+          section.settings.badge_image
+          | image_url: width: 200
+          | image_tag:
+            loading: 'lazy',
+            class: 'fh-footer__badge-image',
+            alt: section.settings.badge_alt
+        }}
+        {%- if section.settings.badge_link != blank -%}
+          </a>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    {%- if column_blocks.size > 0 -%}
+      <div class="fh-footer__columns">
+        {%- for block in column_blocks -%}
+          {%- assign menu = block.settings.menu -%}
+          <nav
+            class="fh-footer__column"
+            aria-labelledby="FhFooterCol-{{ block.id }}"
+            {{ block.shopify_attributes }}
+          >
+            <h2
+              id="FhFooterCol-{{ block.id }}"
+              class="fh-footer__column-heading"
+            >
+              {{- block.settings.heading | default: menu.title | escape -}}
+            </h2>
+            {%- if menu.links.size > 0 -%}
+              <ul class="fh-footer__links">
+                {%- for link in menu.links -%}
+                  <li>
+                    <a
+                      href="{{ link.url }}"
+                      class="fh-footer__link"
+                      {% if link.current %}
+                        aria-current="page"
+                      {% endif %}
+                    >
+                      {{- link.title | escape -}}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </nav>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="fh-footer__legal">
+    <p class="fh-footer__copyright">
+      &copy; {{ 'now' | date: '%Y' }}, {{ section.settings.copyright_name | default: shop.name | escape }}
+    </p>
+    {%- assign legal = section.settings.legal_menu -%}
+    {%- if legal.links.size > 0 -%}
+      <ul
+        class="fh-footer__legal-links"
+        aria-label="Legal"
+      >
+        {%- for link in legal.links -%}
+          <li>
+            <a
+              href="{{ link.url }}"
+              class="fh-footer__legal-link"
+            >
+              {{- link.title | escape -}}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Footer (refresh)",
+  "tag": "div",
+  "class": "section-fh-footer",
+  "settings": [
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "playfair_display_n4"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#F4F0ED"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Heading",
+      "default": "UNLOCK 15% OFF"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Text",
+      "default": "Get early access to new drops, exclusive deals and more."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Email placeholder",
+      "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_success",
+      "label": "Success message",
+      "default": "Thanks for subscribing!"
+    },
+    {
+      "type": "header",
+      "content": "Social links"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook",
+      "label": "Facebook"
+    },
+    {
+      "type": "url",
+      "id": "social_pinterest",
+      "label": "Pinterest"
+    },
+    {
+      "type": "url",
+      "id": "social_linkedin",
+      "label": "LinkedIn"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "Instagram"
+    },
+    {
+      "type": "header",
+      "content": "Badge"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "badge_alt",
+      "label": "Image description",
+      "default": "Certification badge"
+    },
+    {
+      "type": "url",
+      "id": "badge_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Bottom row"
+    },
+    {
+      "type": "text",
+      "id": "copyright_name",
+      "label": "Copyright name",
+      "info": "Defaults to the store name"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal menu"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value prop",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Value prop"
+        }
+      ]
+    },
+    {
+      "type": "column",
+      "name": "Link column",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "info": "Defaults to the menu name"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer (refresh)",
+      "blocks": [
+        { "type": "value" },
+        { "type": "value" },
+        { "type": "value" },
+        { "type": "value" },
+        { "type": "column" },
+        { "type": "column" },
+        { "type": "column" }
+      ]
+    }
+  ]
+}
+{% endschema %}

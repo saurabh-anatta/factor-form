@@ -1,0 +1,116 @@
+/* Promo tiles (Design refresh 2026, Figma node 1-1567) */
+
+.fh-promo-tiles {
+  --fh-navy: #00165a;
+
+  padding: var(--fh-pt-padding-top, 24px) 64px var(--fh-pt-padding-bottom, 24px);
+  background: var(--fh-pt-background, #fff);
+  font-family: var(--fh-font-family, var(--font-body--family));
+  color: var(--fh-navy);
+
+  @media screen and (max-width: 989px) {
+    padding-inline: 24px;
+  }
+
+  @media screen and (max-width: 749px) {
+    padding-inline: 16px;
+  }
+}
+
+.fh-promo-tiles__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--fh-pt-columns, 2), minmax(0, 1fr));
+  gap: 32px;
+
+  @media screen and (max-width: 749px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+.fh-promo-tiles__tile {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fh-promo-tiles__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f4f0ed;
+}
+
+.fh-promo-tiles__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+a.fh-promo-tiles__media:hover .fh-promo-tiles__image {
+  transform: scale(1.02);
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+  }
+}
+
+.fh-promo-tiles__overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  pointer-events: none;
+}
+
+/* 8px top/bottom padding around the 103px text stack */
+.fh-promo-tiles__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-block: 8px;
+}
+
+.fh-promo-tiles__heading {
+  margin: 0;
+  font-family: var(--fh-pt-heading-font, var(--font-heading--family));
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: -0.64px;
+  color: var(--fh-navy);
+
+  @media screen and (max-width: 749px) {
+    font-size: 26px;
+    line-height: 32px;
+    letter-spacing: -0.52px;
+  }
+}
+
+.fh-promo-tiles__text {
+  margin: 0;
+  padding-block-start: 3px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.fh-promo-tiles__link {
+  margin-block-start: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--fh-navy);
+  text-decoration: none;
+}
+
+.fh-promo-tiles__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.fh-promo-tiles__link:focus-visible {
+  outline: 2px solid var(--fh-navy);
+  outline-offset: 2px;
+}
