@@ -8,7 +8,7 @@
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <aside
-  class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}{% if section.settings.design_refresh %} announcement-bar--fh{% endif %}"
   style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;"
 >
   {% liquid
@@ -133,6 +133,13 @@
     "groups": ["header"]
   },
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "design_refresh",
+      "label": "Enable design refresh 2026 styling",
+      "info": "Uses the header font from the header section",
+      "default": false
+    },
     {
       "type": "range",
       "id": "speed",

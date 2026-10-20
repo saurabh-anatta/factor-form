@@ -12,63 +12,75 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "design_refresh": true,
+        "refresh_heading_font": "playfair_display_n4",
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/main-hero-img-3-1-desktop-110524489.png",
-        "media_type_2": "image",
-        "image_2": "shopify://shop_images/image-1-desktop-110524490.png",
+        "image_1": "shopify://shop_images/fh-hero-made-to-move.jpg",
         "content_direction": "column",
-        "horizontal_alignment_flex_direction_column": "flex-start",
+        "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 8,
+        "gap": 0,
         "section_width": "full-width",
-        "section_height": "medium",
+        "section_height": "custom",
+        "section_height_custom": 70,
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
-        "overlay_color": "#00000066",
+        "overlay_color": "#00000026",
         "overlay_style": "solid",
         "padding-block-start": 0,
         "padding-block-end": 0,
-        "stack_media_on_mobile": true,
-        "custom_mobile_media": true,
-        "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/main-hero-img-3-1-desktop-91051018.png",
-        "media_type_2_mobile": "image",
-        "image_2_mobile": "shopify://shop_images/image-1-desktop-91051020.png"
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false
       },
       "blocks": {
-        "heading": {
+        "fh_eyebrow": {
           "type": "text",
           "settings": {
-            "text": "<h1>Your Daily Greens, Reinvented</h1>",
+            "text": "<p>★★★★★ Over 75,000 5 Star reviews</p>",
             "width": "100%",
-            "max_width": "narrow",
-            "alignment": "left",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "paragraph",
+            "color": "#FFFFFF"
+          }
+        },
+        "fh_heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>Made to move</h1>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
             "type_preset": "h1",
             "color": "#FFFFFF"
           }
         },
-        "description": {
+        "fh_subheading": {
           "type": "text",
           "settings": {
-            "text": "<p>Better taste. Better routine. Better you.</p>",
+            "text": "<p>Breathable comfort engineered for every adventure.</p>",
             "width": "100%",
-            "max_width": "narrow",
-            "alignment": "left",
+            "max_width": "none",
+            "alignment": "center",
             "type_preset": "paragraph",
-            "color": "#FFFFFF",
-            "padding-block-end": 24
+            "color": "#FFFFFF"
           }
         },
-        "button": {
+        "fh_button": {
           "type": "button",
           "settings": {
-            "label": "Shop Now",
+            "label": "Shop Men’s swim",
             "link": "shopify://collections/all",
             "style_class": "button"
           }
         }
       },
-      "block_order": ["heading", "description", "button"]
+      "block_order": [
+        "fh_eyebrow",
+        "fh_heading",
+        "fh_subheading",
+        "fh_button"
+      ]
     },
     "reviews": {
       "type": "custom-reviews",
@@ -120,7 +132,12 @@
           }
         }
       },
-      "block_order": ["review-1", "review-2", "review-3", "review-4"]
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3",
+        "review-4"
+      ]
     },
     "product-carousel": {
       "type": "custom-product-carousel",
@@ -230,7 +247,17 @@
           }
         }
       },
-      "block_order": ["tab-1", "tab-2", "tab-3", "tab-4", "category-card-1", "product-card-1", "product-card-2", "product-card-3", "product-card-4"]
+      "block_order": [
+        "tab-1",
+        "tab-2",
+        "tab-3",
+        "tab-4",
+        "category-card-1",
+        "product-card-1",
+        "product-card-2",
+        "product-card-3",
+        "product-card-4"
+      ]
     },
     "marquee": {
       "type": "custom-marquee",
@@ -279,7 +306,14 @@
           }
         }
       },
-      "block_order": ["marquee-item-1", "marquee-item-2", "marquee-item-3", "marquee-item-4", "marquee-item-5", "marquee-item-6"]
+      "block_order": [
+        "marquee-item-1",
+        "marquee-item-2",
+        "marquee-item-3",
+        "marquee-item-4",
+        "marquee-item-5",
+        "marquee-item-6"
+      ]
     },
     "benefits": {
       "type": "custom-benefits",
@@ -305,7 +339,7 @@
           "settings": {
             "heading": "More Quality",
             "description": "Made with no added sugar, our products are keto-friendly and free of unnecessary ingredients",
-            "description_mobile": "No added sugar\u2014keto-friendly and free of unnecessary ingredients",
+            "description_mobile": "No added sugar—keto-friendly and free of unnecessary ingredients",
             "icon_desktop": "icon-2-quality-ingredients-2.svg",
             "icon_mobile": "icon-2-quality-ingredients.svg"
           }
@@ -331,7 +365,12 @@
           }
         }
       },
-      "block_order": ["benefit-1", "benefit-2", "benefit-3", "benefit-4"]
+      "block_order": [
+        "benefit-1",
+        "benefit-2",
+        "benefit-3",
+        "benefit-4"
+      ]
     },
     "certified": {
       "type": "custom-certified",
@@ -367,13 +406,17 @@
           }
         }
       },
-      "block_order": ["certified-1", "certified-2", "certified-3"]
+      "block_order": [
+        "certified-1",
+        "certified-2",
+        "certified-3"
+      ]
     },
     "dietitians": {
       "type": "custom-dietitians",
       "settings": {
         "heading": "Backed By Factor Dietitians",
-        "description": "Formulated with guidance from Factor\u2019s in-house dietitians to help you meet your wellness goals with confidence",
+        "description": "Formulated with guidance from Factor’s in-house dietitians to help you meet your wellness goals with confidence",
         "background_color": "#F1F1EA",
         "padding-block-start": 80,
         "padding-block-end": 80
@@ -407,7 +450,11 @@
           }
         }
       },
-      "block_order": ["dietitian-1", "dietitian-2", "dietitian-3"]
+      "block_order": [
+        "dietitian-1",
+        "dietitian-2",
+        "dietitian-3"
+      ]
     },
     "feature": {
       "type": "custom-feature",
@@ -451,7 +498,11 @@
           }
         }
       },
-      "block_order": ["feature-item-1", "feature-item-2", "feature-item-3"]
+      "block_order": [
+        "feature-item-1",
+        "feature-item-2",
+        "feature-item-3"
+      ]
     },
     "faqs": {
       "type": "custom-faqs",
@@ -494,8 +545,24 @@
           }
         }
       },
-      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"]
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4",
+        "faq-5"
+      ]
     }
   },
-  "order": ["hero", "reviews", "product-carousel", "marquee", "benefits", "certified", "dietitians", "feature", "faqs"]
+  "order": [
+    "hero",
+    "reviews",
+    "product-carousel",
+    "marquee",
+    "benefits",
+    "certified",
+    "dietitians",
+    "feature",
+    "faqs"
+  ]
 }

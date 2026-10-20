@@ -1,0 +1,165 @@
+/*
+  Header design refresh 2026 (Figma: Anatta x FH Design Refresh 2026, node 1-2165)
+  Only applies when "Design refresh 2026" is enabled on the header / announcement sections.
+*/
+
+/* ---------- Announcement bar (32px, sage) ---------- */
+.announcement-bar--fh {
+  font-family: var(--fh-font-family, var(--font-body--family));
+}
+
+.announcement-bar--fh .announcement-bar__slides {
+  max-width: 1256px;
+}
+
+.announcement-bar--fh .announcement-bar__slide {
+  --font-size: 14px;
+  --line-height: 20px;
+
+  font-family: var(--fh-font-family, var(--font-body--family));
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.announcement-bar--fh .announcement-bar__text {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.announcement-bar--fh .announcement-bar__text a {
+  position: relative;
+  z-index: 1;
+  margin-inline-start: 0.5em;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.announcement-bar--fh .announcement-bar__text a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- Main bar (64px, white, navy) ---------- */
+.header--fh {
+  --fh-navy: #00165a;
+  --fh-border: #f4f0ed;
+}
+
+.header--fh .header__row--top {
+  border-bottom: 1px solid var(--fh-border);
+}
+
+.header--fh .header__row--top .header__columns {
+  min-height: 64px;
+  padding-block: 0;
+  align-items: center;
+
+  @media screen and (min-width: 750px) {
+    padding-inline: 64px;
+  }
+}
+
+/* Logo + menu sit together on the left: 144px logo, 24px pad, 24px gap */
+.header--fh .header__column--left {
+  @media screen and (min-width: 750px) {
+    gap: 48px;
+  }
+}
+
+/* Top level menu links: 14/20, navy, 24px between items */
+.header--fh .header-menu {
+  --menu-top-level-font-family: var(--fh-font-family, var(--font-body--family));
+  --menu-top-level-font-weight: 400;
+  --menu-top-level-font-style: normal;
+  --menu-top-level-font-size: 14px;
+  --menu-top-level-font-size-desktop: 14px;
+  --menu-top-level-font-line-height: 20px;
+  --menu-top-level-font-case: none;
+  --menu-top-level-font-color: var(--fh-navy);
+  --menu-top-level-font-color-rgb: 0 22 90;
+}
+
+.header--fh .menu-list__link {
+  letter-spacing: 0;
+}
+
+.header--fh .menu-list__list-item:not([slot='overflow']) .menu-list__link-title {
+  padding-inline: 12px;
+}
+
+.header--fh .menu-list__list {
+  margin-inline-start: -12px;
+}
+
+/* "Sale" link in rust */
+.header--fh .menu-list__link[href*='sale' i],
+.header--fh .menu-list__link[href*='sale' i]:is(:hover, :focus),
+.header--fh .menu-list .menu-list__list-item:where(:hover, :focus-within) .menu-list__link[href*='sale' i] {
+  color: var(--fh-sale-color, #af5312);
+}
+
+/* ---------- Actions: search, account, cart (24px line icons, 24px gap) ---------- */
+.header--fh .header__column--right {
+  @media screen and (min-width: 750px) {
+    gap: 24px;
+  }
+}
+
+.header--fh header-actions,
+.header--fh .header-actions {
+  @media screen and (min-width: 750px) {
+    gap: 24px;
+  }
+}
+
+.header--fh :is(.header-actions__action, .search-action button) {
+  color: var(--fh-navy);
+}
+
+.header--fh :is(.header-actions__action, .search-action) .svg-wrapper,
+.header--fh :is(.header-actions__action, .search-action) .svg-wrapper svg,
+.header--fh .account-button__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.header--fh .header-actions__action:not(.account-button) svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Cart count: 16px rust circle, white 10px bold, top-right of the bag */
+.header--fh .header-actions__cart-icon {
+  position: relative;
+}
+
+.header--fh .cart-bubble {
+  --cart-bubble-size: 16px;
+
+  position: absolute;
+  /* Figma: badge at x+12 / y+0 of the 24px bag icon */
+  top: 0;
+  inset-inline-start: 12px;
+  inset-inline-end: auto;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 9999px;
+}
+
+.header--fh .cart-bubble__background {
+  background-color: var(--fh-sale-color, #af5312);
+  border-radius: 9999px;
+}
+
+.header--fh .cart-bubble__text {
+  color: #fff;
+  font-family: var(--fh-font-family, var(--font-body--family));
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+}
