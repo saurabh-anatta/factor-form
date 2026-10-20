@@ -1,0 +1,108 @@
+/* Social grid (Design refresh 2026, Figma node 1-1736) */
+
+.fh-instagram {
+  background: #fff;
+  font-family: var(--fh-font-family, var(--font-body--family));
+}
+
+/* 110px bar: 35px vertical / 24px horizontal padding around a 40px line */
+.fh-instagram__bar {
+  padding: 35px 24px;
+  background: var(--fh-ig-bar, #223d72);
+  text-align: center;
+
+  @media screen and (max-width: 749px) {
+    padding: 24px 16px;
+  }
+}
+
+.fh-instagram__heading {
+  margin: 0;
+  font-family: var(--fh-ig-heading-font, var(--font-heading--family));
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: -0.3px;
+  color: var(--fh-ig-heading-color, #fff);
+
+  @media screen and (max-width: 749px) {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}
+
+.fh-instagram__handle {
+  color: var(--fh-ig-handle-color, #c8d5e4);
+  text-decoration: none;
+}
+
+a.fh-instagram__handle:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+a.fh-instagram__handle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.fh-instagram__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--fh-ig-columns, 4), minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media screen and (max-width: 749px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.fh-instagram__item {
+  min-width: 0;
+}
+
+.fh-instagram__post {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f4f0ed;
+}
+
+.fh-instagram__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+a.fh-instagram__post:hover .fh-instagram__image {
+  transform: scale(1.03);
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+  }
+}
+
+a.fh-instagram__post:focus-visible {
+  outline: 2px solid #00165a;
+  outline-offset: -4px;
+}
+
+/* 32px white circle, 12px from the top-right corner */
+.fh-instagram__play {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  color: #223d72;
+}
