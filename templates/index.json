@@ -552,10 +552,55 @@
         "faq-4",
         "faq-5"
       ]
+    },
+    "fh-bestsellers": {
+      "type": "fh-bestsellers",
+      "blocks": {
+        "tab_men": {
+          "type": "tab",
+          "settings": {
+            "label": "Men",
+            "collection": "men",
+            "limit": 12
+          }
+        },
+        "tab_women": {
+          "type": "tab",
+          "settings": {
+            "label": "Women",
+            "collection": "women",
+            "limit": 12
+          }
+        },
+        "tab_jewelry": {
+          "type": "tab",
+          "settings": {
+            "label": "Jewelry",
+            "collection": "jewelery",
+            "limit": 12
+          }
+        }
+      },
+      "block_order": [
+        "tab_men",
+        "tab_women",
+        "tab_jewelry"
+      ],
+      "settings": {
+        "heading": "Shop bestsellers",
+        "heading_font": "playfair_display_n4",
+        "badge_tag": "Bestseller",
+        "auto_badge_count": 0,
+        "image_label_tag": "Personalize It",
+        "pill_tags": "Bundle & Save, Personalize It",
+        "padding_top": 25,
+        "padding_bottom": 25
+      }
     }
   },
   "order": [
     "hero",
+    "fh-bestsellers",
     "reviews",
     "product-carousel",
     "marquee",

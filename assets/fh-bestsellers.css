@@ -1,0 +1,330 @@
+/* Shop bestsellers (Design refresh 2026, Figma node 1-167) */
+
+.fh-bestsellers {
+  --fh-navy: #00165a;
+  --fh-slate: #436389;
+  --fh-sky: #c8d5e4;
+  --fh-sand: #f4f0ed;
+  --fh-paper: #fcfbfa;
+  --fh-sage-text: #869e77;
+  --fh-bs-card: 340px;
+  --fh-bs-gap: 16px;
+
+  display: block;
+  background: #fff;
+  padding-block: var(--fh-bs-padding-top, 25px) var(--fh-bs-padding-bottom, 25px);
+  font-family: var(--fh-font-family, var(--font-body--family));
+  color: var(--fh-navy);
+}
+
+.fh-bestsellers__inner {
+  /* Content starts 40px from the left and bleeds off the right edge */
+  padding-inline-start: 40px;
+  padding-block-end: 16px;
+
+  @media screen and (max-width: 749px) {
+    padding-inline-start: 16px;
+  }
+}
+
+/* Header: heading + arrows */
+.fh-bestsellers__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.fh-bestsellers__heading {
+  margin: 0;
+  font-family: var(--fh-bs-heading-font, var(--font-heading--family));
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 48px;
+  letter-spacing: 0;
+  color: var(--fh-navy);
+
+  @media screen and (max-width: 749px) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+.fh-bestsellers__arrows {
+  display: flex;
+  gap: 16px;
+  padding-inline-end: 40px;
+  padding-block-end: 4px;
+
+  @media screen and (max-width: 749px) {
+    display: none;
+  }
+}
+
+.fh-bestsellers__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--fh-navy);
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--fh-navy);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.fh-bestsellers__arrow:is(:hover, :focus-visible):not([disabled]) {
+  background: var(--fh-navy);
+  color: #fff;
+}
+
+.fh-bestsellers__arrow[disabled] {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* Tabs */
+.fh-bestsellers__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-block-start: 20px;
+  padding-inline-end: 16px;
+}
+
+.fh-bestsellers__tab {
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 1px solid var(--fh-sand);
+  border-radius: 9999px;
+  background: var(--fh-paper);
+  color: #000;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.fh-bestsellers__tab:hover {
+  border-color: var(--fh-slate);
+}
+
+.fh-bestsellers__tab[aria-selected='true'] {
+  background: var(--fh-sky);
+  border-color: var(--fh-slate);
+}
+
+/* Track */
+.fh-bestsellers__panel {
+  margin-block-start: 24px;
+}
+
+.fh-bestsellers__panel[hidden] {
+  display: none;
+}
+
+.fh-bestsellers__track {
+  display: flex;
+  gap: var(--fh-bs-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scroll-padding-inline-start: 0;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  outline-offset: 4px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+
+.fh-bestsellers__slide {
+  position: relative;
+  flex: 0 0 var(--fh-bs-card);
+  width: var(--fh-bs-card);
+  scroll-snap-align: start;
+
+  @media screen and (max-width: 749px) {
+    flex-basis: 72vw;
+    width: 72vw;
+  }
+}
+
+.fh-bestsellers__slide:last-child {
+  margin-inline-end: 24px;
+}
+
+/* Card media: 340 x 454 */
+.fh-bestsellers__media {
+  display: block;
+  aspect-ratio: 340 / 454;
+  overflow: hidden;
+  background: var(--fh-sand);
+}
+
+.fh-bestsellers__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.fh-bestsellers__media:hover .fh-bestsellers__image {
+  transform: scale(1.03);
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
+  }
+}
+
+.fh-bestsellers__badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3px 6px;
+  background: var(--fh-sky);
+  color: var(--fh-navy);
+  font-size: 14px;
+  line-height: 14px;
+  pointer-events: none;
+}
+
+.fh-bestsellers__image-label {
+  position: absolute;
+  left: 0;
+  /* Sits on the bottom edge of the 3:4 image */
+  top: calc(var(--fh-bs-card) * 454 / 340 - 20px);
+  padding: 3px 10px;
+  background: #fff;
+  color: var(--fh-sage-text);
+  font-size: 14px;
+  line-height: 14px;
+  pointer-events: none;
+
+  @media screen and (max-width: 749px) {
+    top: calc(72vw * 454 / 340 - 20px);
+  }
+}
+
+/* Card info */
+.fh-bestsellers__info {
+  padding-block: 16px;
+}
+
+.fh-bestsellers__swatches {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 26px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.fh-bestsellers__swatch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+}
+
+.fh-bestsellers__swatch--selected {
+  width: 26px;
+  height: 26px;
+  padding: 2px;
+  border: 1px solid #121211;
+}
+
+.fh-bestsellers__swatch-color {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: var(--fh-sand);
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08);
+}
+
+.fh-bestsellers__swatch-more a {
+  color: var(--fh-navy);
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration: none;
+}
+
+.fh-bestsellers__title {
+  margin: 0;
+  padding-block-end: 2px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--fh-navy);
+}
+
+.fh-bestsellers__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.fh-bestsellers__title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.fh-bestsellers__subtitle {
+  margin: 0;
+  padding-block-end: 3px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--fh-slate);
+}
+
+.fh-bestsellers__price-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.fh-bestsellers__price {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--fh-navy);
+}
+
+.fh-bestsellers__compare {
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--fh-slate);
+}
+
+.fh-bestsellers__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fh-bestsellers__pill {
+  padding: 2px 8px;
+  border-radius: 60px;
+  background: var(--fh-sand);
+  color: #1c1917;
+  font-size: 12px;
+  line-height: 16px;
+}
