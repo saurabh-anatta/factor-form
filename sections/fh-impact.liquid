@@ -51,13 +51,15 @@
   .fh-impact__img--placeholder { background: var(--fh-blue); }
   .fh-impact__inner { width: 100%; padding: 80px var(--fh-gutter) 64px; }
   .fh-impact__content { display: flex; flex-direction: column; align-items: center; max-width: 1168px; margin: 0 auto; text-align: center; }
-  .fh-impact__number { display: block; font-family: var(--fh-font-serif); font-size: clamp(56px, 6.35vw, 96px); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .fh-impact__counter { display: block; }
+  .fh-impact__number { display: block; white-space: nowrap; font-family: var(--fh-font-serif); font-size: clamp(56px, 6.35vw, 96px); line-height: 1.1; font-variant-numeric: tabular-nums; }
   .fh-impact__stats { display: flex; justify-content: center; gap: 32px; width: 100%; padding-top: 64px; }
   .fh-impact__stat { flex: 0 1 328px; }
   .fh-impact__stat-text { padding-top: 4px; }
   @media screen and (max-width: 749px) {
     .fh-impact__inner { padding: 56px 24px; }
     .fh-impact__stats { flex-direction: column; gap: 28px; padding-top: 40px; }
+    .fh-impact__stat { flex: none; }
   }
 {% endstylesheet %}
 

@@ -68,24 +68,28 @@
             {%- liquid
               case name
                 when 'facebook'
-                  assign url = settings.social_facebook_link
+                  assign url = s.facebook_link | default: settings.social_facebook_link
+                  assign network = 'Facebook'
                 when 'pinterest'
-                  assign url = settings.social_pinterest_link
+                  assign url = s.pinterest_link | default: settings.social_pinterest_link
+                  assign network = 'Pinterest'
                 when 'linkedin'
                   assign url = s.linkedin_link
+                  assign network = 'LinkedIn'
                 when 'instagram'
-                  assign url = settings.social_instagram_link
+                  assign url = s.instagram_link | default: settings.social_instagram_link
+                  assign network = 'Instagram'
               endcase
             -%}
             {%- if url != blank -%}
-              <li><a href="{{ url }}" target="_blank" rel="noopener" aria-label="{{ 'fh.visit_social' | t: network: name | capitalize }}">{%- render 'fh-icon', name: name -%}</a></li>
+              <li><a href="{{ url }}" target="_blank" rel="noopener" aria-label="{{ 'fh.visit_social' | t: network: network }}">{%- render 'fh-icon', name: name -%}</a></li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
 
         {%- if s.badge != blank -%}
-          <a href="{{ s.badge_link | default: '#' }}" class="fh-footer__badge" aria-label="{{ s.badge.alt | default: 'fh.certification' | t }}">
-            {{ s.badge | image_url: width: 200 | image_tag: height: 106, width: null, loading: 'lazy', alt: '', style: 'width:auto' }}
+          <a href="{{ s.badge_link | default: '#' }}" class="fh-footer__badge" aria-label="{%- if s.badge.alt != blank -%}{{ s.badge.alt | escape }}{%- else -%}{{ 'fh.certification' | t }}{%- endif -%}">
+            {{ s.badge | image_url: width: 200 | image_tag: loading: 'lazy', alt: '', class: 'fh-footer__badge-img' }}
           </a>
         {%- endif -%}
       </div>
@@ -151,6 +155,7 @@
   .fh-footer__social a { display: inline-flex; color: var(--fh-navy); transition: opacity 0.2s; }
   .fh-footer__social a:hover { opacity: 0.6; }
   .fh-footer__badge { display: inline-flex; align-self: flex-start; }
+  .fh-footer__badge-img { height: 106px; width: auto; }
 
   .fh-footer__menus { display: flex; gap: 32px; }
   .fh-footer__menu { width: 208px; }
@@ -193,8 +198,11 @@
     { "type": "text", "id": "newsletter_heading", "label": "Heading", "default": "Unlock 15% off" },
     { "type": "text", "id": "newsletter_text", "label": "Text", "default": "Get early access to new drops, exclusive deals and more." },
     { "type": "header", "content": "Social and certification" },
-    { "type": "paragraph", "content": "Facebook, Pinterest and Instagram links come from Theme settings > Social media." },
+    { "type": "paragraph", "content": "Leave Facebook, Pinterest or Instagram empty to use Theme settings > Social media." },
+    { "type": "url", "id": "facebook_link", "label": "Facebook link" },
+    { "type": "url", "id": "pinterest_link", "label": "Pinterest link" },
     { "type": "url", "id": "linkedin_link", "label": "LinkedIn link" },
+    { "type": "url", "id": "instagram_link", "label": "Instagram link" },
     { "type": "image_picker", "id": "badge", "label": "Certification badge" },
     { "type": "url", "id": "badge_link", "label": "Badge link" },
     { "type": "header", "content": "Legal" },

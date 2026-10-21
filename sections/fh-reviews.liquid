@@ -56,7 +56,7 @@
                   {%- if p -%}
                     {{ 'fh.shop_now_price' | t: price: p.price | money_without_trailing_zeros }}
                   {%- else -%}
-                    {{ b.cta_label | default: 'fh.shop_now' | t }}
+                    {%- if b.cta_label != blank -%}{{ b.cta_label }}{%- else -%}{{ 'fh.shop_now' | t }}{%- endif -%}
                   {%- endif -%}
                 </span>
               </span>
