@@ -1,0 +1,97 @@
+{%- comment -%}
+  Fair Harbor value-prop marquee (Figma 1:35).
+  Sand strip, 64px tall, with icon and label pairs scrolling continuously.
+{%- endcomment -%}
+
+{%- liquid
+  assign items = section.blocks | where: 'type', 'item'
+-%}
+
+{%- capture list -%}
+  {%- for block in items -%}
+    <li class="fh-marquee__item" {{ block.shopify_attributes }}>
+      {%- if block.settings.image != blank -%}
+        {{ block.settings.image | image_url: width: 64 | image_tag: width: 32, height: 32, alt: '', loading: 'lazy', class: 'fh-marquee__icon' }}
+      {%- elsif block.settings.icon != 'none' -%}
+        {%- render 'fh-icon', name: block.settings.icon, class: 'fh-marquee__icon' -%}
+      {%- endif -%}
+      <span class="fh-caption">{{ block.settings.text }}</span>
+    </li>
+  {%- endfor -%}
+  <li class="fh-marquee__divider" aria-hidden="true"></li>
+{%- endcapture -%}
+
+{%- if items.size > 0 -%}
+  <div class="fh fh-marquee" style="--fh-marquee-speed: {{ section.settings.speed }}s; --fh-marquee-bg: {{ section.settings.background }};">
+    <h2 class="fh-visually-hidden">{{ 'fh.why_fair_harbor' | t }}</h2>
+    <div class="fh-marquee__viewport">
+      <div class="fh-marquee__track">
+        <ul class="fh-marquee__list" role="list">{{ list }}</ul>
+        <ul class="fh-marquee__list" role="list" aria-hidden="true">{{ list }}</ul>
+        <ul class="fh-marquee__list" role="list" aria-hidden="true">{{ list }}</ul>
+        <ul class="fh-marquee__list" role="list" aria-hidden="true">{{ list }}</ul>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .fh-marquee { background: var(--fh-marquee-bg, var(--fh-sand)); padding: 16px 24px; overflow: hidden; }
+  .fh-marquee__viewport { max-width: var(--fh-max); margin: 0 auto; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+  .fh-marquee__track { display: flex; width: max-content; animation: fh-marquee var(--fh-marquee-speed, 40s) linear infinite; }
+  .fh-marquee:hover .fh-marquee__track { animation-play-state: paused; }
+  .fh-marquee__list { display: flex; align-items: center; gap: 64px; padding-right: 64px; }
+  .fh-marquee__item { display: flex; align-items: center; gap: 16px; color: var(--fh-slate); white-space: nowrap; }
+  .fh-marquee__icon { width: 32px; height: 32px; color: var(--fh-navy); object-fit: contain; }
+  .fh-marquee__divider { width: 1px; height: 32px; background: #d9d9d9; }
+  @keyframes fh-marquee { to { transform: translateX(-25%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .fh-marquee__track { animation: none; }
+    .fh-marquee__viewport { overflow-x: auto; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Value marquee",
+  "tag": "section",
+  "class": "fh-section fh-section--marquee",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "range", "id": "speed", "label": "Loop duration", "min": 10, "max": 90, "step": 5, "unit": "s", "default": 40 },
+    { "type": "color", "id": "background", "label": "Background", "default": "#f4f0ed" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Signature Comfort" },
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "signature-comfort", "label": "Signature comfort" },
+            { "value": "elevated-essentials", "label": "Elevated essentials" },
+            { "value": "made-by-the-elements", "label": "Made by the elements" },
+            { "value": "effortless-versatility", "label": "Effortless versatility" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "signature-comfort"
+        },
+        { "type": "image_picker", "id": "image", "label": "Custom icon", "info": "Replaces the icon above." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Value marquee",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Signature Comfort", "icon": "signature-comfort" } },
+        { "type": "item", "settings": { "text": "Elevated Essentials", "icon": "elevated-essentials" } },
+        { "type": "item", "settings": { "text": "Made by the Elements", "icon": "made-by-the-elements" } },
+        { "type": "item", "settings": { "text": "Effortless Versatility", "icon": "effortless-versatility" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,158 @@
+{%- comment -%}
+  Fair Harbor full-bleed image banner (Figma 1:7 hero, 1:1243 New Arrivals,
+  1:1343 Elevated Essentials). Image with a dark overlay, centred eyebrow,
+  serif display heading, subheading and pill buttons.
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign heading_tag = 'h2'
+  if s.heading_level == 'h1'
+    assign heading_tag = 'h1'
+  endif
+  assign loading = 'lazy'
+  assign fetchpriority = 'auto'
+  if section.index <= 2
+    assign loading = 'eager'
+    assign fetchpriority = 'high'
+  endif
+  assign buttons = section.blocks | where: 'type', 'button'
+-%}
+
+<div
+  class="fh fh-hero fh-hero--{{ s.content_position }}"
+  style="--fh-hero-h: {{ s.height }}px; --fh-hero-h-mobile: {{ s.height_mobile }}px; --fh-hero-overlay: {{ s.overlay_opacity | divided_by: 100.0 }}; --fh-hero-fg: {{ s.text_color }};"
+>
+  <div class="fh-hero__media">
+    {%- if s.image != blank -%}
+      {%- capture sizes -%}100vw{%- endcapture -%}
+      {%- if s.image_mobile != blank -%}
+        <picture>
+          <source media="(max-width: 749px)" srcset="{{ s.image_mobile | image_url: width: 750 }} 750w, {{ s.image_mobile | image_url: width: 1100 }} 1100w" sizes="100vw">
+          {{ s.image | image_url: width: 3024 | image_tag: widths: '750, 1100, 1500, 2000, 2600, 3024', sizes: sizes, loading: loading, fetchpriority: fetchpriority, alt: s.image.alt | default: s.heading, class: 'fh-hero__img' }}
+        </picture>
+      {%- else -%}
+        {{ s.image | image_url: width: 3024 | image_tag: widths: '750, 1100, 1500, 2000, 2600, 3024', sizes: sizes, loading: loading, fetchpriority: fetchpriority, alt: s.image.alt | default: s.heading, class: 'fh-hero__img' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'hero-apparel-1' | placeholder_svg_tag: 'fh-hero__img fh-hero__img--placeholder' }}
+    {%- endif -%}
+    <span class="fh-hero__overlay" aria-hidden="true"></span>
+  </div>
+
+  {%- if s.link != blank -%}
+    <a href="{{ s.link }}" class="fh-hero__cover-link" tabindex="-1" aria-hidden="true"></a>
+  {%- endif -%}
+
+  <div class="fh-hero__content">
+    {%- if s.eyebrow != blank -%}
+      <p class="fh-eyebrow fh-hero__eyebrow">{{ s.eyebrow }}</p>
+    {%- endif -%}
+    {%- if s.heading != blank -%}
+      <{{ heading_tag }} class="fh-display fh-hero__heading">{{ s.heading | newline_to_br }}</{{ heading_tag }}>
+    {%- endif -%}
+    {%- if s.subheading != blank -%}
+      <p class="fh-body-lg fh-hero__sub">{{ s.subheading }}</p>
+    {%- endif -%}
+    {%- if buttons.size > 0 -%}
+      <div class="fh-hero__buttons">
+        {%- for block in buttons -%}
+          <a
+            href="{{ block.settings.link | default: s.link | default: '#' }}"
+            class="fh-btn fh-btn--{{ block.settings.style }}"
+            {{ block.shopify_attributes }}
+          >{{ block.settings.label }}</a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .fh-hero {
+    position: relative; display: flex; align-items: center; justify-content: center; isolation: isolate;
+    min-height: var(--fh-hero-h, 672px); max-width: var(--fh-max); margin: 0 auto; overflow: hidden; color: var(--fh-hero-fg, #fff);
+  }
+  .fh-hero__media, .fh-hero__overlay, .fh-hero__cover-link { position: absolute; inset: 0; }
+  .fh-hero__media { z-index: -1; }
+  .fh-hero__media picture { display: contents; }
+  .fh-hero__img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--fh-ease); }
+  .fh-hero__img--placeholder { background: var(--fh-sky); }
+  .fh-hero__overlay { background: #000; opacity: var(--fh-hero-overlay, 0.15); }
+  .fh-hero:has(.fh-hero__cover-link:hover) .fh-hero__img { transform: scale(1.02); }
+  .fh-hero__cover-link { z-index: 0; }
+  .fh-hero__content {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
+    width: 100%; max-width: 1384px; padding: 64px var(--fh-gutter); pointer-events: none;
+  }
+  .fh-hero__content a { pointer-events: auto; }
+  .fh-hero--bottom { align-items: flex-end; }
+  .fh-hero--left .fh-hero__content { align-items: flex-start; text-align: left; }
+  .fh-hero__heading { padding-top: 8px; }
+  .fh-hero__sub { padding-top: 8px; }
+  .fh-hero__buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; padding-top: 24px; }
+  .fh-hero--left .fh-hero__buttons { justify-content: flex-start; }
+
+  @media screen and (max-width: 749px) {
+    .fh-hero { min-height: var(--fh-hero-h-mobile, 520px); }
+    .fh-hero__content { padding: 48px 24px; }
+    .fh-hero__sub { font-size: 16px; line-height: 24px; }
+    .fh-hero__buttons { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Hero banner",
+  "tag": "section",
+  "class": "fh-section fh-section--hero",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "header", "content": "Media" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 15 },
+    { "type": "url", "id": "link", "label": "Banner link", "info": "Makes the whole banner clickable." },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "★★★★★ Over 75,000 5 Star reviews" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Made to move" },
+    {
+      "type": "select", "id": "heading_level", "label": "Heading tag",
+      "options": [ { "value": "h1", "label": "H1 (use once per page)" }, { "value": "h2", "label": "H2" } ],
+      "default": "h2"
+    },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Breathable comfort engineered for every adventure." },
+    {
+      "type": "select", "id": "content_position", "label": "Content position",
+      "options": [ { "value": "center", "label": "Center" }, { "value": "bottom", "label": "Bottom" }, { "value": "left", "label": "Left" } ],
+      "default": "center"
+    },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#ffffff" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "height", "label": "Desktop height", "min": 400, "max": 900, "step": 10, "unit": "px", "default": 670 },
+    { "type": "range", "id": "height_mobile", "label": "Mobile height", "min": 300, "max": 800, "step": 10, "unit": "px", "default": 520 }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Shop Men’s swim" },
+        { "type": "url", "id": "link", "label": "Link" },
+        {
+          "type": "select", "id": "style", "label": "Style",
+          "options": [ { "value": "light", "label": "White" }, { "value": "dark", "label": "Navy" }, { "value": "outline", "label": "Outline" } ],
+          "default": "light"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Hero banner",
+      "blocks": [ { "type": "button", "settings": { "label": "Shop Men’s swim" } } ]
+    }
+  ]
+}
+{% endschema %}

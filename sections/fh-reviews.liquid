@@ -1,0 +1,137 @@
+{%- comment -%}
+  Fair Harbor "Over 75,000 Five Star Reviews" (Figma 1:1366).
+  440px sand cards: eyebrow title, stars, serif quote, author, and a white
+  product chip with a thumbnail and "Shop now - $price".
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign reviews = section.blocks | where: 'type', 'review'
+-%}
+
+<fh-carousel class="fh fh-reviews" style="--fh-reviews-bg: {{ s.background }}; padding-block: {{ s.padding_top }}px {{ s.padding_bottom }}px;">
+  <div class="fh-reviews__inner">
+    <div class="fh-reviews__head">
+      <h2 class="fh-h2">{{ s.heading }}</h2>
+      <div class="fh-arrows">
+        <button type="button" class="fh-arrow" data-prev aria-label="{{ 'fh.previous_reviews' | t }}" disabled>{%- render 'fh-icon', name: 'arrow-left' -%}</button>
+        <button type="button" class="fh-arrow fh-arrow--next" data-next aria-label="{{ 'fh.more_reviews' | t }}">{%- render 'fh-icon', name: 'arrow-left' -%}</button>
+      </div>
+    </div>
+
+    <ul class="fh-track fh-reviews__track" data-track role="list">
+      {%- for block in reviews -%}
+        {%- liquid
+          assign b = block.settings
+          assign p = b.product
+          assign p_title = b.product_title | default: p.title
+          assign p_url = p.url | default: b.product_link | default: '#'
+          assign p_img = b.product_image | default: p.featured_media
+          assign rating = b.rating | times: 1
+        -%}
+        <li class="fh-reviews__card" {{ block.shopify_attributes }}>
+          <figure class="fh-reviews__body">
+            {%- if b.title != blank -%}<p class="fh-eyebrow">{{ b.title }}</p>{%- endif -%}
+            <div class="fh-reviews__stars" role="img" aria-label="{{ 'fh.stars' | t: count: rating }}">
+              {%- for i in (1..5) -%}
+                <span class="fh-reviews__star{% if i > rating %} is-empty{% endif %}">{%- render 'fh-icon', name: 'star' -%}</span>
+              {%- endfor -%}
+            </div>
+            <blockquote class="fh-reviews__quote">“{{ b.quote }}”</blockquote>
+            {%- if b.author != blank -%}
+              <figcaption class="fh-reviews__author"><span class="fh-body" aria-hidden="true">–</span><span class="fh-body-sm">{{ b.author }}</span></figcaption>
+            {%- endif -%}
+          </figure>
+
+          {%- if p_title != blank -%}
+            <a href="{{ p_url }}" class="fh-reviews__product">
+              <span class="fh-reviews__thumb">
+                {%- if p_img != blank -%}
+                  {{ p_img | image_url: width: 160 | image_tag: width: 64, height: 64, loading: 'lazy', alt: '' }}
+                {%- endif -%}
+              </span>
+              <span class="fh-reviews__product-text">
+                <span class="fh-body">{{ p_title }}</span>
+                <span class="fh-reviews__shop fh-body-sm">
+                  {%- if p -%}
+                    {{ 'fh.shop_now_price' | t: price: p.price | money_without_trailing_zeros }}
+                  {%- else -%}
+                    {{ b.cta_label | default: 'fh.shop_now' | t }}
+                  {%- endif -%}
+                </span>
+              </span>
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</fh-carousel>
+
+{% stylesheet %}
+  .fh-reviews { display: block; background: var(--fh-reviews-bg, #fff); overflow: hidden; }
+  .fh-reviews__inner { display: flex; flex-direction: column; gap: 32px; max-width: var(--fh-max); margin: 0 auto; padding: 0 var(--fh-gutter); }
+  .fh-reviews__head { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .fh-reviews__track { gap: 32px; margin-right: calc(var(--fh-gutter) * -1); padding-right: var(--fh-gutter); }
+  .fh-reviews__card { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 32px; width: 440px; padding: 32px 24px; background: var(--fh-sand); }
+  .fh-reviews__body { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+  .fh-reviews__stars { display: flex; gap: 4px; color: var(--fh-navy); }
+  .fh-reviews__star .fh-icon { width: 14px; height: 14px; }
+  .fh-reviews__star.is-empty { opacity: 0.25; }
+  .fh-reviews__quote { margin: 0; font-family: var(--fh-font-serif); font-size: 20px; line-height: 28px; letter-spacing: -0.02em; color: var(--fh-blue); }
+  .fh-reviews__author { display: flex; align-items: center; gap: 8px; }
+  .fh-reviews__product { display: flex; gap: 16px; width: 282px; max-width: 100%; padding: 16px; background: #fff; border-radius: 8px; transition: box-shadow 0.2s; }
+  .fh-reviews__product:hover { box-shadow: 0 4px 16px rgb(0 22 90 / 0.08); }
+  .fh-reviews__thumb { flex: none; width: 64px; height: 64px; overflow: hidden; background: var(--fh-sand); }
+  .fh-reviews__thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .fh-reviews__product-text { display: flex; flex-direction: column; justify-content: center; gap: 5px; }
+  .fh-reviews__shop { align-self: flex-start; font-weight: 600; border-bottom: 1px solid currentColor; }
+  @media screen and (max-width: 749px) {
+    .fh-reviews__head .fh-arrows { display: none; }
+    .fh-reviews__track { gap: 16px; }
+    .fh-reviews__card { width: 84vw; max-width: 380px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Reviews",
+  "tag": "section",
+  "class": "fh-section fh-section--reviews",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Over 75,000 Five Star Reviews" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 16 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Perfect Bathing Suit!" },
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Great fit, the seersucker looks sharp but relaxed, love the material. High quality." },
+        { "type": "text", "id": "author", "label": "Author", "default": "David D." },
+        { "type": "header", "content": "Product" },
+        { "type": "product", "id": "product", "label": "Product", "info": "Fills in the title, image, price and link." },
+        { "type": "text", "id": "product_title", "label": "Product title override" },
+        { "type": "image_picker", "id": "product_image", "label": "Product image override" },
+        { "type": "url", "id": "product_link", "label": "Link (if no product)" },
+        { "type": "text", "id": "cta_label", "label": "Link text (if no product)", "default": "Shop now" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Reviews",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review", "settings": { "title": "So Comfortable and Soft!", "quote": "This shirt is ideal for lounge days by the pool or beach. Great fit, soft and still stylish", "author": "Craig S." } },
+        { "type": "review", "settings": { "title": "Comfortable and Stylish", "quote": "Trunks are very comfortable and love the inner liner. Would buy again", "author": "Owen S." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

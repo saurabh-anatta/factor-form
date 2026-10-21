@@ -1,0 +1,86 @@
+{%- comment -%}
+  Fair Harbor promo tiles (Figma 1:1567). Two square images side by side,
+  each with a serif heading, description and bold text link underneath.
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign tiles = section.blocks | where: 'type', 'tile'
+-%}
+
+<div class="fh fh-tiles" style="padding-block: {{ s.padding_top }}px {{ s.padding_bottom }}px;">
+  <div class="fh-tiles__grid" style="--fh-tiles-cols: {{ tiles.size | at_least: 1 | at_most: 3 }};">
+    {%- for block in tiles -%}
+      {%- assign b = block.settings -%}
+      <article class="fh-tiles__tile" {{ block.shopify_attributes }}>
+        <a href="{{ b.link | default: '#' }}" class="fh-tiles__media" tabindex="-1" aria-hidden="true" style="--fh-tile-overlay: {{ b.overlay_opacity | divided_by: 100.0 }};">
+          {%- if b.image != blank -%}
+            {{ b.image | image_url: width: 1400 | image_tag: widths: '500, 750, 1000, 1400', sizes: '(min-width: 990px) 676px, 100vw', loading: 'lazy', alt: '', class: 'fh-tiles__img' }}
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'fh-tiles__img fh-tiles__img--placeholder' }}
+          {%- endif -%}
+        </a>
+        <div class="fh-tiles__body">
+          <h2 class="fh-h3">{{ b.heading }}</h2>
+          {%- if b.text != blank -%}<p class="fh-body fh-tiles__text">{{ b.text }}</p>{%- endif -%}
+          {%- if b.link_label != blank -%}
+            <a href="{{ b.link | default: '#' }}" class="fh-body fh-tiles__link">{{ b.link_label }}</a>
+          {%- endif -%}
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .fh-tiles__grid { display: grid; grid-template-columns: repeat(var(--fh-tiles-cols, 2), minmax(0, 1fr)); gap: 16px; max-width: var(--fh-max); margin: 0 auto; padding: 0 var(--fh-gutter); }
+  .fh-tiles__tile { display: flex; flex-direction: column; }
+  .fh-tiles__media { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: var(--fh-sand); }
+  .fh-tiles__media::after { content: ''; position: absolute; inset: 0; background: #000; opacity: var(--fh-tile-overlay, 0); pointer-events: none; }
+  .fh-tiles__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--fh-ease); }
+  .fh-tiles__tile:hover .fh-tiles__img { transform: scale(1.03); }
+  .fh-tiles__body { padding: 8px 0; }
+  .fh-tiles__text { padding-top: 3px; }
+  .fh-tiles__link { display: inline-block; margin-top: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: transparent; transition: text-decoration-color 0.2s; }
+  .fh-tiles__link:hover { text-decoration-color: currentColor; }
+  @media screen and (max-width: 749px) {
+    .fh-tiles__grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Promo tiles",
+  "tag": "section",
+  "class": "fh-section fh-section--tiles",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "max_blocks": 3,
+  "settings": [
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 24 }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "range", "id": "overlay_opacity", "label": "Image overlay", "min": 0, "max": 60, "step": 5, "unit": "%", "default": 0 },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Bundle & Save" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Buy more of what you love, for less." },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop Bundles" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Promo tiles",
+      "blocks": [
+        { "type": "tile" },
+        { "type": "tile", "settings": { "heading": "Make it Personalized", "text": "Explore our eligible styles, customizable with up to three initials or our new icons.", "link_label": "Shop Personalized", "overlay_opacity": 15 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

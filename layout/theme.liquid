@@ -32,6 +32,8 @@
     {%- render 'color-schemes' -%}
     {%- render 'custom-fonts' -%}
     {%- render 'header-footer-overrides' -%}
+    {%- render 'fh-design-tokens' -%}
+    <script src="{{ 'fh-sections.js' | asset_url }}" type="module"></script>
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}

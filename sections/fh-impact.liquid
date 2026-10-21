@@ -1,0 +1,100 @@
+{%- comment -%}
+  Fair Harbor impact stats (Figma 1:1612). Full-bleed image with a large serif
+  counter ("plastic bottles recycled to date") and three supporting stats.
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign stats = section.blocks | where: 'type', 'stat'
+-%}
+
+<div class="fh fh-impact" style="--fh-impact-overlay: {{ s.overlay_opacity | divided_by: 100.0 }}; --fh-impact-fg: {{ s.text_color }}; --fh-impact-h: {{ s.height }}px;">
+  <div class="fh-impact__media">
+    {%- if s.image != blank -%}
+      {{ s.image | image_url: width: 3024 | image_tag: widths: '750, 1100, 1500, 2000, 3024', sizes: '100vw', loading: 'lazy', alt: '', class: 'fh-impact__img' }}
+    {%- else -%}
+      {{ 'hero-apparel-2' | placeholder_svg_tag: 'fh-impact__img fh-impact__img--placeholder' }}
+    {%- endif -%}
+  </div>
+
+  <div class="fh-impact__inner">
+    <div class="fh-impact__content">
+      {%- if s.counter_value != blank -%}
+        <fh-counter class="fh-impact__counter" data-value="{{ s.counter_value }}" data-duration="2200">
+          <span class="fh-impact__number" data-counter-value aria-hidden="true">{{ s.counter_value }}</span>
+          <span class="fh-visually-hidden">{{ s.counter_value }}</span>
+        </fh-counter>
+      {%- endif -%}
+      {%- if s.counter_label != blank -%}
+        <h2 class="fh-body fh-impact__label">{{ s.counter_label }}</h2>
+      {%- endif -%}
+
+      {%- if stats.size > 0 -%}
+        <ul class="fh-impact__stats" role="list">
+          {%- for block in stats -%}
+            <li class="fh-impact__stat" {{ block.shopify_attributes }}>
+              <p class="fh-h3">{{ block.settings.value }}</p>
+              <p class="fh-body fh-impact__stat-text">{{ block.settings.text | newline_to_br }}</p>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .fh-impact { position: relative; isolation: isolate; display: flex; align-items: flex-start; min-height: var(--fh-impact-h, 605px); max-width: var(--fh-max); margin: 0 auto; overflow: hidden; color: var(--fh-impact-fg, var(--fh-sand)); }
+  .fh-impact__media { position: absolute; inset: 0; z-index: -1; }
+  .fh-impact__media::after { content: ''; position: absolute; inset: 0; background: #000; opacity: var(--fh-impact-overlay, 0); }
+  .fh-impact__img { width: 100%; height: 100%; object-fit: cover; }
+  .fh-impact__img--placeholder { background: var(--fh-blue); }
+  .fh-impact__inner { width: 100%; padding: 80px var(--fh-gutter) 64px; }
+  .fh-impact__content { display: flex; flex-direction: column; align-items: center; max-width: 1168px; margin: 0 auto; text-align: center; }
+  .fh-impact__number { display: block; font-family: var(--fh-font-serif); font-size: clamp(56px, 6.35vw, 96px); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .fh-impact__stats { display: flex; justify-content: center; gap: 32px; width: 100%; padding-top: 64px; }
+  .fh-impact__stat { flex: 0 1 328px; }
+  .fh-impact__stat-text { padding-top: 4px; }
+  @media screen and (max-width: 749px) {
+    .fh-impact__inner { padding: 56px 24px; }
+    .fh-impact__stats { flex-direction: column; gap: 28px; padding-top: 40px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Impact stats",
+  "tag": "section",
+  "class": "fh-section fh-section--impact",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 0 },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#f4f0ed" },
+    { "type": "text", "id": "counter_value", "label": "Counter number", "default": "37,628,496", "info": "Counts up when it scrolls into view." },
+    { "type": "text", "id": "counter_label", "label": "Counter label", "default": "plastic bottles recycled to date" },
+    { "type": "range", "id": "height", "label": "Minimum height", "min": 400, "max": 900, "step": 5, "unit": "px", "default": 605 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "12" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Recycled plastic bottles in each\ngarment, on average" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Impact stats",
+      "blocks": [
+        { "type": "stat" },
+        { "type": "stat", "settings": { "value": "45+", "text": "Company beach\ncleanups" } },
+        { "type": "stat", "settings": { "value": "4.2", "text": "Liters of water saved\nwith our eco-wash denim" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

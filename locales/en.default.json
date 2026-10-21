@@ -8,6 +8,38 @@
  * ------------------------------------------------------------
  */
 {
+  "fh": {
+    "announcements": "Announcements",
+    "previous": "Previous",
+    "next": "Next",
+    "open_menu": "Open menu",
+    "menu": "Menu",
+    "main_navigation": "Main navigation",
+    "account": "Account",
+    "log_in": "Log in",
+    "shop_all": "Shop all {{ title }}",
+    "why_fair_harbor": "Why Fair Harbor",
+    "sale": "Sale",
+    "bestseller": "Bestseller",
+    "new": "New",
+    "product_title": "Product title",
+    "sale_price": "Sale price",
+    "regular_price": "Regular price",
+    "from": "From",
+    "previous_reviews": "Show previous reviews",
+    "more_reviews": "Show more reviews",
+    "stars": "{{ count }} out of 5 stars",
+    "shop_now": "Shop now",
+    "shop_now_price": "Shop now - {{ price }}",
+    "play_video": "Play video",
+    "email": "Email",
+    "email_placeholder": "Enter your email",
+    "subscribe": "Subscribe to newsletter",
+    "subscribed": "Thanks for signing up!",
+    "visit_social": "Visit our {{ network }} page",
+    "certification": "Certification details",
+    "footer_navigation": "Footer navigation"
+  },
   "accessibility": {
     "account": "Account",
     "cart": "Cart",

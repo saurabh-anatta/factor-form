@@ -1,0 +1,236 @@
+{%- comment -%}
+  Fair Harbor footer (Figma 1:1774). Sand background:
+  1. a row of value props (icon and serif label) with a sky-blue bottom border
+  2. newsletter ("UNLOCK 15% OFF"), social icons and certification badge on the
+     left, with up to three link menus on the right
+  3. copyright and policy links
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign values = section.blocks | where: 'type', 'value'
+  assign menus = section.blocks | where: 'type', 'menu'
+-%}
+
+<div class="fh fh-footer" style="--fh-footer-bg: {{ s.background }};">
+  <div class="fh-footer__inner">
+    {%- if values.size > 0 -%}
+      <ul class="fh-footer__values" role="list">
+        {%- for block in values -%}
+          <li class="fh-footer__value" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 96 | image_tag: width: 48, height: 48, alt: '', loading: 'lazy', class: 'fh-footer__value-icon' }}
+            {%- elsif block.settings.icon != 'none' -%}
+              {%- render 'fh-icon', name: block.settings.icon, class: 'fh-footer__value-icon' -%}
+            {%- endif -%}
+            <span class="fh-h4">{{ block.settings.text }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <div class="fh-footer__main">
+      <div class="fh-footer__brand">
+        <div class="fh-footer__signup">
+          {%- if s.newsletter_heading != blank -%}<h2 class="fh-footer__signup-heading">{{ s.newsletter_heading }}</h2>{%- endif -%}
+          {%- if s.newsletter_text != blank -%}<p class="fh-body fh-footer__signup-text">{{ s.newsletter_text }}</p>{%- endif -%}
+
+          {%- form 'customer', id: 'FhFooterNewsletter', class: 'fh-footer__form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <label for="FhFooterEmail" class="fh-visually-hidden">{{ 'fh.email' | t }}</label>
+            <input
+              id="FhFooterEmail"
+              type="email"
+              name="contact[email]"
+              class="fh-footer__input fh-body"
+              value="{{ form.email }}"
+              placeholder="{{ 'fh.email_placeholder' | t }}"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+              required
+              {% if form.errors %}aria-invalid="true" aria-describedby="FhFooterNewsletterMsg"{% endif %}
+            >
+            <button type="submit" class="fh-footer__submit" aria-label="{{ 'fh.subscribe' | t }}">{%- render 'fh-icon', name: 'arrow-right-thin' -%}</button>
+            {%- if form.posted_successfully? -%}
+              <p id="FhFooterNewsletterMsg" class="fh-footer__msg fh-body-sm" role="status">{{ 'fh.subscribed' | t }}</p>
+            {%- elsif form.errors -%}
+              <p id="FhFooterNewsletterMsg" class="fh-footer__msg fh-footer__msg--error fh-body-sm" role="alert">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+
+        {%- liquid
+          assign socials = 'facebook,pinterest,linkedin,instagram' | split: ','
+        -%}
+        <ul class="fh-footer__social" role="list">
+          {%- for name in socials -%}
+            {%- liquid
+              case name
+                when 'facebook'
+                  assign url = settings.social_facebook_link
+                when 'pinterest'
+                  assign url = settings.social_pinterest_link
+                when 'linkedin'
+                  assign url = s.linkedin_link
+                when 'instagram'
+                  assign url = settings.social_instagram_link
+              endcase
+            -%}
+            {%- if url != blank -%}
+              <li><a href="{{ url }}" target="_blank" rel="noopener" aria-label="{{ 'fh.visit_social' | t: network: name | capitalize }}">{%- render 'fh-icon', name: name -%}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if s.badge != blank -%}
+          <a href="{{ s.badge_link | default: '#' }}" class="fh-footer__badge" aria-label="{{ s.badge.alt | default: 'fh.certification' | t }}">
+            {{ s.badge | image_url: width: 200 | image_tag: height: 106, width: null, loading: 'lazy', alt: '', style: 'width:auto' }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if menus.size > 0 -%}
+        <nav class="fh-footer__menus" aria-label="{{ 'fh.footer_navigation' | t }}">
+          {%- for block in menus -%}
+            {%- assign m = block.settings.menu -%}
+            <div class="fh-footer__menu" {{ block.shopify_attributes }}>
+              <h2 class="fh-body fh-footer__menu-heading">{{ block.settings.heading | default: m.title }}</h2>
+              {%- if m != blank -%}
+                <ul role="list">
+                  {%- for link in m.links -%}
+                    <li><a href="{{ link.url }}" class="fh-body">{{ link.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+    </div>
+
+    <div class="fh-footer__legal fh-body-sm">
+      <span>&copy; {{ 'now' | date: '%Y' }}, {{ s.copyright_name | default: shop.name }}</span>
+      {%- if s.legal_menu != blank -%}
+        <ul class="fh-footer__legal-links" role="list">
+          {%- for link in s.legal_menu.links -%}
+            <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <ul class="fh-footer__legal-links" role="list">
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank -%}<li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>{%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .fh-footer { background: var(--fh-footer-bg, var(--fh-sand)); }
+  .fh-footer__inner { max-width: var(--fh-max); margin: 0 auto; padding: 64px var(--fh-gutter); }
+  .fh-footer__values { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 32px; padding: 16px 0; border-bottom: 1px solid var(--fh-sky); color: var(--fh-blue); }
+  .fh-footer__value { display: flex; align-items: center; gap: 16px; }
+  .fh-footer__value-icon { width: 48px; height: 48px; color: var(--fh-navy); object-fit: contain; }
+
+  .fh-footer__main { display: flex; justify-content: space-between; gap: 32px; padding-top: 48px; }
+  .fh-footer__brand { display: flex; flex-direction: column; gap: 24px; width: 100%; max-width: 434px; }
+  .fh-footer__signup-heading { font-family: var(--fh-font-serif); font-weight: 400; font-size: 18px; line-height: 28px; text-transform: uppercase; }
+  .fh-footer__signup-text { padding-top: 8px; }
+  .fh-footer__form { position: relative; display: flex; flex-wrap: wrap; width: 300px; max-width: 100%; margin-top: 16px; background: #fff; }
+  .fh-footer__input { flex: 1; min-width: 0; height: 56px; padding: 16px 48px 16px 16px; border: 1px solid transparent; background: transparent; color: var(--fh-navy); font-family: inherit; outline: none; }
+  .fh-footer__input::placeholder { color: var(--fh-slate); }
+  .fh-footer__input:focus-visible { border-color: var(--fh-navy); }
+  .fh-footer__submit { position: absolute; top: 0; right: 16px; height: 56px; display: inline-flex; align-items: center; color: var(--fh-navy); transition: transform 0.2s; }
+  .fh-footer__submit:hover { transform: translateX(3px); }
+  .fh-footer__msg { flex-basis: 100%; padding: 8px 0 0; background: var(--fh-footer-bg, var(--fh-sand)); }
+  .fh-footer__msg--error { color: #b3261e; }
+  .fh-footer__social { display: flex; gap: 8px; }
+  .fh-footer__social a { display: inline-flex; color: var(--fh-navy); transition: opacity 0.2s; }
+  .fh-footer__social a:hover { opacity: 0.6; }
+  .fh-footer__badge { display: inline-flex; align-self: flex-start; }
+
+  .fh-footer__menus { display: flex; gap: 32px; }
+  .fh-footer__menu { width: 208px; }
+  .fh-footer__menu ul { display: flex; flex-direction: column; gap: 8px; padding: 16px 0 8px; }
+  .fh-footer__menu a { color: var(--fh-blue); }
+  .fh-footer__menu a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .fh-footer__legal { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; padding-top: 32px; }
+  .fh-footer__legal > span { padding-right: 3px; }
+  .fh-footer__legal-links { display: flex; flex-wrap: wrap; }
+  .fh-footer__legal-links li { display: flex; }
+  .fh-footer__legal-links li::before { content: '|'; padding: 0 3px; }
+  .fh-footer__legal-links li:first-child::before { content: none; }
+  .fh-footer__legal > span + .fh-footer__legal-links li:first-child { padding-left: 0; }
+  .fh-footer__legal a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  @media screen and (max-width: 989px) {
+    .fh-footer__main { flex-direction: column; gap: 48px; }
+    .fh-footer__menus { flex-wrap: wrap; gap: 32px 24px; }
+    .fh-footer__menu { width: calc(50% - 12px); }
+  }
+  @media screen and (max-width: 749px) {
+    .fh-footer__inner { padding: 48px 24px; }
+    .fh-footer__values { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: 32px; }
+    .fh-footer__value .fh-h4 { font-size: 20px; line-height: 28px; }
+    .fh-footer__form { width: 100%; }
+    .fh-footer__legal { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Footer",
+  "tag": "div",
+  "class": "fh-section fh-section--footer",
+  "enabled_on": { "groups": ["footer"] },
+  "settings": [
+    { "type": "color", "id": "background", "label": "Background", "default": "#f4f0ed" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "text", "id": "newsletter_heading", "label": "Heading", "default": "Unlock 15% off" },
+    { "type": "text", "id": "newsletter_text", "label": "Text", "default": "Get early access to new drops, exclusive deals and more." },
+    { "type": "header", "content": "Social and certification" },
+    { "type": "paragraph", "content": "Facebook, Pinterest and Instagram links come from Theme settings > Social media." },
+    { "type": "url", "id": "linkedin_link", "label": "LinkedIn link" },
+    { "type": "image_picker", "id": "badge", "label": "Certification badge" },
+    { "type": "url", "id": "badge_link", "label": "Badge link" },
+    { "type": "header", "content": "Legal" },
+    { "type": "text", "id": "copyright_name", "label": "Copyright name", "info": "Defaults to the store name." },
+    { "type": "link_list", "id": "legal_menu", "label": "Legal links menu", "info": "Defaults to the store policies." }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value prop",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Signature Comfort" },
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "signature-comfort", "label": "Signature comfort" },
+            { "value": "elevated-essentials", "label": "Elevated essentials" },
+            { "value": "made-by-the-elements", "label": "Made by the elements" },
+            { "value": "effortless-versatility", "label": "Effortless versatility" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "signature-comfort"
+        },
+        { "type": "image_picker", "id": "image", "label": "Custom icon" }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "info": "Defaults to the menu title." },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    }
+  ]
+}
+{% endschema %}

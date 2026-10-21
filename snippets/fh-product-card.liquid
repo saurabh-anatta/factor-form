@@ -1,0 +1,121 @@
+{%- doc -%}
+  Fair Harbor product card (Figma 1:196). 340x454 image, top-left badge,
+  colour swatches, title, variant/colour line, price and offer chips.
+
+  @param {object} [product] - Product to show (if blank, a placeholder card is shown)
+  @param {string} [badge] - Badge override, e.g. "Bestseller"
+  @param {string} [chips] - Comma-separated offer chips, e.g. "Bundle & Save, Personalize It"
+  @param {number} [index] - Position in list (first cards load eagerly)
+{%- enddoc -%}
+
+{%- liquid
+  assign loading = 'lazy'
+  if index and index < 4
+    assign loading = 'eager'
+  endif
+
+  assign color_option = nil
+  if product
+    for option in product.options_with_values
+      assign oname = option.name | downcase
+      if oname == 'color' or oname == 'colour' or oname == 'pattern' or oname == 'print'
+        assign color_option = option
+        break
+      endif
+    endfor
+
+    assign card_badge = badge
+    if card_badge == blank
+      if product.compare_at_price > product.price
+        assign card_badge = 'fh.sale' | t
+      elsif product.tags contains 'bestseller' or product.tags contains 'Bestseller'
+        assign card_badge = 'fh.bestseller' | t
+      elsif product.tags contains 'new' or product.tags contains 'New'
+        assign card_badge = 'fh.new' | t
+      endif
+    endif
+
+    assign variant_label = ''
+    if color_option
+      assign variant_label = color_option.selected_value
+    endif
+  endif
+-%}
+
+<article class="fh-card" data-fh-card>
+  <div class="fh-card__media">
+    <a href="{{ product.url | default: '#' }}" class="fh-card__image-link" data-card-link tabindex="-1" aria-hidden="true">
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: 1000 | image_tag: widths: '340, 500, 680, 1000', sizes: '(min-width: 990px) 340px, (min-width: 750px) 40vw, 70vw', loading: loading, class: 'fh-card__img', data-card-image: '', alt: product.featured_media.alt | default: product.title }}
+        {%- assign second = product.media[1] -%}
+        {%- if second and second.media_type == 'image' -%}
+          {{ second | image_url: width: 1000 | image_tag: widths: '340, 500, 680, 1000', sizes: '(min-width: 990px) 340px, 70vw', loading: 'lazy', class: 'fh-card__img fh-card__img--hover', alt: '' }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-apparel-1' | placeholder_svg_tag: 'fh-card__img fh-card__img--placeholder' }}
+      {%- endif -%}
+    </a>
+    {%- if card_badge != blank -%}
+      <span class="fh-card__badge">{{ card_badge }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="fh-card__info">
+    {%- if color_option and color_option.values.size > 1 -%}
+      <fh-swatches class="fh-card__swatches" role="group" aria-label="{{ color_option.name | escape }}">
+        {%- for value in color_option.values limit: 6 -%}
+          {%- liquid
+            assign swatch_color = value.swatch.color
+          -%}
+          <button
+            type="button"
+            class="fh-card__swatch"
+            data-swatch
+            aria-pressed="{% if value.selected %}true{% else %}false{% endif %}"
+            aria-label="{{ value.name | escape }}"
+            data-label="{{ value.name | escape }}"
+            {% if value.variant.featured_media %}data-image="{{ value.variant.featured_media | image_url: width: 680 }}" data-srcset="{{ value.variant.featured_media | image_url: width: 340 }} 340w, {{ value.variant.featured_media | image_url: width: 680 }} 680w, {{ value.variant.featured_media | image_url: width: 1000 }} 1000w"{% endif %}
+            {% if value.variant %}data-url="{{ value.variant.url }}"{% endif %}
+            style="{% if value.swatch.image %}--sw-img: url('{{ value.swatch.image | image_url: width: 40 }}');{% elsif swatch_color %}--sw-color: {{ swatch_color }};{% else %}--sw-color: {{ value.name | split: ' ' | last | downcase }};{% endif %}"
+          ></button>
+        {%- endfor -%}
+        {%- if color_option.values.size > 6 -%}
+          <a href="{{ product.url }}" class="fh-card__more fh-caption">+{{ color_option.values.size | minus: 6 }}</a>
+        {%- endif -%}
+      </fh-swatches>
+    {%- endif -%}
+
+    <h3 class="fh-card__title fh-body">
+      <a href="{{ product.url | default: '#' }}" data-card-link>
+        {%- if product -%}{{ product.title | escape }}{%- else -%}{{ 'fh.product_title' | t }}{%- endif -%}
+      </a>
+    </h3>
+    {%- if variant_label != blank -%}
+      <p class="fh-card__variant fh-caption" data-card-variant>{{ variant_label }}</p>
+    {%- endif -%}
+
+    <div class="fh-card__price-row">
+      <span class="fh-card__price fh-body">
+        {%- if product -%}
+          {%- if product.compare_at_price > product.price -%}
+            <span class="fh-visually-hidden">{{ 'fh.sale_price' | t }}</span>{{ product.price | money_without_trailing_zeros }}
+            <s class="fh-card__compare"><span class="fh-visually-hidden">{{ 'fh.regular_price' | t }}</span>{{ product.compare_at_price | money_without_trailing_zeros }}</s>
+          {%- else -%}
+            {%- if product.price_varies -%}{{ 'fh.from' | t }} {% endif -%}{{ product.price | money_without_trailing_zeros }}
+          {%- endif -%}
+        {%- else -%}
+          $88
+        {%- endif -%}
+      </span>
+      {%- if chips != blank -%}
+        <span class="fh-card__chips">
+          {%- assign chip_list = chips | split: ',' -%}
+          {%- for chip in chip_list -%}
+            {%- assign c = chip | strip -%}
+            {%- if c != blank -%}<span class="fh-card__chip">{{ c }}</span>{%- endif -%}
+          {%- endfor -%}
+        </span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

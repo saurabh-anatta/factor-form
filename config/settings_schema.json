@@ -1568,7 +1568,6 @@
         ],
         "default": "body"
       },
-
       {
         "type": "select",
         "id": "button_text_case_primary",
@@ -1625,7 +1624,6 @@
         ],
         "default": "body"
       },
-
       {
         "type": "select",
         "id": "button_text_case_secondary",
@@ -1764,7 +1762,6 @@
         "info": "t:info.checkout_buttons",
         "default": true
       },
-
       {
         "type": "url",
         "id": "empty_cart_button_link",
@@ -2285,6 +2282,33 @@
           }
         ],
         "default": "equal-width-buttons"
+      }
+    ]
+  },
+  {
+    "name": "Fair Harbor design",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Fonts for the Fair Harbor sections (fh-*). The design uses ABC Arizona and ABC Diatype. These are licensed fonts, so to use them add the woff2 files to assets as abc-arizona-regular.woff2, abc-diatype-regular.woff2 and abc-diatype-bold.woff2 and turn on the setting below. Until then, the fallback fonts are used."
+      },
+      {
+        "type": "font_picker",
+        "id": "fh_serif_font",
+        "label": "Heading font (fallback for ABC Arizona)",
+        "default": "lora_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "fh_sans_font",
+        "label": "Body font (fallback for ABC Diatype)",
+        "default": "inter_n4"
+      },
+      {
+        "type": "checkbox",
+        "id": "fh_use_licensed_fonts",
+        "label": "Use licensed ABC fonts uploaded to assets",
+        "default": false
       }
     ]
   }

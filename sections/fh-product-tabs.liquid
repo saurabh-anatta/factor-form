@@ -1,0 +1,168 @@
+{%- comment -%}
+  Fair Harbor "Shop bestsellers" (Figma 1:167).
+  Heading with arrows, pill tabs (one per collection), a carousel of product
+  cards (340px wide, 16px gap) and a centred link underneath.
+{%- endcomment -%}
+
+{%- liquid
+  assign tabs = section.blocks | where: 'type', 'tab'
+  assign s = section.settings
+-%}
+
+<div class="fh fh-ptabs" style="--fh-ptabs-bg: {{ s.background }}; padding-block: {{ s.padding_top }}px {{ s.padding_bottom }}px;">
+  <fh-tabs class="fh-ptabs__inner">
+    <div class="fh-ptabs__head">
+      <h2 class="fh-h2">{{ s.heading }}</h2>
+    </div>
+
+    {%- if tabs.size > 1 -%}
+      <div class="fh-ptabs__tabs" role="tablist" aria-label="{{ s.heading | escape }}">
+        {%- for t in tabs -%}
+          <button
+            type="button"
+            role="tab"
+            id="FhTab-{{ section.id }}-{{ forloop.index0 }}"
+            class="fh-ptabs__tab fh-body-sm"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-controls="FhTabPanel-{{ section.id }}-{{ forloop.index0 }}"
+            tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+            {{ t.shopify_attributes }}
+          >{{ t.settings.label | default: t.settings.collection.title }}</button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- for tab in tabs -%}
+      <fh-carousel
+        class="fh-ptabs__panel"
+        role="tabpanel"
+        id="FhTabPanel-{{ section.id }}-{{ forloop.index0 }}"
+        {% if tabs.size > 1 %}aria-labelledby="FhTab-{{ section.id }}-{{ forloop.index0 }}"{% else %}aria-label="{{ s.heading | escape }}"{% endif %}
+        {% unless forloop.first %}hidden{% endunless %}
+      >
+        <div class="fh-arrows fh-ptabs__arrows">
+          <button type="button" class="fh-arrow" data-prev aria-label="{{ 'fh.previous' | t }}" disabled>{%- render 'fh-icon', name: 'arrow-left' -%}</button>
+          <button type="button" class="fh-arrow fh-arrow--next" data-next aria-label="{{ 'fh.next' | t }}">{%- render 'fh-icon', name: 'arrow-left' -%}</button>
+        </div>
+
+        <ul class="fh-track fh-ptabs__track" data-track role="list">
+          {%- if tab.settings.collection != blank and tab.settings.collection.products_count > 0 -%}
+            {%- for product in tab.settings.collection.products limit: s.max_products -%}
+              <li class="fh-ptabs__slide">{%- render 'fh-product-card', product: product, chips: tab.settings.chips, badge: tab.settings.badge, index: forloop.index0 -%}</li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..6) -%}
+              <li class="fh-ptabs__slide">{%- render 'fh-product-card', chips: tab.settings.chips, badge: tab.settings.badge, index: forloop.index0 -%}</li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+
+        {%- assign cta_label = tab.settings.cta_label | default: s.cta_label -%}
+        {%- if cta_label != blank -%}
+          <div class="fh-ptabs__cta">
+            <a href="{{ tab.settings.cta_link | default: tab.settings.collection.url | default: s.cta_link | default: routes.all_products_collection_url }}" class="fh-body fh-ptabs__cta-link">{{ cta_label }}</a>
+          </div>
+        {%- endif -%}
+      </fh-carousel>
+    {%- endfor -%}
+  </fh-tabs>
+</div>
+
+{% stylesheet %}
+  .fh-ptabs { background: var(--fh-ptabs-bg, #fff); overflow: hidden; }
+  .fh-ptabs__inner { position: relative; display: block; max-width: var(--fh-max); margin: 0 auto; padding-left: var(--fh-gutter-sm); }
+  .fh-ptabs__panel { display: block; }
+  .fh-ptabs__panel[hidden] { display: none; }
+  .fh-ptabs__arrows { position: absolute; top: 4px; right: var(--fh-gutter-sm); }
+  .fh-ptabs__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-right: var(--fh-gutter-sm); }
+  .fh-ptabs__tabs { display: flex; flex-wrap: wrap; gap: 16px; padding-top: 20px; }
+  .fh-ptabs__tab {
+    min-height: 42px; padding: 10px 15px; border-radius: 9999px; border: 1px solid var(--fh-sand); background: var(--fh-cream); color: #000;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  .fh-ptabs__tab:hover { border-color: var(--fh-slate); }
+  .fh-ptabs__tab[aria-selected='true'] { background: var(--fh-sky); border-color: var(--fh-slate); }
+  .fh-ptabs__track { gap: 16px; margin-top: 24px; padding-right: var(--fh-gutter-sm); scroll-padding-left: 0; }
+  .fh-ptabs__slide { width: 340px; }
+  .fh-ptabs__cta { display: flex; justify-content: center; padding-top: 32px; padding-right: var(--fh-gutter-sm); }
+  .fh-ptabs__cta-link { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: transparent; transition: text-decoration-color 0.2s; }
+  .fh-ptabs__cta-link:hover { text-decoration-color: currentColor; }
+
+  /* Product card */
+  .fh-card { display: flex; flex-direction: column; }
+  .fh-card__media { position: relative; aspect-ratio: 340 / 454; overflow: hidden; background: var(--fh-sand); }
+  .fh-card__image-link { display: block; width: 100%; height: 100%; }
+  .fh-card__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s var(--fh-ease), transform 0.8s var(--fh-ease); }
+  .fh-card__img--hover { opacity: 0; }
+  @media (hover: hover) {
+    .fh-card__media:hover .fh-card__img--hover { opacity: 1; }
+    .fh-card__media:hover .fh-card__img { transform: scale(1.02); }
+  }
+  .fh-card__badge { position: absolute; top: 0; left: 0; padding: 3px 6px; background: var(--fh-sky); color: var(--fh-navy); font-size: 14px; line-height: 14px; }
+  .fh-card__info { display: flex; flex-direction: column; padding: 16px 0; }
+  .fh-card__swatches { display: flex; align-items: center; gap: 16px; min-height: 34px; padding-bottom: 8px; }
+  .fh-card__swatch {
+    position: relative; width: 20px; height: 20px; border-radius: 9999px; background: var(--sw-color, #ccc) var(--sw-img, none) center / cover;
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08);
+  }
+  .fh-card__swatch::after { content: ''; position: absolute; inset: -3px; border-radius: inherit; border: 1px solid transparent; transition: border-color 0.2s; }
+  .fh-card__swatch[aria-pressed='true']::after, .fh-card__swatch:hover::after { border-color: #121211; }
+  .fh-card__more { color: var(--fh-navy); }
+  .fh-card__title { padding-bottom: 2px; }
+  .fh-card__title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .fh-card__variant { color: var(--fh-slate); padding-bottom: 3px; }
+  .fh-card__price-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+  .fh-card__compare { color: var(--fh-slate); margin-left: 4px; }
+  .fh-card__chips { display: inline-flex; flex-wrap: wrap; gap: 8px; }
+  .fh-card__chip { padding: 4px 8px; border-radius: 60px; background: var(--fh-sand); color: var(--fh-ink); font-size: 12px; line-height: 12px; }
+
+  @media screen and (max-width: 749px) {
+    .fh-ptabs__arrows { display: none; }
+    .fh-ptabs__tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-right: var(--fh-gutter-sm); gap: 8px; }
+    .fh-ptabs__tab { flex: none; }
+    .fh-ptabs__slide { width: 70vw; max-width: 300px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Product tabs",
+  "tag": "section",
+  "class": "fh-section fh-section--ptabs",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop bestsellers" },
+    { "type": "range", "id": "max_products", "label": "Products per tab", "min": 4, "max": 24, "step": 1, "default": 12 },
+    { "type": "text", "id": "cta_label", "label": "Link label", "default": "Shop Men’s Bestsellers" },
+    { "type": "url", "id": "cta_link", "label": "Link" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 25 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 25 }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Tab label", "default": "Swim" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "badge", "label": "Badge on every card", "info": "Leave empty to use product tags (bestseller, new) or sale status." },
+        { "type": "text", "id": "chips", "label": "Offer chips", "info": "Comma-separated, e.g. Bundle & Save, Personalize It", "default": "Bundle & Save" },
+        { "type": "text", "id": "cta_label", "label": "Link label override" },
+        { "type": "url", "id": "cta_link", "label": "Link override" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Product tabs",
+      "blocks": [
+        { "type": "tab", "settings": { "label": "Swim" } },
+        { "type": "tab", "settings": { "label": "Tops" } },
+        { "type": "tab", "settings": { "label": "Bottoms" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

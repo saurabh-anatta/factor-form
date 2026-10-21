@@ -1,0 +1,280 @@
+{%- comment -%}
+  Fair Harbor header (Figma 1:2190).
+  64px white bar: logo, main navigation with mega-menu dropdowns, then search,
+  account and cart. Below 990px it switches to a hamburger drawer.
+  Search opens Horizon's #search-modal and the cart uses Horizon's cart drawer.
+{%- endcomment -%}
+
+{%- liquid
+  assign menu = section.settings.menu
+  assign highlight = section.settings.highlight_link | downcase | strip
+  assign promos = section.blocks | where: 'type', 'menu_promo'
+-%}
+
+<fh-header
+  id="fh-header"
+  class="fh fh-header{% if section.settings.sticky %} fh-header--sticky{% endif %}"
+  style="--fh-header-border: {{ section.settings.border_color }};"
+>
+  <div class="fh-header__bar">
+    <div class="fh-header__left">
+      <button type="button" class="fh-header__action fh-header__burger" data-drawer-open aria-label="{{ 'fh.open_menu' | t }}" aria-controls="fh-header-drawer">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="{{ routes.root_url }}" class="fh-header__logo" aria-label="{{ shop.name }}">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 400 | image_tag: alt: shop.name, width: section.settings.logo_width, height: null, loading: 'eager', style: 'height:auto' }}
+        {%- else -%}
+          {%- render 'fh-icon', name: 'logo' -%}
+          <span class="fh-visually-hidden">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    {%- if menu != blank -%}
+      <nav class="fh-header__nav" aria-label="{{ 'fh.main_navigation' | t }}">
+        <ul class="fh-header__menu" role="list">
+          {%- for link in menu.links -%}
+            {%- liquid
+              assign link_key = link.title | downcase | strip
+              assign link_promos = promos | where: 'settings.menu_item', link.title
+              assign has_panel = false
+              if link.links.size > 0 or link_promos.size > 0
+                assign has_panel = true
+              endif
+            -%}
+            <li class="fh-header__item" data-menu-item>
+              <a
+                href="{{ link.url }}"
+                class="fh-header__link fh-body-sm{% if link_key == highlight %} fh-header__link--highlight{% endif %}{% if link.active or link.child_active %} is-active{% endif %}"
+                {% if has_panel %}data-menu-trigger aria-haspopup="true" aria-expanded="false"{% endif %}
+                {% if link.current %}aria-current="page"{% endif %}
+              >{{ link.title | escape }}</a>
+
+              {%- if has_panel -%}
+                <div class="fh-header__panel" data-menu-panel>
+                  <div class="fh-header__panel-inner">
+                    {%- if link.links.size > 0 -%}
+                      <div class="fh-header__columns">
+                        {%- for child in link.links -%}
+                          <div class="fh-header__column">
+                            <a href="{{ child.url }}" class="fh-header__column-title fh-eyebrow">{{ child.title | escape }}</a>
+                            {%- if child.links.size > 0 -%}
+                              <ul role="list">
+                                {%- for grandchild in child.links -%}
+                                  <li><a href="{{ grandchild.url }}" class="fh-header__sublink fh-body-sm">{{ grandchild.title | escape }}</a></li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endif -%}
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+
+                    {%- if link_promos.size > 0 -%}
+                      <div class="fh-header__promos">
+                        {%- for promo in link_promos limit: 2 -%}
+                          <a href="{{ promo.settings.link | default: link.url }}" class="fh-header__promo" {{ promo.shopify_attributes }}>
+                            <span class="fh-header__promo-media">
+                              {%- if promo.settings.image != blank -%}
+                                {{ promo.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '225px', widths: '300, 450, 600' }}
+                              {%- else -%}
+                                {{ 'lifestyle-1' | placeholder_svg_tag: 'fh-placeholder' }}
+                              {%- endif -%}
+                            </span>
+                            <span class="fh-body-sm fh-header__promo-label">{{ promo.settings.heading }}</span>
+                          </a>
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    <div class="fh-header__actions">
+      <button type="button" class="fh-header__action" on:click="#search-modal/showDialog" aria-label="{{ 'content.search_input_label' | t }}" aria-haspopup="dialog">
+        {%- render 'fh-icon', name: 'search' -%}
+      </button>
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="fh-header__action fh-header__account" aria-label="{{ 'fh.account' | t }}">
+          {%- render 'fh-icon', name: 'account' -%}
+        </a>
+      {%- endif -%}
+
+      {%- render 'fh-cart-drawer', section: section -%}
+    </div>
+  </div>
+
+  {%- comment -%} Mobile drawer {%- endcomment -%}
+  <dialog id="fh-header-drawer" class="fh-header__drawer" data-drawer aria-label="{{ 'fh.menu' | t }}">
+    <div class="fh-header__drawer-inner">
+      <div class="fh-header__drawer-top">
+        <a href="{{ routes.root_url }}" class="fh-header__logo" aria-label="{{ shop.name }}">{%- render 'fh-icon', name: 'logo' -%}</a>
+        <button type="button" class="fh-header__action" data-drawer-close aria-label="{{ 'actions.close_dialog' | t }}">{%- render 'fh-icon', name: 'close' -%}</button>
+      </div>
+
+      {%- if menu != blank -%}
+        <ul class="fh-header__drawer-menu" role="list">
+          {%- for link in menu.links -%}
+            {%- assign link_key = link.title | downcase | strip -%}
+            <li>
+              {%- if link.links.size > 0 -%}
+                <details class="fh-header__drawer-group">
+                  <summary class="fh-header__drawer-link{% if link_key == highlight %} fh-header__link--highlight{% endif %}">
+                    {{ link.title | escape }}
+                    <span class="fh-header__chev" aria-hidden="true"></span>
+                  </summary>
+                  <ul role="list" class="fh-header__drawer-sub">
+                    <li><a href="{{ link.url }}" class="fh-body">{{ 'fh.shop_all' | t: title: link.title }}</a></li>
+                    {%- for child in link.links -%}
+                      <li><a href="{{ child.url }}" class="fh-body">{{ child.title | escape }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                </details>
+              {%- else -%}
+                <a href="{{ link.url }}" class="fh-header__drawer-link{% if link_key == highlight %} fh-header__link--highlight{% endif %}">{{ link.title | escape }}</a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="fh-header__drawer-account fh-body-sm" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}">
+          {%- render 'fh-icon', name: 'account' -%}
+          {%- if customer -%}{{ 'fh.account' | t }}{%- else -%}{{ 'fh.log_in' | t }}{%- endif -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </dialog>
+</fh-header>
+
+<script>
+  (() => {
+    const h = document.getElementById('fh-header');
+    if (!h) return;
+    const set = () => document.body.style.setProperty('--header-height', h.offsetHeight + 'px');
+    set();
+    new ResizeObserver(set).observe(h);
+  })();
+</script>
+
+{% stylesheet %}
+  .fh-section--header { position: relative; z-index: 20; }
+  .fh-section--header:has(.fh-header--sticky) { position: sticky; top: 0; }
+  .fh-header { display: block; background: var(--fh-white); border-bottom: 1px solid var(--fh-header-border, var(--fh-sand)); transition: box-shadow 0.2s var(--fh-ease); }
+  .fh-header[data-scrolled].fh-header--sticky { box-shadow: 0 1px 12px rgb(0 22 90 / 0.06); }
+  .fh-header__bar {
+    position: relative; display: flex; align-items: center; gap: 24px;
+    max-width: var(--fh-max); min-height: 63px; margin: 0 auto; padding: 0 var(--fh-gutter);
+  }
+  .fh-header__left { display: flex; align-items: center; gap: 16px; flex: none; padding-right: 24px; }
+  .fh-header__logo { display: inline-flex; align-items: center; color: var(--fh-navy); }
+  .fh-header__logo .fh-icon--logo { width: 144px; height: 14px; }
+  .fh-header__logo img { max-height: 40px; width: auto; }
+
+  .fh-header__nav { flex: 1; align-self: stretch; }
+  .fh-header__menu { display: flex; align-items: stretch; gap: 24px; height: 100%; }
+  .fh-header__item { display: flex; }
+  .fh-header__link { position: relative; display: flex; align-items: center; color: var(--fh-navy); white-space: nowrap; }
+  .fh-header__link::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.25s var(--fh-ease); }
+  .fh-header__item:hover .fh-header__link::after, .fh-header__item[data-open] .fh-header__link::after, .fh-header__link.is-active::after { transform: scaleX(1); }
+  .fh-header__link--highlight { color: var(--fh-rust); }
+
+  .fh-header__panel {
+    position: absolute; left: 0; right: 0; top: 100%; background: var(--fh-white); border-top: 1px solid var(--fh-sand);
+    box-shadow: 0 16px 24px -16px rgb(0 22 90 / 0.15); opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: opacity 0.2s var(--fh-ease), transform 0.2s var(--fh-ease), visibility 0s 0.2s;
+  }
+  @media (hover: hover) { .fh-header__item:hover .fh-header__panel { opacity: 1; visibility: visible; transform: none; transition-delay: 0.08s; } }
+  .fh-header__item[data-open] .fh-header__panel, .fh-header__item:focus-within .fh-header__panel { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .fh-header__panel-inner { display: flex; justify-content: space-between; gap: 48px; max-width: var(--fh-max); margin: 0 auto; padding: 40px var(--fh-gutter) 48px calc(var(--fh-gutter) + 168px); }
+  .fh-header__columns { display: flex; flex-wrap: wrap; gap: 32px 64px; }
+  .fh-header__column { display: flex; flex-direction: column; gap: 16px; min-width: 140px; }
+  .fh-header__column ul { display: flex; flex-direction: column; gap: 10px; }
+  .fh-header__column-title { color: var(--fh-navy); }
+  .fh-header__sublink { color: var(--fh-blue); }
+  .fh-header__sublink:hover, .fh-header__column-title:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .fh-header__promos { display: flex; gap: 16px; }
+  .fh-header__promo { display: flex; flex-direction: column; gap: 10px; width: 225px; }
+  .fh-header__promo-media { display: block; aspect-ratio: 225 / 338; overflow: hidden; background: var(--fh-sand); }
+  .fh-header__promo-media img, .fh-header__promo-media svg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--fh-ease); }
+  .fh-header__promo:hover img { transform: scale(1.04); }
+
+  .fh-header__actions { display: flex; align-items: center; gap: 24px; margin-left: auto; }
+  .fh-header__action { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 40px; color: var(--fh-navy); }
+  .fh-header__cart-icon { position: relative; display: inline-flex; }
+  .fh-header__cart-icon .cart-bubble {
+    position: absolute; top: -5px; left: 12px; display: flex; align-items: center; justify-content: center;
+    min-width: 16px; height: 16px; padding: 0 4px; border-radius: 9999px; background: var(--fh-rust); color: var(--fh-white);
+    font-size: 10px; line-height: 14px; font-weight: 700;
+  }
+  .fh-header__cart-icon .cart-bubble__background { display: none; }
+  .fh-header__cart-icon .cart-bubble.visually-hidden { position: absolute !important; }
+
+  .fh-header__burger { display: none; flex-direction: column; gap: 5px; width: 24px; }
+  .fh-header__burger span { display: block; width: 20px; height: 1.5px; background: currentColor; border-radius: 2px; }
+
+  .fh-header__drawer { margin: 0; padding: 0; width: min(420px, 88vw); max-width: none; height: 100dvh; max-height: none; border: 0; background: var(--fh-white); color: var(--fh-navy); }
+  .fh-header__drawer::backdrop { background: rgb(0 22 90 / 0.35); }
+  .fh-header__drawer[open] { animation: fh-drawer-in 0.3s var(--fh-ease); }
+  @keyframes fh-drawer-in { from { transform: translateX(-100%); } }
+  .fh-header__drawer-inner { display: flex; flex-direction: column; height: 100%; font-family: var(--fh-font-sans); }
+  .fh-header__drawer-top { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 0 24px; border-bottom: 1px solid var(--fh-sand); }
+  .fh-header__drawer-menu { flex: 1; overflow-y: auto; padding: 8px 24px; }
+  .fh-header__drawer-menu > li { border-bottom: 1px solid var(--fh-sand); }
+  .fh-header__drawer-link { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; font-family: var(--fh-font-serif); font-size: 24px; line-height: 32px; letter-spacing: -0.02em; cursor: pointer; list-style: none; }
+  .fh-header__drawer-link::-webkit-details-marker { display: none; }
+  .fh-header__chev { width: 10px; height: 10px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); transition: transform 0.2s; }
+  .fh-header__drawer-group[open] .fh-header__chev { transform: rotate(-135deg); }
+  .fh-header__drawer-sub { display: flex; flex-direction: column; gap: 12px; padding: 0 0 20px; color: var(--fh-blue); }
+  .fh-header__drawer-account { display: flex; align-items: center; gap: 8px; padding: 20px 24px; background: var(--fh-sand); }
+  html.fh-scroll-lock { overflow: hidden; }
+
+  @media screen and (max-width: 989px) {
+    .fh-header__bar { min-height: 56px; gap: 12px; }
+    .fh-header__nav { display: none; }
+    .fh-header__burger { display: inline-flex; }
+    .fh-header__left { padding-right: 0; flex: 1; }
+    .fh-header__logo .fh-icon--logo { width: 120px; height: 12px; }
+    .fh-header__left .fh-header__logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    .fh-header__actions { gap: 16px; }
+    .fh-header__account { display: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Header",
+  "tag": "header",
+  "class": "fh-section fh-section--header header-section",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Leave empty to use the Fair Harbor wordmark from the design." },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 240, "step": 4, "unit": "px", "default": 144 },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "text", "id": "highlight_link", "label": "Highlighted menu item", "info": "Menu item title shown in rust, e.g. Sale.", "default": "Sale" },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true },
+    { "type": "color", "id": "border_color", "label": "Bottom border", "default": "#f4f0ed" }
+  ],
+  "blocks": [
+    {
+      "type": "menu_promo",
+      "name": "Menu image",
+      "settings": [
+        { "type": "text", "id": "menu_item", "label": "Show under menu item", "info": "Must match the top-level menu item title exactly, e.g. New & Featured." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "heading", "label": "Label", "default": "New Arrivals" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

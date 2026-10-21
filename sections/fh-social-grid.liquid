@@ -1,0 +1,103 @@
+{%- comment -%}
+  Fair Harbor "Find us in the Wild @FairHarborClothing" (Figma 1:1736).
+  Blue header bar and four square tiles; video tiles get a white play button.
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign tiles = section.blocks | where: 'type', 'tile'
+-%}
+
+<div class="fh fh-social">
+  <div class="fh-social__head" style="background: {{ s.header_background }};">
+    <h2 class="fh-h3 fh-social__heading">
+      <span>{{ s.heading }}</span>
+      {%- if s.handle != blank -%}
+        <a href="{{ s.handle_link | default: '#' }}" class="fh-social__handle" {% if s.handle_link != blank %}target="_blank" rel="noopener"{% endif %}>{{ s.handle }}</a>
+      {%- endif -%}
+    </h2>
+  </div>
+
+  <ul class="fh-social__grid" role="list">
+    {%- for block in tiles -%}
+      {%- assign b = block.settings -%}
+      <li class="fh-social__tile" {{ block.shopify_attributes }}>
+        {%- if b.video != blank -%}
+          <fh-video-tile class="fh-social__video">
+            {{ b.video | video_tag: muted: true, loop: true, playsinline: true, preload: 'none', image_size: '800x', class: 'fh-social__img' }}
+            <button type="button" class="fh-social__play" data-play aria-pressed="false" aria-label="{{ 'fh.play_video' | t }}">{%- render 'fh-icon', name: 'video' -%}</button>
+          </fh-video-tile>
+        {%- else -%}
+          <a href="{{ b.link | default: s.handle_link | default: '#' }}" class="fh-social__link" {% if b.link == blank and s.handle_link != blank %}target="_blank" rel="noopener"{% endif %} aria-label="{{ b.image.alt | default: s.handle | escape }}">
+            {%- if b.image != blank -%}
+              {{ b.image | image_url: width: 800 | image_tag: widths: '378, 600, 800', sizes: '(min-width: 750px) 25vw, 50vw', loading: 'lazy', alt: '', class: 'fh-social__img' }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'fh-social__img fh-social__img--placeholder' }}
+            {%- endif -%}
+            {%- if b.show_play -%}
+              <span class="fh-social__play" aria-hidden="true">{%- render 'fh-icon', name: 'video' -%}</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+{% stylesheet %}
+  .fh-social { max-width: var(--fh-max); margin: 0 auto; background: #fff; }
+  .fh-social__head { padding: 35px 24px; color: #fff; text-align: center; }
+  .fh-social__heading { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 18px; letter-spacing: -0.01em; }
+  .fh-social__handle { color: var(--fh-sky); }
+  .fh-social__handle:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .fh-social__grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .fh-social__tile { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--fh-sand); }
+  .fh-social__link, .fh-social__video { display: block; width: 100%; height: 100%; }
+  .fh-social__img, .fh-social__video video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--fh-ease); }
+  .fh-social__link:hover .fh-social__img { transform: scale(1.04); }
+  .fh-social__play { position: absolute; top: 12px; right: 12px; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 16px; background: #fff; color: var(--fh-blue); }
+  .fh-social__play .fh-icon { width: 18px; height: 18px; }
+  @media screen and (max-width: 749px) {
+    .fh-social__head { padding: 24px 16px; }
+    .fh-social__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Social grid",
+  "tag": "section",
+  "class": "fh-section fh-section--social",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find us in the Wild" },
+    { "type": "text", "id": "handle", "label": "Handle", "default": "@FairHarborClothing" },
+    { "type": "url", "id": "handle_link", "label": "Handle link" },
+    { "type": "color", "id": "header_background", "label": "Header background", "default": "#223d72" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "video", "id": "video", "label": "Video", "info": "Optional. Plays inline when the play button is used." },
+        { "type": "checkbox", "id": "show_play", "label": "Show play icon on image", "default": false },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Social grid",
+      "blocks": [
+        { "type": "tile" },
+        { "type": "tile", "settings": { "show_play": true } },
+        { "type": "tile", "settings": { "show_play": true } },
+        { "type": "tile", "settings": { "show_play": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}
