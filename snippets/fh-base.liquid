@@ -42,7 +42,12 @@
 
   .fh { font-family: var(--fh-sans); color: var(--fh-navy); -webkit-font-smoothing: antialiased; }
   .fh *, .fh *::before, .fh *::after { box-sizing: border-box; }
-  .fh :where(h1, h2, h3, h4, p, ul, ol, figure) { margin: 0; padding: 0; }
+  .fh :where(h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote) { margin: 0; padding: 0; }
+  .fh :where(h1, h2, h3, h4, h5, h6, p, blockquote, button, input) {
+    font-family: inherit; font-weight: inherit; font-size: inherit; line-height: inherit;
+    letter-spacing: inherit; text-transform: inherit; color: inherit;
+  }
+  .fh { font-size: 16px; line-height: 24px; font-weight: 400; letter-spacing: 0; }
   .fh :where(ul, ol) { list-style: none; }
   .fh :where(a) { color: inherit; text-decoration: none; }
   .fh :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }

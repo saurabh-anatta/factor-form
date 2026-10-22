@@ -14,7 +14,7 @@
       "settings": {
         "fallback_image": "fh-hero.jpg",
         "overlay": 15,
-        "height": 670,
+        "height": 672,
         "height_mobile": 600,
         "eyebrow": "Over 75,000 5 Star reviews",
         "show_stars": true,
@@ -75,6 +75,8 @@
       "settings": {
         "heading": "Shop bestsellers",
         "max_products": 12,
+        "cta_label": "Shop Men’s Bestsellers",
+        "cta_link": "shopify://collections/all",
         "background": "#ffffff"
       },
       "blocks": {
