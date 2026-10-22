@@ -1,0 +1,94 @@
+{%- comment -%} Figma 1:1736 — "Find us in the Wild" social grid {%- endcomment -%}
+<section class="fh fh-social" style="--fh-social-bar: {{ section.settings.bar_color }};">
+  <div class="fh-social__bar">
+    <h2 class="fh-social__heading">
+      <span>{{ section.settings.heading }}</span>
+      {%- if section.settings.handle != blank -%}
+        <a href="{{ section.settings.handle_link | default: '#' }}" class="fh-social__handle" target="_blank" rel="noopener">{{ section.settings.handle }}</a>
+      {%- endif -%}
+    </h2>
+  </div>
+
+  <ul class="fh-social__grid" role="list">
+    {%- for block in section.blocks -%}
+      {%- assign b = block.settings -%}
+      <li class="fh-social__item" {{ block.shopify_attributes }}>
+        <a
+          href="{{ b.link | default: section.settings.handle_link | default: '#' }}"
+          class="fh-social__link fh-media"
+          target="_blank"
+          rel="noopener"
+          aria-label="{{ section.settings.handle | escape }}{% if b.is_video %} (video){% endif %}"
+        >
+          {% render 'fh-image', image: b.image, fallback: b.fallback_image, alt: section.settings.handle, sizes: '(min-width: 750px) 25vw, 50vw', width: 800, w: 378, h: 378 %}
+          {%- if b.is_video -%}
+            <span class="fh-social__play" aria-hidden="true">{{ 'fh-icon-video.svg' | inline_asset_content }}</span>
+          {%- endif -%}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+
+{% stylesheet %}
+  .fh-social { background: #fff; }
+  .fh-social__bar { background: var(--fh-social-bar, #223d72); padding: 35px 24px; }
+  .fh-social__heading {
+    display: flex; flex-wrap: wrap; justify-content: center; column-gap: 19px; text-align: center;
+    font-family: var(--fh-serif); font-weight: 400; font-size: 32px; line-height: 40px; letter-spacing: -0.3px; color: #fff;
+  }
+  .fh-social__handle { color: var(--fh-blue-light); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .fh-social__handle:hover { color: #fff; }
+  .fh-social__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .fh-social__link { display: block; aspect-ratio: 1 / 1; }
+  .fh-social__link img { transition: transform .6s ease, opacity .3s ease; }
+  .fh-social__link:hover img { transform: scale(1.04); }
+  .fh-social__play {
+    position: absolute; top: 12px; right: 12px; z-index: 1; width: 32px; height: 32px; border-radius: 16px; background: #fff;
+    display: inline-flex; align-items: center; justify-content: center; color: var(--fh-blue-deep);
+  }
+  .fh-social__play svg { width: 18px; height: 18px; }
+  @media screen and (max-width: 749px) {
+    .fh-social__bar { padding: 24px 16px; }
+    .fh-social__heading { font-size: 24px; line-height: 32px; }
+    .fh-social__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Social grid",
+  "class": "fh-social-section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find us in the Wild" },
+    { "type": "text", "id": "handle", "label": "Handle", "default": "@FairHarborClothing" },
+    { "type": "url", "id": "handle_link", "label": "Handle link" },
+    { "type": "color", "id": "bar_color", "label": "Heading bar color", "default": "#223d72" }
+  ],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Post",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback_image", "label": "Placeholder image (theme asset)" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "checkbox", "id": "is_video", "label": "Show video icon", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Social grid",
+      "blocks": [
+        { "type": "post", "settings": { "fallback_image": "fh-ig1.jpg" } },
+        { "type": "post", "settings": { "fallback_image": "fh-ig2.jpg", "is_video": true } },
+        { "type": "post", "settings": { "fallback_image": "fh-ig3.jpg", "is_video": true } },
+        { "type": "post", "settings": { "fallback_image": "fh-ig4.jpg", "is_video": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

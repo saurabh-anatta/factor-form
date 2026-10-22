@@ -1,0 +1,93 @@
+{%- comment -%} Figma 1:35 — scrolling brand values strip {%- endcomment -%}
+{%- capture items -%}
+  <ul class="fh-values__list" role="list">
+    {%- for block in section.blocks -%}
+      <li class="fh-values__item" {{ block.shopify_attributes }}>
+        <span class="fh-values__icon" aria-hidden="true">
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 64 | image_tag: alt: '', width: 32, height: 32, loading: 'lazy' }}
+          {%- elsif block.settings.icon != 'none' -%}
+            {{ 'fh-icon-' | append: block.settings.icon | append: '.svg' | inline_asset_content }}
+          {%- endif -%}
+        </span>
+        <span class="fh-values__text fh-caption">{{ block.settings.text }}</span>
+      </li>
+    {%- endfor -%}
+    <li class="fh-values__divider" aria-hidden="true"></li>
+  </ul>
+{%- endcapture -%}
+
+<section
+  class="fh fh-values"
+  style="--fh-values-speed: {{ section.settings.speed }}s; --fh-values-bg: {{ section.settings.background }};"
+  aria-label="Brand values"
+>
+  <div class="fh-values__viewport">
+    <div class="fh-values__track">
+      {{ items }}
+      <div aria-hidden="true" class="fh-values__clone">{{ items }}</div>
+      <div aria-hidden="true" class="fh-values__clone">{{ items }}</div>
+      <div aria-hidden="true" class="fh-values__clone">{{ items }}</div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .fh-values { background: var(--fh-values-bg, #f4f0ed); padding: 16px 24px; overflow: hidden; }
+  .fh-values__viewport { overflow: hidden; }
+  .fh-values__track { display: flex; width: max-content; animation: fh-values-scroll var(--fh-values-speed, 40s) linear infinite; }
+  .fh-values:hover .fh-values__track { animation-play-state: paused; }
+  .fh-values__clone { display: flex; }
+  .fh-values__list { display: flex; align-items: center; gap: 64px; padding-right: 64px; }
+  .fh-values__item { display: flex; align-items: center; gap: 16px; white-space: nowrap; }
+  .fh-values__icon { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; color: var(--fh-navy); }
+  .fh-values__icon svg, .fh-values__icon img { width: 32px; height: 32px; }
+  .fh-values__text { color: var(--fh-blue); }
+  .fh-values__divider { width: 1px; height: 32px; background: #d9d9d9; }
+  @keyframes fh-values-scroll { from { transform: translateX(0); } to { transform: translateX(-25%); } }
+  @media (prefers-reduced-motion: reduce) { .fh-values__track { animation: none; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Values marquee",
+  "class": "fh-values-section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "range", "id": "speed", "label": "Loop duration", "min": 10, "max": 120, "step": 5, "unit": "s", "default": 40 },
+    { "type": "color", "id": "background", "label": "Background", "default": "#f4f0ed" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "comfort", "label": "Comfort" },
+            { "value": "essentials", "label": "Essentials" },
+            { "value": "elements", "label": "Elements" },
+            { "value": "versatility", "label": "Versatility" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "comfort"
+        },
+        { "type": "image_picker", "id": "image", "label": "Custom icon image" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Signature Comfort" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Values marquee",
+      "blocks": [
+        { "type": "value", "settings": { "icon": "comfort", "text": "Signature Comfort" } },
+        { "type": "value", "settings": { "icon": "essentials", "text": "Elevated Essentials" } },
+        { "type": "value", "settings": { "icon": "elements", "text": "Made by the Elements" } },
+        { "type": "value", "settings": { "icon": "versatility", "text": "Effortless Versatility" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

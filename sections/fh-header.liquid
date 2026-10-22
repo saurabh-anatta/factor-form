@@ -1,0 +1,164 @@
+{%- comment -%} Figma 1:2190 — "Banner" / main navigation {%- endcomment -%}
+<header class="fh fh-header{% if section.settings.sticky %} fh-header--sticky{% endif %}">
+  <nav class="fh-header__bar" aria-label="Main navigation">
+    <details class="fh-header__drawer">
+      <summary class="fh-header__burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </summary>
+      <div class="fh-header__drawer-panel">
+        <ul class="fh-header__drawer-list">
+          {%- for block in section.blocks -%}
+            <li>
+              <a
+                href="{{ block.settings.link | default: '#' }}"
+                class="fh-header__drawer-link{% if block.settings.highlight %} is-sale{% endif %}"
+              >
+                {{- block.settings.label -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </details>
+
+    <a href="{{ routes.root_url }}" class="fh-header__logo" aria-label="Go to {{ shop.name | escape }} homepage">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 300 | image_tag: alt: shop.name, width: 144 }}
+      {%- else -%}
+        {{ 'fh-icon-logo.svg' | inline_asset_content }}
+      {%- endif -%}
+    </a>
+
+    <ul class="fh-header__menu" role="list">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }}>
+          <a
+            href="{{ block.settings.link | default: '#' }}"
+            class="fh-header__link fh-small{% if block.settings.highlight %} is-sale{% endif %}"
+            {% if block.settings.link != blank and request.path == block.settings.link %}
+              aria-current="page"
+            {% endif %}
+          >
+            {{- block.settings.label -}}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <div class="fh-header__actions">
+      <button
+        type="button"
+        class="fh-header__icon fh-header__icon--search"
+        on:click="#search-modal/showDialog"
+        aria-label="{{ 'content.search_input_label' | t }}"
+        aria-haspopup="dialog"
+      >
+        {{ 'fh-icon-search.svg' | inline_asset_content }}
+      </button>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="fh-header__icon fh-header__icon--account" aria-label="View account">
+          {{ 'fh-icon-account.svg' | inline_asset_content }}
+        </a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="fh-header__icon fh-header__cart" aria-label="{{ 'content.cart_title' | t }} ({{ cart.item_count }})">
+        {{ 'fh-icon-bag.svg' | inline_asset_content }}
+        <span class="fh-header__count" data-fh-cart-count>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Keep the bag count in sync after AJAX add-to-cart events from the theme.
+  document.addEventListener('cart:update', (event) => {
+    const count = event?.detail?.resource?.item_count ?? event?.detail?.data?.itemCount;
+    if (typeof count === 'number') {
+      document.querySelectorAll('[data-fh-cart-count]').forEach((el) => (el.textContent = count));
+    }
+  });
+</script>
+
+{% stylesheet %}
+  .fh-header { background: #fff; border-bottom: 1px solid var(--fh-sand); position: relative; z-index: 20; }
+  #header-group:has(.fh-header--sticky) { display: contents; }
+  .fh-header-section:has(> .fh-header--sticky) { position: sticky; top: 0; z-index: 30; }
+  .fh-header__bar { display: flex; align-items: center; min-height: 63px; padding: 0 var(--fh-gutter); }
+  .fh-header__logo { display: inline-flex; width: 168px; padding-right: 24px; color: var(--fh-navy); flex: none; }
+  .fh-header__logo svg, .fh-header__logo img { width: 144px; height: auto; display: block; }
+  .fh-header__menu { display: flex; align-items: center; gap: 24px; flex: 1; min-width: 0; }
+  .fh-header__link { display: inline-flex; align-items: center; height: 64px; color: var(--fh-navy); position: relative; white-space: nowrap; }
+  .fh-header__link::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 18px; height: 1px; background: currentColor;
+    transform: scaleX(0); transform-origin: left; transition: transform .25s ease;
+  }
+  .fh-header__link:hover::after, .fh-header__link[aria-current='page']::after { transform: scaleX(1); }
+  .fh-header__link.is-sale, .fh-header__drawer-link.is-sale { color: var(--fh-rust); }
+  .fh-header__actions { display: flex; align-items: center; justify-content: flex-end; gap: 24px; flex: none; color: var(--fh-navy); }
+  .fh-header__icon { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; position: relative; color: var(--fh-navy); }
+  .fh-header__icon--search { width: 40px; height: 40px; }
+  .fh-header__icon svg { width: 24px; height: 24px; }
+  .fh-header__count {
+    position: absolute; top: 0; left: 12px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 9999px;
+    background: var(--fh-rust); color: #fff; font-size: 10px; line-height: 14px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+
+  .fh-header__drawer { display: none; }
+  .fh-header__burger { list-style: none; cursor: pointer; width: 24px; height: 24px; display: flex; flex-direction: column; justify-content: center; gap: 5px; }
+  .fh-header__burger::-webkit-details-marker { display: none; }
+  .fh-header__burger span { display: block; height: 1.5px; background: var(--fh-navy); border-radius: 2px; transition: transform .2s ease, opacity .2s ease; }
+  .fh-header__drawer[open] .fh-header__burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .fh-header__drawer[open] .fh-header__burger span:nth-child(2) { opacity: 0; }
+  .fh-header__drawer[open] .fh-header__burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .fh-header__drawer-panel {
+    position: absolute; left: 0; right: 0; top: 100%; background: #fff; border-top: 1px solid var(--fh-sand);
+    padding: 16px var(--fh-gutter) 32px; box-shadow: 0 12px 24px rgba(0, 22, 90, .08);
+  }
+  .fh-header__drawer-link { display: block; padding: 12px 0; font-family: var(--fh-serif); font-size: 24px; line-height: 32px; color: var(--fh-navy); border-bottom: 1px solid var(--fh-sand); }
+
+  @media screen and (max-width: 989px) {
+    .fh-header__bar { min-height: 56px; display: grid; grid-template-columns: 1fr auto 1fr; }
+    .fh-header__drawer { display: block; }
+    .fh-header__menu { display: none; }
+    .fh-header__logo { padding-right: 0; width: auto; justify-self: center; }
+    .fh-header__logo svg, .fh-header__logo img { width: 120px; }
+    .fh-header__actions { gap: 12px; }
+    .fh-header__icon--account { display: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Header",
+  "class": "fh-header-section",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Defaults to the Fair Harbor wordmark" },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Menu link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Link" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "checkbox", "id": "highlight", "label": "Highlight (sale color)", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Header",
+      "blocks": [
+        { "type": "link", "settings": { "label": "New & Featured", "link": "shopify://collections/all" } },
+        { "type": "link", "settings": { "label": "Tops" } },
+        { "type": "link", "settings": { "label": "Bottoms" } },
+        { "type": "link", "settings": { "label": "Swim" } },
+        { "type": "link", "settings": { "label": "Kids" } },
+        { "type": "link", "settings": { "label": "Sale", "highlight": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

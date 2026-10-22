@@ -1,0 +1,44 @@
+{%- doc -%}
+  Renders an uploaded image, or a bundled theme asset when no image is chosen.
+  Used so the Figma imagery shows out of the box while staying editable.
+
+  @param {object} [image] - Image from an image_picker setting
+  @param {string} [fallback] - Theme asset filename used when image is blank
+  @param {string} [alt] - Alt text
+  @param {string} [sizes] - sizes attribute
+  @param {number} [width] - Largest rendition width (default 1600)
+  @param {string} [class] - Class for the <img>
+  @param {string} [loading] - 'lazy' (default) or 'eager'
+  @param {number} [w] - Intrinsic width for the fallback <img> (aspect ratio hint)
+  @param {number} [h] - Intrinsic height for the fallback <img>
+
+  @example
+  {% render 'fh-image', image: section.settings.image, fallback: 'fh-hero.jpg', sizes: '100vw' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign max_w = width | default: 1600
+  assign load = loading | default: 'lazy'
+  assign img_sizes = sizes | default: '100vw'
+-%}
+
+{%- if image != blank -%}
+  {%- assign img_alt = alt | default: image.alt -%}
+  {%- assign w_small = max_w | divided_by: 2 -%}
+  {%- capture srcset_widths -%}{{ w_small }},{{ max_w | times: 3 | divided_by: 4 }},{{ max_w }}{%- endcapture -%}
+  {{
+    image
+    | image_url: width: max_w
+    | image_tag: alt: img_alt, class: class, loading: load, sizes: img_sizes, widths: srcset_widths, fetchpriority: 'auto'
+  }}
+{%- elsif fallback != blank -%}
+  <img
+    src="{{ fallback | asset_url }}"
+    alt="{{ alt | escape }}"
+    width="{{ w | default: 1600 }}"
+    height="{{ h | default: 1600 }}"
+    {% if class %}class="{{ class }}"{% endif %}
+    loading="{{ load }}"
+    decoding="async"
+  >
+{%- endif -%}

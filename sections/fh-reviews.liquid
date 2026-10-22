@@ -1,0 +1,125 @@
+{%- comment -%} Figma 1:1366 — "Over 75,000 Five Star Reviews" {%- endcomment -%}
+<section class="fh fh-reviews" style="--fh-reviews-bg: {{ section.settings.background }};">
+  <fh-carousel class="fh-reviews__inner">
+    <div class="fh-reviews__head">
+      <h2 class="fh-h2">{{ section.settings.heading }}</h2>
+      <div class="fh-arrows fh-reviews__arrows">
+        <button type="button" class="fh-arrow" data-fh-prev aria-label="Show previous reviews">{{ 'fh-icon-arrow-left.svg' | inline_asset_content }}</button>
+        <button type="button" class="fh-arrow" data-fh-next aria-label="Show more reviews">{{ 'fh-icon-arrow-right.svg' | inline_asset_content }}</button>
+      </div>
+    </div>
+
+    <ul class="fh-reviews__track fh-track" data-fh-track role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign b = block.settings
+          assign p = b.product
+          assign product_name = b.product_name | default: p.title
+          assign product_url = b.product_link | default: p.url | default: '#'
+          assign product_price = b.product_price
+          if product_price == blank and p != blank
+            assign product_price = p.price | money_without_trailing_zeros
+          endif
+          assign product_img = b.product_image | default: p.featured_image
+          assign rating = b.rating | at_most: 5 | at_least: 1
+        -%}
+        <li class="fh-review" {{ block.shopify_attributes }}>
+          <div class="fh-review__body">
+            {%- if b.title != blank -%}<h3 class="fh-review__title fh-eyebrow">{{ b.title }}</h3>{%- endif -%}
+            <div class="fh-review__stars" role="img" aria-label="{{ rating }} out of 5 stars">
+              {%- for i in (1..5) -%}
+                <span class="fh-review__star{% if i > rating %} is-empty{% endif %}">{{ 'fh-icon-star.svg' | inline_asset_content }}</span>
+              {%- endfor -%}
+            </div>
+            <blockquote class="fh-review__quote">“{{ b.quote }}”</blockquote>
+            {%- if b.author != blank -%}
+              <p class="fh-review__author"><span class="fh-body" aria-hidden="true">–</span><span class="fh-small">{{ b.author }}</span></p>
+            {%- endif -%}
+          </div>
+
+          {%- if product_name != blank -%}
+            <a href="{{ product_url }}" class="fh-review__product">
+              <span class="fh-review__thumb fh-media">
+                {% render 'fh-image', image: product_img, fallback: b.fallback_image, alt: product_name, sizes: '64px', width: 160, w: 64, h: 64 %}
+              </span>
+              <span class="fh-review__product-text">
+                <span class="fh-review__product-name fh-body">{{ product_name }}</span>
+                <span class="fh-review__shop fh-small">{{ b.cta_label }}{% if product_price != blank %} - {{ product_price }}{% endif %}</span>
+              </span>
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </fh-carousel>
+</section>
+
+{% stylesheet %}
+  .fh-reviews { background: var(--fh-reviews-bg, #fff); padding: 40px 0 16px var(--fh-gutter); overflow: hidden; }
+  .fh-reviews__inner { display: flex; flex-direction: column; gap: 32px; }
+  .fh-reviews__head { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding-right: var(--fh-gutter); }
+  .fh-reviews__track { gap: 32px; padding-right: var(--fh-gutter); }
+  .fh-review {
+    width: 440px; min-height: 360px; background: var(--fh-sand); padding: 32px 24px;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 32px; text-align: center;
+  }
+  .fh-review__body { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; }
+  .fh-review__title { color: var(--fh-navy); }
+  .fh-review__stars { display: flex; gap: 4px; color: var(--fh-navy); }
+  .fh-review__star svg { width: 14px; height: 14px; display: block; }
+  .fh-review__star.is-empty { opacity: .25; }
+  .fh-review__quote { margin: 0; font-family: var(--fh-serif); font-size: 20px; line-height: 28px; letter-spacing: -0.4px; color: var(--fh-blue-deep); }
+  .fh-review__author { display: flex; align-items: center; gap: 8px; color: var(--fh-navy); }
+  .fh-review__product { display: flex; gap: 16px; padding: 16px; background: #fff; border-radius: 8px; text-align: left; max-width: 100%; width: 282px; }
+  .fh-review__thumb { width: 64px; height: 64px; flex: none; }
+  .fh-review__product-text { display: flex; flex-direction: column; justify-content: center; gap: 5px; min-width: 0; }
+  .fh-review__product-name { color: var(--fh-navy); }
+  .fh-review__shop { align-self: flex-start; font-weight: 600; color: var(--fh-navy); border-bottom: 1px solid var(--fh-navy); }
+  .fh-review__product:hover .fh-review__shop { color: var(--fh-blue); border-color: var(--fh-blue); }
+  @media screen and (max-width: 749px) {
+    .fh-reviews__arrows { display: none; }
+    .fh-reviews__track { gap: 16px; }
+    .fh-review { width: 82vw; max-width: 360px; padding: 24px 16px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Reviews",
+  "class": "fh-reviews-section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Over 75,000 Five Star Reviews" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#ffffff" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Perfect Bathing Suit!" },
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Great fit, the seersucker looks sharp but relaxed, love the material. High quality." },
+        { "type": "text", "id": "author", "label": "Author", "default": "David D." },
+        { "type": "header", "content": "Product" },
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "image_picker", "id": "product_image", "label": "Product image override" },
+        { "type": "text", "id": "fallback_image", "label": "Placeholder image (theme asset)" },
+        { "type": "text", "id": "product_name", "label": "Product name override" },
+        { "type": "text", "id": "product_price", "label": "Price override" },
+        { "type": "url", "id": "product_link", "label": "Link override" },
+        { "type": "text", "id": "cta_label", "label": "Link label", "default": "Shop now" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Reviews",
+      "blocks": [
+        { "type": "review", "settings": { "product_name": "Anchor Rashguard | Aqua", "product_price": "$59", "fallback_image": "fh-rev1.jpg" } },
+        { "type": "review", "settings": { "title": "So Comfortable and Soft!", "quote": "This shirt is ideal for lounge days by the pool or beach. Great fit, soft and still stylish", "author": "Craig S.", "product_name": "Anchor Trunk | Clark", "product_price": "$88", "fallback_image": "fh-rev2.jpg" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

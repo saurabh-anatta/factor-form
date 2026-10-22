@@ -1,0 +1,128 @@
+{%- doc -%}
+  Fair Harbor product card (Figma 1:196 "1 / 18").
+  Pass either a real `product`, or a manual-card `block` (used for placeholders
+  and editorial cards). Values from the block override product values.
+
+  @param {object} [product] - Product to render
+  @param {object} [block] - Manual card block (settings: image, fallback_image, title, subtitle, price, badge, image_label, chip_1, chip_2, link, swatches, swatch_selected, more_count)
+  @param {string} [tabs] - Comma separated tab keys this card belongs to
+  @param {boolean} [eager] - Load the image eagerly
+
+  @example
+  {% render 'fh-product-card', product: product, tabs: 'swim' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign b = block.settings
+  assign loading = 'lazy'
+  if eager
+    assign loading = 'eager'
+  endif
+
+  assign card_url = b.link | default: product.url | default: '#'
+  assign title = b.title
+  assign subtitle = b.subtitle
+  if title == blank and product != blank
+    assign parts = product.title | split: ' | '
+    assign title = parts.first
+    if parts.size > 1
+      assign subtitle = parts.last
+    else
+      assign subtitle = product.selected_or_first_available_variant.option1
+      if subtitle == 'Default Title'
+        assign subtitle = ''
+      endif
+    endif
+  endif
+
+  assign price = b.price
+  if price == blank and product != blank
+    assign price = product.price | money_without_trailing_zeros
+  endif
+
+  assign badge = b.badge
+  assign image_label = b.image_label
+  assign chip_1 = b.chip_1
+  assign chip_2 = b.chip_2
+  if product != blank and block == blank
+    assign tags = product.tags | join: ',' | downcase
+    if tags contains 'bestseller'
+      assign badge = 'Bestseller'
+    elsif tags contains 'new'
+      assign badge = 'NEW'
+    endif
+    if tags contains 'bundle'
+      assign chip_1 = 'Bundle & Save'
+    endif
+    if tags contains 'personaliz'
+      assign chip_2 = 'Personalize It'
+      assign image_label = 'Personalize It'
+    endif
+  endif
+-%}
+
+<article class="fh-card" data-fh-panel-item data-fh-tabs="{{ tabs }}" {{ block.shopify_attributes }}>
+  <a href="{{ card_url }}" class="fh-card__media fh-media" aria-label="{{ title | escape }} {{ subtitle | escape }}">
+    {%- if b.image != blank or b.fallback_image != blank -%}
+      {% render 'fh-image', image: b.image, fallback: b.fallback_image, alt: title, sizes: '(min-width: 990px) 340px, 70vw', width: 800, loading: loading, w: 340, h: 454 %}
+    {%- elsif product.featured_media != blank -%}
+      {% render 'fh-image', image: product.featured_media.preview_image, alt: product.title, sizes: '(min-width: 990px) 340px, 70vw', width: 800, loading: loading %}
+    {%- else -%}
+      {{ 'product-apparel-1' | placeholder_svg_tag }}
+    {%- endif -%}
+    {%- if badge != blank -%}<span class="fh-card__badge">{{ badge }}</span>{%- endif -%}
+    {%- if image_label != blank -%}<span class="fh-card__label">{{ image_label }}</span>{%- endif -%}
+  </a>
+
+  <div class="fh-card__info">
+    {%- liquid
+      assign swatch_list = b.swatches | split: ','
+      assign color_option = nil
+      if block == blank and product != blank
+        for option in product.options_with_values
+          assign oname = option.name | downcase
+          if oname == 'color' or oname == 'colour'
+            assign color_option = option
+          endif
+        endfor
+      endif
+    -%}
+    {%- if swatch_list.size > 0 or color_option != nil -%}
+      <div class="fh-card__swatches">
+        {%- if color_option != nil -%}
+          {%- for value in color_option.values limit: 6 -%}
+            <span class="fh-card__swatch{% if value.selected %} is-selected{% endif %}" title="{{ value | escape }}">
+              <span style="{% if value.swatch.image %}background-image: url({{ value.swatch.image | image_url: width: 48 }});{% elsif value.swatch.color %}background-color: {{ value.swatch.color }};{% else %}background-color: {{ value | handleize | split: '-' | last }};{% endif %}"></span>
+            </span>
+          {%- endfor -%}
+          {%- if color_option.values.size > 6 -%}
+            <a href="{{ card_url }}" class="fh-card__more fh-caption">+{{ color_option.values.size | minus: 6 }}</a>
+          {%- endif -%}
+        {%- else -%}
+          {%- assign selected = b.swatch_selected | minus: 1 -%}
+          {%- for sw in swatch_list -%}
+            {%- assign sw = sw | strip -%}
+            <span class="fh-card__swatch{% if forloop.index0 == selected %} is-selected{% endif %}">
+              <span style="{% if sw contains '.' %}background-image: url({{ sw | asset_url }});{% else %}background-color: {{ sw }};{% endif %}"></span>
+            </span>
+          {%- endfor -%}
+          {%- if b.more_count > 0 -%}
+            <a href="{{ card_url }}" class="fh-card__more fh-caption">+{{ b.more_count }}</a>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <h3 class="fh-card__title fh-body"><a href="{{ card_url }}">{{ title }}</a></h3>
+    {%- if subtitle != blank -%}<p class="fh-card__subtitle fh-caption">{{ subtitle }}</p>{%- endif -%}
+    <div class="fh-card__price-row">
+      <span class="fh-card__price fh-body">{{ price }}</span>
+      {%- if chip_1 != blank or chip_2 != blank -%}
+        <span class="fh-card__chips">
+          {%- if chip_1 != blank -%}<span class="fh-card__chip">{{ chip_1 }}</span>{%- endif -%}
+          {%- if chip_2 != blank -%}<span class="fh-card__chip">{{ chip_2 }}</span>{%- endif -%}
+        </span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

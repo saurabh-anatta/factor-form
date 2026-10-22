@@ -1,0 +1,91 @@
+{%- comment -%} Figma 1:1612 — sustainability impact counter over full-bleed image {%- endcomment -%}
+{%- assign s = section.settings -%}
+<section
+  class="fh fh-impact"
+  style="--fh-impact-h: {{ s.height }}px; --fh-impact-fg: {{ s.text_color }}; --fh-impact-overlay: {{ s.overlay | divided_by: 100.0 }};"
+>
+  <div class="fh-impact__media fh-media">
+    {% render 'fh-image', image: s.image, fallback: s.fallback_image, alt: '', sizes: '100vw', width: 2400, w: 1512, h: 605 %}
+  </div>
+  <div class="fh-impact__overlay" aria-hidden="true"></div>
+
+  <div class="fh-impact__box">
+    <div class="fh-impact__main">
+      <fh-counter class="fh-impact__count" data-value="{{ s.count }}">
+        <span data-fh-count>{{ s.count }}</span>
+      </fh-counter>
+      <p class="fh-impact__label fh-body">{{ s.count_label }}</p>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="fh-impact__stats" role="list">
+        {%- for block in section.blocks -%}
+          <li class="fh-impact__stat" {{ block.shopify_attributes }}>
+            <h3 class="fh-impact__value fh-h3">{{ block.settings.value }}</h3>
+            <p class="fh-impact__desc fh-body">{{ block.settings.text | newline_to_br }}</p>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .fh-impact { position: relative; min-height: var(--fh-impact-h, 605px); padding: 80px var(--fh-gutter) 64px; color: var(--fh-impact-fg, #f4f0ed); isolation: isolate; overflow: hidden; }
+  .fh-impact__media { position: absolute; inset: 0; z-index: -2; }
+  .fh-impact__overlay { position: absolute; inset: 0; z-index: -1; background: #000; opacity: var(--fh-impact-overlay, 0); }
+  .fh-impact__box { max-width: 1384px; margin: 0 auto; padding: 0 108px 64px; border-bottom: 1px solid currentColor; text-align: center; }
+  .fh-impact__count {
+    display: block; font-family: var(--fh-serif); font-weight: 400; font-size: 96px; line-height: 105.6px;
+    font-variant-numeric: tabular-nums; padding-top: 5px; min-height: 117px;
+  }
+  .fh-impact__stats { display: flex; justify-content: center; gap: 32px; padding-top: 64px; }
+  .fh-impact__stat { flex: 0 1 328px; }
+  .fh-impact__value { letter-spacing: 0; }
+  .fh-impact__desc { padding-top: 4px; max-width: 260px; margin: 0 auto; }
+  @media screen and (max-width: 749px) {
+    .fh-impact { padding: 56px 20px 48px; }
+    .fh-impact__box { padding: 0 0 40px; }
+    .fh-impact__count { font-size: 52px; line-height: 60px; min-height: 0; }
+    .fh-impact__stats { flex-direction: column; gap: 24px; padding-top: 40px; }
+    .fh-impact__stat { flex-basis: auto; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Impact counter",
+  "class": "fh-impact-section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "fallback_image", "label": "Placeholder image (theme asset)", "default": "fh-impact.jpg" },
+    { "type": "range", "id": "overlay", "label": "Overlay opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 0 },
+    { "type": "range", "id": "height", "label": "Minimum height", "min": 400, "max": 900, "step": 5, "unit": "px", "default": 605 },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#f4f0ed" },
+    { "type": "text", "id": "count", "label": "Counter value", "default": "37,628,496" },
+    { "type": "text", "id": "count_label", "label": "Counter label", "default": "plastic bottles recycled to date" }
+  ],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "12" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Recycled plastic bottles in each garment, on average" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Impact counter",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "12", "text": "Recycled plastic bottles in each\ngarment, on average" } },
+        { "type": "stat", "settings": { "value": "45+", "text": "Company beach\ncleanups" } },
+        { "type": "stat", "settings": { "value": "4.2", "text": "Liters of water saved\nwith our eco-wash denim" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

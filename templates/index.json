@@ -7,495 +7,747 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "hero": {
-      "type": "hero",
+      "type": "fh-hero",
       "settings": {
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/main-hero-img-3-1-desktop-110524489.png",
-        "media_type_2": "image",
-        "image_2": "shopify://shop_images/image-1-desktop-110524490.png",
-        "content_direction": "column",
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 8,
-        "section_width": "full-width",
-        "section_height": "medium",
-        "color_scheme": "scheme-5",
-        "toggle_overlay": true,
-        "overlay_color": "#00000066",
-        "overlay_style": "solid",
-        "padding-block-start": 0,
-        "padding-block-end": 0,
-        "stack_media_on_mobile": true,
-        "custom_mobile_media": true,
-        "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/main-hero-img-3-1-desktop-91051018.png",
-        "media_type_2_mobile": "image",
-        "image_2_mobile": "shopify://shop_images/image-1-desktop-91051020.png"
+        "fallback_image": "fh-hero.jpg",
+        "overlay": 15,
+        "height": 670,
+        "height_mobile": 600,
+        "eyebrow": "Over 75,000 5 Star reviews",
+        "show_stars": true,
+        "heading": "Made to move",
+        "heading_level": "h1",
+        "text": "Breathable comfort engineered for every adventure.",
+        "button_label": "Shop Men’s swim",
+        "button_link": "shopify://collections/all"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "values": {
+      "type": "fh-value-marquee",
+      "settings": {
+        "speed": 40,
+        "background": "#f4f0ed"
       },
       "blocks": {
-        "heading": {
-          "type": "text",
+        "value_1": {
+          "type": "value",
           "settings": {
-            "text": "<h1>Your Daily Greens, Reinvented</h1>",
-            "width": "100%",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h1",
-            "color": "#FFFFFF"
+            "icon": "comfort",
+            "text": "Signature Comfort"
           }
         },
-        "description": {
-          "type": "text",
+        "value_2": {
+          "type": "value",
           "settings": {
-            "text": "<p>Better taste. Better routine. Better you.</p>",
-            "width": "100%",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "paragraph",
-            "color": "#FFFFFF",
-            "padding-block-end": 24
+            "icon": "essentials",
+            "text": "Elevated Essentials"
           }
         },
-        "button": {
-          "type": "button",
+        "value_3": {
+          "type": "value",
           "settings": {
-            "label": "Shop Now",
-            "link": "shopify://collections/all",
-            "style_class": "button"
+            "icon": "elements",
+            "text": "Made by the Elements"
+          }
+        },
+        "value_4": {
+          "type": "value",
+          "settings": {
+            "icon": "versatility",
+            "text": "Effortless Versatility"
           }
         }
       },
-      "block_order": ["heading", "description", "button"]
+      "block_order": [
+        "value_1",
+        "value_2",
+        "value_3",
+        "value_4"
+      ]
+    },
+    "bestsellers": {
+      "type": "fh-bestsellers",
+      "settings": {
+        "heading": "Shop bestsellers",
+        "max_products": 12,
+        "background": "#ffffff"
+      },
+      "blocks": {
+        "tab_1": {
+          "type": "tab",
+          "settings": {
+            "label": "Swim"
+          }
+        },
+        "tab_2": {
+          "type": "tab",
+          "settings": {
+            "label": "Tops"
+          }
+        },
+        "tab_3": {
+          "type": "tab",
+          "settings": {
+            "label": "Bottoms"
+          }
+        },
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Light Blue Seersucker",
+            "price": "$88",
+            "badge": "Bestseller",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch1.jpg,fh-swatch2.jpg,fh-swatch3.jpg,fh-swatch4.jpg,fh-swatch5.jpg,fh-swatch6.jpg",
+            "swatch_selected": 4,
+            "more_count": 9,
+            "fallback_image": "fh-prod1.jpg",
+            "tabs": "Swim, Bottoms",
+            "link": ""
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "title": "Anchor Trunk",
+            "subtitle": "Nautical Red Wavy Geo",
+            "price": "$88",
+            "badge": "Bestseller",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch7.jpg,fh-swatch8.jpg,fh-swatch9.jpg,fh-swatch10.jpg,fh-swatch11.jpg,fh-swatch12.jpg",
+            "swatch_selected": 3,
+            "more_count": 9,
+            "fallback_image": "fh-prod2.jpg",
+            "tabs": "Swim, Bottoms",
+            "link": ""
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "title": "Anchor Trunk",
+            "subtitle": "Light Blue Stripe",
+            "price": "$88",
+            "badge": "Bestseller",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch7.jpg,fh-swatch8.jpg,fh-swatch9.jpg,fh-swatch10.jpg,fh-swatch11.jpg,fh-swatch12.jpg",
+            "swatch_selected": 4,
+            "more_count": 9,
+            "fallback_image": "fh-prod3.jpg",
+            "tabs": "Swim, Bottoms",
+            "link": ""
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Green Shibori",
+            "price": "$88",
+            "badge": "NEW",
+            "image_label": "",
+            "chip_1": "Bundle & Save",
+            "chip_2": "",
+            "swatches": "fh-swatch1.jpg,fh-swatch2.jpg,fh-swatch3.jpg,fh-swatch4.jpg,fh-swatch5.jpg,fh-swatch6.jpg",
+            "swatch_selected": 1,
+            "more_count": 9,
+            "fallback_image": "fh-prod4.jpg",
+            "tabs": "Swim, Bottoms",
+            "link": ""
+          }
+        },
+        "card_5": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Blue Waves",
+            "price": "$88",
+            "badge": "Bestseller",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch1.jpg,fh-swatch2.jpg,fh-swatch3.jpg,fh-swatch4.jpg,fh-swatch5.jpg,fh-swatch6.jpg",
+            "swatch_selected": 1,
+            "more_count": 9,
+            "fallback_image": "fh-prod5.jpg",
+            "tabs": "Swim, Bottoms",
+            "link": ""
+          }
+        },
+        "card_6": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Red Waves",
+            "price": "$88",
+            "badge": "",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch1.jpg,fh-swatch2.jpg,fh-swatch3.jpg,fh-swatch4.jpg,fh-swatch5.jpg,fh-swatch6.jpg",
+            "swatch_selected": 3,
+            "more_count": 9,
+            "fallback_image": "fh-prod6.jpg",
+            "tabs": "Swim, Bottoms",
+            "link": ""
+          }
+        },
+        "card_7": {
+          "type": "card",
+          "settings": {
+            "title": "Anchor Trunk",
+            "subtitle": "Red Stripe",
+            "price": "$88",
+            "badge": "Bestseller",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch7.jpg,fh-swatch8.jpg,fh-swatch9.jpg,fh-swatch10.jpg,fh-swatch11.jpg,fh-swatch12.jpg",
+            "swatch_selected": 1,
+            "more_count": 9,
+            "fallback_image": "fh-prod7.jpg",
+            "tabs": "Swim, Bottoms",
+            "link": ""
+          }
+        },
+        "card_8": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Navy Seersucker",
+            "price": "$88",
+            "badge": "",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch1.jpg,fh-swatch2.jpg,fh-swatch3.jpg,fh-swatch4.jpg,fh-swatch5.jpg,fh-swatch6.jpg",
+            "swatch_selected": 6,
+            "more_count": 9,
+            "fallback_image": "fh-prod8.jpg",
+            "tabs": "Swim, Bottoms",
+            "link": ""
+          }
+        },
+        "card_9": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Green Waves",
+            "price": "$88",
+            "badge": "Bestseller",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch1.jpg,fh-swatch2.jpg,fh-swatch3.jpg,fh-swatch4.jpg,fh-swatch5.jpg,fh-swatch6.jpg",
+            "swatch_selected": 5,
+            "more_count": 9,
+            "fallback_image": "fh-prod9.jpg",
+            "tabs": "Swim, Bottoms",
+            "link": ""
+          }
+        },
+        "card_10": {
+          "type": "card",
+          "settings": {
+            "title": "Anchor Trunk",
+            "subtitle": "Grey Floral",
+            "price": "$88",
+            "badge": "",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch7.jpg,fh-swatch8.jpg,fh-swatch9.jpg,fh-swatch10.jpg,fh-swatch11.jpg,fh-swatch12.jpg",
+            "swatch_selected": 6,
+            "more_count": 9,
+            "fallback_image": "fh-prod10.jpg",
+            "tabs": "Swim, Tops",
+            "link": ""
+          }
+        },
+        "card_11": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Navy Shibori",
+            "price": "$88",
+            "badge": "Bestseller",
+            "image_label": "Personalize It",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch1.jpg,fh-swatch2.jpg,fh-swatch3.jpg,fh-swatch4.jpg,fh-swatch5.jpg,fh-swatch6.jpg",
+            "swatch_selected": 2,
+            "more_count": 9,
+            "fallback_image": "fh-prod11.jpg",
+            "tabs": "Swim, Tops",
+            "link": ""
+          }
+        },
+        "card_12": {
+          "type": "card",
+          "settings": {
+            "title": "Bungalow Trunk",
+            "subtitle": "Cobalt Suns",
+            "price": "$88",
+            "badge": "",
+            "image_label": "",
+            "chip_1": "Bundle & Save",
+            "chip_2": "",
+            "swatches": "fh-swatch7.jpg,fh-swatch13.jpg,fh-swatch8.jpg,fh-swatch14.jpg,fh-swatch15.jpg,fh-swatch16.jpg",
+            "swatch_selected": 4,
+            "more_count": 9,
+            "fallback_image": "fh-prod12.jpg",
+            "tabs": "Swim, Tops",
+            "link": ""
+          }
+        },
+        "card_13": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Sky Blue Shells",
+            "price": "$88",
+            "badge": "",
+            "image_label": "",
+            "chip_1": "Bundle & Save",
+            "chip_2": "",
+            "swatches": "fh-swatch1.jpg,fh-swatch2.jpg,fh-swatch3.jpg,fh-swatch4.jpg,fh-swatch5.jpg,fh-swatch6.jpg",
+            "swatch_selected": 1,
+            "more_count": 9,
+            "fallback_image": "fh-prod13.jpg",
+            "tabs": "Swim, Tops",
+            "link": ""
+          }
+        },
+        "card_14": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Seapine Seersucker",
+            "price": "$88",
+            "badge": "Bestseller",
+            "image_label": "",
+            "chip_1": "Bundle & Save",
+            "chip_2": "Personalize It",
+            "swatches": "fh-swatch1.jpg,fh-swatch2.jpg,fh-swatch3.jpg,fh-swatch4.jpg,fh-swatch5.jpg,fh-swatch6.jpg",
+            "swatch_selected": 1,
+            "more_count": 9,
+            "fallback_image": "fh-prod14.jpg",
+            "tabs": "Swim, Tops",
+            "link": ""
+          }
+        },
+        "card_15": {
+          "type": "card",
+          "settings": {
+            "title": "Anchor Trunk",
+            "subtitle": "Mist Seaview",
+            "price": "$88",
+            "badge": "",
+            "image_label": "",
+            "chip_1": "Bundle & Save",
+            "chip_2": "",
+            "swatches": "fh-swatch7.jpg,fh-swatch8.jpg,fh-swatch9.jpg,fh-swatch10.jpg,fh-swatch11.jpg,fh-swatch12.jpg",
+            "swatch_selected": 1,
+            "more_count": 9,
+            "fallback_image": "fh-prod15.jpg",
+            "tabs": "Swim, Tops",
+            "link": ""
+          }
+        },
+        "card_16": {
+          "type": "card",
+          "settings": {
+            "title": "Swell Board Short",
+            "subtitle": "Navy Stripe",
+            "price": "$88",
+            "badge": "",
+            "image_label": "",
+            "chip_1": "Mikey DeTemple x Fair Harbor",
+            "chip_2": "",
+            "swatches": "fh-swatch17.jpg,fh-swatch18.jpg,fh-swatch19.jpg",
+            "swatch_selected": 1,
+            "more_count": 0,
+            "fallback_image": "fh-prod16.jpg",
+            "tabs": "Swim, Tops",
+            "link": ""
+          }
+        },
+        "card_17": {
+          "type": "card",
+          "settings": {
+            "title": "Bayberry Trunk",
+            "subtitle": "Seersucker Sea Blue Tiles",
+            "price": "$69",
+            "badge": "",
+            "image_label": "",
+            "chip_1": "",
+            "chip_2": "",
+            "swatches": "fh-swatch20.jpg,fh-swatch21.jpg,fh-swatch22.jpg,fh-swatch23.jpg,fh-swatch24.jpg,fh-swatch25.jpg",
+            "swatch_selected": 1,
+            "more_count": 18,
+            "fallback_image": "fh-prod17.jpg",
+            "tabs": "Swim, Tops",
+            "link": ""
+          }
+        },
+        "card_18": {
+          "type": "card",
+          "settings": {
+            "title": "Bungalow Trunk",
+            "subtitle": "Silver Palms",
+            "price": "$88",
+            "badge": "",
+            "image_label": "",
+            "chip_1": "Bundle & Save",
+            "chip_2": "",
+            "swatches": "fh-swatch7.jpg,fh-swatch13.jpg,fh-swatch8.jpg,fh-swatch14.jpg,fh-swatch15.jpg,fh-swatch16.jpg",
+            "swatch_selected": 1,
+            "more_count": 9,
+            "fallback_image": "fh-prod18.jpg",
+            "tabs": "Swim, Tops",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "tab_1",
+        "tab_2",
+        "tab_3",
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5",
+        "card_6",
+        "card_7",
+        "card_8",
+        "card_9",
+        "card_10",
+        "card_11",
+        "card_12",
+        "card_13",
+        "card_14",
+        "card_15",
+        "card_16",
+        "card_17",
+        "card_18"
+      ]
+    },
+    "new_arrivals": {
+      "type": "fh-hero",
+      "settings": {
+        "fallback_image": "fh-new-arrivals.jpg",
+        "overlay": 40,
+        "height": 660,
+        "height_mobile": 560,
+        "heading": "New Arrivals",
+        "heading_level": "h2",
+        "text": "Check out our newest drops.",
+        "button_label": "Shop men’s New arrivals",
+        "button_link": "shopify://collections/all"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "activity": {
+      "type": "fh-category-carousel",
+      "settings": {
+        "heading": "Shop by activity",
+        "background": "#f4f0ed"
+      },
+      "blocks": {
+        "category_1": {
+          "type": "category",
+          "settings": {
+            "title": "Beach towels",
+            "fallback_image": "fh-act1.jpg"
+          }
+        },
+        "category_2": {
+          "type": "category",
+          "settings": {
+            "title": "All Swim",
+            "fallback_image": "fh-act2.jpg"
+          }
+        },
+        "category_3": {
+          "type": "category",
+          "settings": {
+            "title": "All New Arrivals",
+            "fallback_image": "fh-act3.jpg"
+          }
+        },
+        "category_4": {
+          "type": "category",
+          "settings": {
+            "title": "Men's Sweatshirts & Hoodies",
+            "fallback_image": "fh-act4.jpg"
+          }
+        },
+        "category_5": {
+          "type": "category",
+          "settings": {
+            "title": "UPF 50 Styles",
+            "fallback_image": "fh-act5.jpg"
+          }
+        },
+        "category_6": {
+          "type": "category",
+          "settings": {
+            "title": "Kids' Collection",
+            "fallback_image": "fh-act6.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "category_1",
+        "category_2",
+        "category_3",
+        "category_4",
+        "category_5",
+        "category_6"
+      ]
+    },
+    "essentials": {
+      "type": "fh-hero",
+      "settings": {
+        "fallback_image": "fh-essentials.jpg",
+        "overlay": 40,
+        "height": 640,
+        "height_mobile": 560,
+        "heading": "Elevated Essentials",
+        "heading_level": "h2",
+        "text": "Check out our newest drops and all time favorites.",
+        "button_label": "Shop men’s essentials",
+        "button_link": "shopify://collections/all"
+      },
+      "blocks": {},
+      "block_order": []
     },
     "reviews": {
-      "type": "custom-reviews",
+      "type": "fh-reviews",
       "settings": {
-        "heading": "Over 5,000 5-stars reviews on Trustpilot",
-        "color_scheme": "scheme-5",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "heading": "Over 75,000 Five Star Reviews",
+        "background": "#ffffff"
       },
       "blocks": {
-        "review-1": {
-          "type": "review-item",
+        "review_1": {
+          "type": "review",
           "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524516.png",
-            "quote": "\"The taste is a lot better than the greens powder I'm usually taking\"",
-            "author": "Nicole B.  |  Paid review†",
-            "show_play_button": true,
-            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            "title": "Perfect Bathing Suit!",
+            "rating": 5,
+            "quote": "Great fit, the seersucker looks sharp but relaxed, love the material. High quality.",
+            "author": "David D.",
+            "product_name": "Anchor Rashguard | Aqua",
+            "product_price": "$59",
+            "fallback_image": "fh-rev1.jpg",
+            "cta_label": "Shop now"
           }
         },
-        "review-2": {
-          "type": "review-item",
+        "review_2": {
+          "type": "review",
           "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524524.png",
-            "quote": "\"It's delivered right to your door, for a very fair price, so I highly recommend it\"",
-            "author": "Brian L.  |  Paid review†",
-            "show_play_button": true,
-            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            "title": "So Comfortable and Soft!",
+            "rating": 5,
+            "quote": "This shirt is ideal for lounge days by the pool or beach. Great fit, soft and still stylish",
+            "author": "Craig S.",
+            "product_name": "Anchor Trunk | Clark",
+            "product_price": "$88",
+            "fallback_image": "fh-rev2.jpg",
+            "cta_label": "Shop now"
           }
         },
-        "review-3": {
-          "type": "review-item",
+        "review_3": {
+          "type": "review",
           "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524532.png",
-            "quote": "\"I feel like I have more energy and ability to focus\"",
-            "author": "Omni P.  |  Paid review†",
-            "show_play_button": true,
-            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            "title": "So Comfortable and Soft!",
+            "rating": 5,
+            "quote": "This shirt is ideal for lounge days by the pool or beach. Great fit, soft and still stylish",
+            "author": "Craig S.",
+            "product_name": "Anchor Trunk | Clark",
+            "product_price": "$88",
+            "fallback_image": "fh-rev2.jpg",
+            "cta_label": "Shop now"
           }
         },
-        "review-4": {
-          "type": "review-item",
+        "review_4": {
+          "type": "review",
           "settings": {
-            "image": "shopify://shop_images/greens-nicole-b-1-desktop-110524540.png",
-            "quote": "\"The ritual of having it first thing in the morning has been a positive\"",
-            "author": "Zack S. | Paid review†",
-            "show_play_button": true,
-            "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            "title": "Comfortable and Stylish",
+            "rating": 5,
+            "quote": "Trunks are very comfortable and love the inner liner. Would buy again",
+            "author": "Owen S.",
+            "product_name": "Anchor Trunk | Star Mosaic",
+            "product_price": "$69",
+            "fallback_image": "fh-rev3.jpg",
+            "cta_label": "Shop now"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "title": "Comfortable and Stylish",
+            "rating": 5,
+            "quote": "Trunks are very comfortable and love the inner liner. Would buy again",
+            "author": "Owen S.",
+            "product_name": "Anchor Trunk | Star Mosaic",
+            "product_price": "$69",
+            "fallback_image": "fh-rev3.jpg",
+            "cta_label": "Shop now"
           }
         }
       },
-      "block_order": ["review-1", "review-2", "review-3", "review-4"]
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ]
     },
-    "product-carousel": {
-      "type": "custom-product-carousel",
+    "promo_tiles": {
+      "type": "fh-promo-tiles",
       "settings": {
-        "subheading": "brought to you by",
-        "heading": "Built From Food, Designed for Results",
-        "background_color": "#F1F1EA",
-        "padding-block-start": 64,
-        "padding-block-end": 0
+        "background": "#ffffff"
       },
       "blocks": {
-        "tab-1": {
-          "type": "tab",
+        "tile_1": {
+          "type": "tile",
           "settings": {
-            "label": "Gut Health",
-            "is_active": true
+            "fallback_image": "fh-bundle.jpg",
+            "overlay": 0,
+            "heading": "Bundle & Save",
+            "text": "Buy more of what you love, for less.",
+            "link_label": "Shop Bundles"
           }
         },
-        "tab-2": {
-          "type": "tab",
+        "tile_2": {
+          "type": "tile",
           "settings": {
-            "label": "Recovery",
-            "is_active": false
-          }
-        },
-        "tab-3": {
-          "type": "tab",
-          "settings": {
-            "label": "Immunity",
-            "is_active": false
-          }
-        },
-        "tab-4": {
-          "type": "tab",
-          "settings": {
-            "label": "Energy & Focus",
-            "is_active": false
-          }
-        },
-        "category-card-1": {
-          "type": "category-card",
-          "settings": {
-            "image": "shopify://shop_images/agile-support-1-desktop-112594627.png",
-            "title": "Gut Health",
-            "description": "Superfoods and nutrients for daily digestive support",
-            "cta_text": "VIEW ALL GUT HEALTH",
-            "mobile_cta_text": "VIEW ALL"
-          }
-        },
-        "product-card-1": {
-          "type": "product-card",
-          "settings": {
-            "product": "daily-greens",
-            "product_handle": "daily-greens",
-            "image": "shopify://shop_images/image-desktop-112594636.png",
-            "title": "Daily Greens",
-            "description": "Drink your veggies on-the-go with a refreshing twist.",
-            "price": "$47.39",
-            "compare_price": "$78.99",
-            "cta_text": "ADD TO CART",
-            "badge_1_text": "FREE WELCOME KIT",
-            "badge_1_color": "#141414",
-            "badge_2_text": "40% OFF FIRST ORDER",
-            "badge_2_color": "#EC0606"
-          }
-        },
-        "product-card-2": {
-          "type": "product-card",
-          "settings": {
-            "product": "starter-bundle",
-            "product_handle": "starter-bundle",
-            "image": "shopify://shop_images/image-desktop-112594700.png",
-            "title": "Starter Bundle",
-            "description": "Hydration and gut health to give you energy and crush your goals",
-            "price": "$56.39",
-            "compare_price": "$93.98",
-            "cta_text": "ADD TO CART"
-          }
-        },
-        "product-card-3": {
-          "type": "product-card",
-          "settings": {
-            "product": "greens-gains-bundle",
-            "product_handle": "greens-gains-bundle",
-            "image": "shopify://shop_images/agile-support-1-desktop-112594812.png",
-            "title": "Greens & Gains Bundle",
-            "description": "Foundation nutrition plus protein to support muscle recovery and gut health",
-            "price": "$56.39",
-            "compare_price": "$93.98",
-            "cta_text": "ADD TO CART"
-          }
-        },
-        "product-card-4": {
-          "type": "product-card",
-          "settings": {
-            "product": "immunity-bundle",
-            "product_handle": "immunity-bundle",
-            "image": "shopify://shop_images/image-desktop-112594752.png",
-            "title": "Immunity Bundle",
-            "description": "Daily defense with probiotics, immunity vitamins & minerals, and electrolytes.",
-            "price": "$56.39",
-            "compare_price": "$93.98",
-            "cta_text": "ADD TO CART",
-            "badge_1_text": "BESTSELLER",
-            "badge_1_color": "#FFFFFF",
-            "show_heart": true
+            "fallback_image": "fh-personalize.jpg",
+            "overlay": 15,
+            "heading": "Make it Personalized",
+            "text": "Explore our eligible styles, customizable with up to three initials or our new icons.",
+            "link_label": "Shop Personalized"
           }
         }
       },
-      "block_order": ["tab-1", "tab-2", "tab-3", "tab-4", "category-card-1", "product-card-1", "product-card-2", "product-card-3", "product-card-4"]
+      "block_order": [
+        "tile_1",
+        "tile_2"
+      ]
     },
-    "marquee": {
-      "type": "custom-marquee",
+    "impact": {
+      "type": "fh-impact",
       "settings": {
-        "ticker_color": "#3F7057",
-        "background_color": "#F1F1EA",
-        "marquee_speed": 30,
-        "padding-block-start": 16,
-        "padding-block-end": 0
+        "fallback_image": "fh-impact.jpg",
+        "overlay": 0,
+        "height": 605,
+        "text_color": "#f4f0ed",
+        "count": "37,628,496",
+        "count_label": "plastic bottles recycled to date"
       },
       "blocks": {
-        "marquee-item-1": {
-          "type": "marquee-item",
+        "stat_1": {
+          "type": "stat",
           "settings": {
-            "text": "Grounded in Food Science"
+            "value": "12",
+            "text": "Recycled plastic bottles in each\ngarment, on average"
           }
         },
-        "marquee-item-2": {
-          "type": "marquee-item",
+        "stat_2": {
+          "type": "stat",
           "settings": {
-            "text": "High Quality Ingredients"
+            "value": "45+",
+            "text": "Company beach\ncleanups"
           }
         },
-        "marquee-item-3": {
-          "type": "marquee-item",
+        "stat_3": {
+          "type": "stat",
           "settings": {
-            "text": "Flavorful Nutrition"
-          }
-        },
-        "marquee-item-4": {
-          "type": "marquee-item",
-          "settings": {
-            "text": "Dietitian Approved"
-          }
-        },
-        "marquee-item-5": {
-          "type": "marquee-item",
-          "settings": {
-            "text": "No Added Sugar"
-          }
-        },
-        "marquee-item-6": {
-          "type": "marquee-item",
-          "settings": {
-            "text": "Keto Friendly"
+            "value": "4.2",
+            "text": "Liters of water saved\nwith our eco-wash denim"
           }
         }
       },
-      "block_order": ["marquee-item-1", "marquee-item-2", "marquee-item-3", "marquee-item-4", "marquee-item-5", "marquee-item-6"]
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ]
     },
-    "benefits": {
-      "type": "custom-benefits",
+    "social": {
+      "type": "fh-social-grid",
       "settings": {
-        "heading": "Why Factor Form",
-        "background_color": "#E1F0E2",
-        "padding-block-start": 80,
-        "padding-block-end": 80
+        "heading": "Find us in the Wild",
+        "handle": "@FairHarborClothing",
+        "handle_link": "https://www.instagram.com/fairharborclothing/",
+        "bar_color": "#223d72"
       },
       "blocks": {
-        "benefit-1": {
-          "type": "benefit-item",
+        "post_1": {
+          "type": "post",
           "settings": {
-            "heading": "More Flexibility",
-            "description": "Build a personalized wellness routine with targeted formulas for gut health, immunity, recovery, and more",
-            "description_mobile": "Create your perfect routine with targeted wellness products",
-            "icon_desktop": "icon-1-nutrition-all-in-one-place-2.svg",
-            "icon_mobile": "icon-1-nutrition-all-in-one-place.svg"
+            "fallback_image": "fh-ig1.jpg",
+            "is_video": false,
+            "link": "https://www.instagram.com/fairharborclothing/"
           }
         },
-        "benefit-2": {
-          "type": "benefit-item",
+        "post_2": {
+          "type": "post",
           "settings": {
-            "heading": "More Quality",
-            "description": "Made with no added sugar, our products are keto-friendly and free of unnecessary ingredients",
-            "description_mobile": "No added sugar\u2014keto-friendly and free of unnecessary ingredients",
-            "icon_desktop": "icon-2-quality-ingredients-2.svg",
-            "icon_mobile": "icon-2-quality-ingredients.svg"
+            "fallback_image": "fh-ig2.jpg",
+            "is_video": true,
+            "link": "https://www.instagram.com/fairharborclothing/"
           }
         },
-        "benefit-3": {
-          "type": "benefit-item",
+        "post_3": {
+          "type": "post",
           "settings": {
-            "heading": "More Nutrition",
-            "description": "Enjoy dietitian-approved formulas packed with premium, nutritional ingredients.",
-            "description_mobile": "Dietitian-approved formulas made with premium, nutrient-rich ingredients",
-            "icon_desktop": "icon-3-b-food-first-nutrition-2.svg",
-            "icon_mobile": "icon-3-b-food-first-nutrition.svg"
+            "fallback_image": "fh-ig3.jpg",
+            "is_video": true,
+            "link": "https://www.instagram.com/fairharborclothing/"
           }
         },
-        "benefit-4": {
-          "type": "benefit-item",
+        "post_4": {
+          "type": "post",
           "settings": {
-            "heading": "More Convenience",
-            "description": "Take your life on the go with our single-serving packets you can tuck in your bag, car, or suitcase.",
-            "description_mobile": "Grab-and-go packets designed for life on the move",
-            "icon_desktop": "icon-4-designed-for-on-the-go-2.svg",
-            "icon_mobile": "icon-4-designed-for-on-the-go.svg"
+            "fallback_image": "fh-ig4.jpg",
+            "is_video": true,
+            "link": "https://www.instagram.com/fairharborclothing/"
           }
         }
       },
-      "block_order": ["benefit-1", "benefit-2", "benefit-3", "benefit-4"]
-    },
-    "certified": {
-      "type": "custom-certified",
-      "settings": {
-        "heading": "The Factor Standard",
-        "background_color": "#FFFFFF",
-        "padding-block-start": 80,
-        "padding-block-end": 80
-      },
-      "blocks": {
-        "certified-1": {
-          "type": "certified-item",
-          "settings": {
-            "image": "shopify://shop_images/image-59-desktop-110864992.png",
-            "heading": "Pure Ingredients",
-            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
-          }
-        },
-        "certified-2": {
-          "type": "certified-item",
-          "settings": {
-            "image": "shopify://shop_images/image-58-desktop-110864999.png",
-            "heading": "Expert-Crafted Blends",
-            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
-          }
-        },
-        "certified-3": {
-          "type": "certified-item",
-          "settings": {
-            "image": "shopify://shop_images/image-60-desktop-110865006.png",
-            "heading": "Transparent and Clean Labels",
-            "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit."
-          }
-        }
-      },
-      "block_order": ["certified-1", "certified-2", "certified-3"]
-    },
-    "dietitians": {
-      "type": "custom-dietitians",
-      "settings": {
-        "heading": "Backed By Factor Dietitians",
-        "description": "Formulated with guidance from Factor\u2019s in-house dietitians to help you meet your wellness goals with confidence",
-        "background_color": "#F1F1EA",
-        "padding-block-start": 80,
-        "padding-block-end": 80
-      },
-      "blocks": {
-        "dietitian-1": {
-          "type": "dietitian-item",
-          "settings": {
-            "image": "shopify://shop_images/image-61-desktop-118265456.png",
-            "quote": "\"A rigorous 'no list' of over 100 banned ingredients\"",
-            "description": "Factor Form upholds strong nutrition and ingredient standards across all products. We ensure only high quality ingredients make it into our products",
-            "author": "Kara Kash   |   Research & Development"
-          }
-        },
-        "dietitian-2": {
-          "type": "dietitian-item",
-          "settings": {
-            "image": "shopify://shop_images/image-62-desktop-118265466.png",
-            "quote": "\"One serving equals a whole serving of green leafy veggies\"",
-            "description": "I love that the vitamin and mineral content is balanced; the daily value percentages aren't excessive",
-            "author": "Carlie Williams   |   Dietitian + Personal Trainer"
-          }
-        },
-        "dietitian-3": {
-          "type": "dietitian-item",
-          "settings": {
-            "image": "shopify://shop_images/image-63-desktop-118265476.png",
-            "quote": "\"A good mix of B vitamins along with typical electrolytes\"",
-            "description": "B Vitamins act as coenzymes when your body is metabolizing energy, so it's nice to have that in an electrolyte mix",
-            "author": "Olivia Hamilton   |   Dietitian"
-          }
-        }
-      },
-      "block_order": ["dietitian-1", "dietitian-2", "dietitian-3"]
-    },
-    "feature": {
-      "type": "custom-feature",
-      "settings": {
-        "heading": "FREE Daily Greens Welcome Kit worth $36",
-        "description": "Turn your daily habit into a delicious ritual with a kit full of greens essentials. Free welcome kit with first time purchase of Daily Greens.",
-        "image": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-desktop-110525076.png",
-        "image_mobile": "shopify://shop_images/daily-nouri-d37stewmyqy-unsplash-3-mobile-110526574.png",
-        "badge_text": "FREE WELCOME KIT",
-        "button_text": "SHOP DAILY GREENS",
-        "background_color": "#E1F0E2",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      },
-      "blocks": {
-        "feature-item-1": {
-          "type": "feature-item",
-          "settings": {
-            "heading": "Shaker bottle",
-            "free_label": "FREE",
-            "description": "Premium bottle to mix and carry your greens",
-            "price": "$20.00"
-          }
-        },
-        "feature-item-2": {
-          "type": "feature-item",
-          "settings": {
-            "heading": "Full-size samples (3)",
-            "free_label": "FREE",
-            "description": "3 product samples free with every first order",
-            "price": "$10.00"
-          }
-        },
-        "feature-item-3": {
-          "type": "feature-item",
-          "settings": {
-            "heading": "Shipping",
-            "free_label": "FREE",
-            "description": "Free shipping on orders above $50",
-            "price": "$5.99"
-          }
-        }
-      },
-      "block_order": ["feature-item-1", "feature-item-2", "feature-item-3"]
-    },
-    "faqs": {
-      "type": "custom-faqs",
-      "settings": {
-        "heading": "Frequently Asked Questions",
-        "background_color": "#FFFFFF",
-        "padding-block-start": 80,
-        "padding-block-end": 80
-      },
-      "blocks": {
-        "faq-1": {
-          "type": "faq-item",
-          "settings": {
-            "question": "What makes Factor Form products different?",
-            "answer": "Factor Form products are built with clean, science-backed ingredients chosen for real, functional benefits; not trends or fillers. Each formula is optimised for daily performance, energy, and recovery. You get products that are effective, transparent, and designed to fit effortlessly into your routine."
-          }
-        },
-        "faq-2": {
-          "type": "faq-item",
-          "settings": {
-            "question": "Are Factor Form products third-party tested?"
-          }
-        },
-        "faq-3": {
-          "type": "faq-item",
-          "settings": {
-            "question": "Are Factor Form products safe to use together?"
-          }
-        },
-        "faq-4": {
-          "type": "faq-item",
-          "settings": {
-            "question": "Do you ship internationally?"
-          }
-        },
-        "faq-5": {
-          "type": "faq-item",
-          "settings": {
-            "question": "What is your return policy?"
-          }
-        }
-      },
-      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"]
+      "block_order": [
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4"
+      ]
     }
   },
-  "order": ["hero", "reviews", "product-carousel", "marquee", "benefits", "certified", "dietitians", "feature", "faqs"]
+  "order": [
+    "hero",
+    "values",
+    "bestsellers",
+    "new_arrivals",
+    "activity",
+    "essentials",
+    "reviews",
+    "promo_tiles",
+    "impact",
+    "social"
+  ]
 }

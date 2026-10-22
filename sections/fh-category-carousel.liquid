@@ -1,0 +1,88 @@
+{%- comment -%} Figma 1:1266 — "Shop by activity" category carousel {%- endcomment -%}
+<section class="fh fh-cats" style="--fh-cats-bg: {{ section.settings.background }};">
+  <fh-carousel class="fh-cats__inner">
+    <div class="fh-cats__head">
+      <h2 class="fh-h2">{{ section.settings.heading }}</h2>
+      <div class="fh-arrows fh-cats__arrows">
+        <button type="button" class="fh-arrow" data-fh-prev aria-label="Previous slide">{{ 'fh-icon-arrow-left.svg' | inline_asset_content }}</button>
+        <button type="button" class="fh-arrow" data-fh-next aria-label="Next slide">{{ 'fh-icon-arrow-right.svg' | inline_asset_content }}</button>
+      </div>
+    </div>
+
+    <ul class="fh-cats__track fh-track" data-fh-track role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign title = block.settings.title
+          if title == blank
+            assign title = block.settings.collection.title
+          endif
+          assign url = block.settings.link | default: block.settings.collection.url | default: '#'
+          assign img = block.settings.image | default: block.settings.collection.featured_image
+        -%}
+        <li class="fh-cats__slide" {{ block.shopify_attributes }}>
+          <a href="{{ url }}" class="fh-cats__link">
+            <span class="fh-cats__media fh-media">
+              {% render 'fh-image', image: img, fallback: block.settings.fallback_image, alt: title, sizes: '(min-width: 990px) 388px, 75vw', width: 800, w: 388, h: 517 %}
+            </span>
+            <h3 class="fh-cats__title fh-body">{{ title }}</h3>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </fh-carousel>
+</section>
+
+{% stylesheet %}
+  .fh-cats { background: var(--fh-cats-bg, #f4f0ed); padding: 40px 0; }
+  .fh-cats__inner { display: block; padding-left: var(--fh-gutter-sm); }
+  .fh-cats__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-right: var(--fh-gutter-sm); }
+  .fh-cats__track { margin-top: 32px; }
+  .fh-cats__slide { width: 388px; }
+  .fh-cats__link { display: block; }
+  .fh-cats__media { display: block; aspect-ratio: 388 / 517; }
+  .fh-cats__media img { transition: transform .6s ease; }
+  .fh-cats__link:hover .fh-cats__media img { transform: scale(1.03); }
+  .fh-cats__title { padding: 20px 8px 16px; text-align: center; font-weight: 700; color: var(--fh-navy); }
+  .fh-cats__link:hover .fh-cats__title { text-decoration: underline; text-underline-offset: 3px; }
+  @media screen and (max-width: 749px) {
+    .fh-cats__arrows { display: none; }
+    .fh-cats__track { margin-top: 24px; }
+    .fh-cats__slide { width: 70vw; max-width: 300px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FH Category carousel",
+  "class": "fh-cats-section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by activity" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#f4f0ed" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Defaults to the collection image" },
+        { "type": "text", "id": "fallback_image", "label": "Placeholder image (theme asset)" },
+        { "type": "text", "id": "title", "label": "Title", "info": "Defaults to the collection title" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Defaults to the collection" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FH Category carousel",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Beach towels", "fallback_image": "fh-act1.jpg" } },
+        { "type": "category", "settings": { "title": "All Swim", "fallback_image": "fh-act2.jpg" } },
+        { "type": "category", "settings": { "title": "All New Arrivals", "fallback_image": "fh-act3.jpg" } },
+        { "type": "category", "settings": { "title": "Men's Sweatshirts & Hoodies", "fallback_image": "fh-act4.jpg" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
