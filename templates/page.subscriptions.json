@@ -1,0 +1,91 @@
+{
+  "sections": {
+    "portal": {
+      "type": "ap-portal",
+      "blocks": {
+        "article_1": {
+          "type": "article",
+          "settings": {
+            "fallback_image": "ap-portal-article-1.jpg",
+            "title": "Put the extra protein to use.\nOats, pancakes, coffee, ice cream.",
+            "text": "One scoop, more ways.",
+            "link_label": "View recipe",
+            "link_url": "/blogs/news"
+          }
+        },
+        "article_2": {
+          "type": "article",
+          "settings": {
+            "fallback_image": "ap-portal-article-2.jpg",
+            "title": "Ascent comes straight from milk.\nCleanest protein source.",
+            "text": "We refuse to compromise!",
+            "link_label": "View article",
+            "link_url": "/blogs/news"
+          }
+        },
+        "article_3": {
+          "type": "article",
+          "settings": {
+            "fallback_image": "ap-portal-article-3.jpg",
+            "title": "Explore the full flavor lineup",
+            "text": "Native whey sourced directly from milk, zero artificial flavors or sweeteners.",
+            "link_label": "View recipe",
+            "link_url": "/collections/all"
+          }
+        },
+        "article_4": {
+          "type": "article",
+          "settings": {
+            "fallback_image": "ap-portal-article-4.jpg",
+            "title": "What makes Ascent different?",
+            "text": "Native whey sourced directly from milk, zero artificial flavors or sweeteners.",
+            "link_label": "View recipe",
+            "link_url": "/blogs/news"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "What is native whey and why does it matter?",
+            "answer": "<p>Native whey is filtered directly from fresh milk instead of being a by-product of cheese making. Less processing means the protein stays closer to its natural form, with no artificial flavors or sweeteners added.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does a 1 lb bag last?",
+            "answer": "<p>A 1 lb bag has about 14 servings, roughly two weeks at one scoop a day. If it runs out sooner or later than that, change your delivery frequency on the Subscriptions tab.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I change my flavor on my next order?",
+            "answer": "<p>Yes. Open the Subscriptions tab, choose the product and swap it before your next order date.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "What does Informed Sport certified mean?",
+            "answer": "<p>Informed Sport is an independent testing program. Batches are tested for substances banned in sport before they are released.</p>"
+          }
+        }
+      },
+      "block_order": ["article_1", "article_2", "article_3", "article_4", "faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {
+        "recharge_token": "",
+        "demo_mode": false,
+        "hide_demo_bar": false,
+        "welcome": "Welcome back, [name]!",
+        "upsell_heading": "Add items to your subscription",
+        "upsell_limit": 8,
+        "browse_label": "Browse all",
+        "show_edu": true,
+        "show_kc": true,
+        "show_history_edu": true
+      }
+    }
+  },
+  "order": ["portal"]
+}

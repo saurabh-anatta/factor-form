@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Ascent Protein: Recharge Affinity portal theme overrides
+   --------------------------------------------------------------------------
+   OPTIONAL. Only needed if customers still see Recharge's own Affinity pages
+   (payment method update and the cancellation/retention flow open there).
+
+   Embedded portal ("Embedded in platform storefront"): nothing to paste.
+   The theme loads assets/ap-recharge-affinity.css on /tools/recurring/* pages
+   automatically (snippets/ap-recharge-affinity.liquid).
+
+   Hosted portal ("Hosted by Recharge"): paste this whole file into
+   Recharge admin › Storefront › Customer portal › Customize › Custom CSS.
+
+   Recharge supports overriding the CSS variables on .recharge-theme only.
+   Do not target Affinity's generated class names; they change between releases.
+   ========================================================================== */
+.recharge-theme {
+  /* Brand: Ascent ink, used for primary buttons and links */
+  --recharge-color-brand: #1a1a1a;
+  --recharge-color-brand-120: #000000;
+  --recharge-color-brand-20: #3a3a3a;
+  --recharge-color-brand-40: #696969;
+  --recharge-color-brand-60: #a9a9a9;
+  --recharge-color-brand-75: #d0d0d0;
+  --recharge-color-brand-85: #f8f8f8;
+
+  /* Neutrals */
+  --recharge-color-neutral: #1a1a1a;
+  --recharge-color-neutral-80: #414141;
+  --recharge-color-neutral-70: #5c5c5c;
+  --recharge-color-neutral-40: #a9a9a9;
+  --recharge-color-neutral-10: #e5e5e5;
+
+  /* Positive: Ascent success green */
+  --recharge-color-positive120: #3f9c6c;
+  --recharge-color-positive: #5abe8a;
+  --recharge-color-positive80: #74c99c;
+  --recharge-color-positive60: #95d6b3;
+  --recharge-color-positive40: #bfe6d1;
+}

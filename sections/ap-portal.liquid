@@ -1,0 +1,224 @@
+{% comment %}
+  Ascent Protein — Recharge customer portal (theme-hosted).
+
+  Renders <ap-portal>, which reads live subscription data with the Recharge
+  Storefront JS SDK (customer must be logged in to Shopify; the session comes
+  from Recharge's app proxy). Without a storefront token, in the theme editor
+  or with ?ap_demo=1 it renders sample data from the Figma design.
+
+  Setup: see recharge/README.md in the repository.
+{% endcomment %}
+
+{%- liquid
+  assign token = section.settings.recharge_token | strip
+  assign demo_assets = 'ap-portal-prod-whey.png,ap-portal-prod-collagen.png,ap-portal-prod-hoodie.jpg,ap-portal-prod-bottle.png,ap-portal-prod-casein.png' | split: ','
+-%}
+
+{{ 'ap-portal.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Familjen+Grotesk:wght@500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap"
+>
+
+<div class="ap" id="ap-portal-{{ section.id }}">
+  <ap-portal>
+    <script type="application/json" data-ap-config>
+      {
+        "token": {{ token | json }},
+        "storeIdentifier": {{ shop.permanent_domain | json }},
+        "designMode": {{ request.design_mode | json }},
+        "forceDemo": {{ section.settings.demo_mode | json }},
+        "hideDemoBar": {{ section.settings.hide_demo_bar | json }},
+        "loggedIn": {% if customer %}true{% else %}false{% endif %},
+        "customerFirstName": {{ customer.first_name | default: '' | json }},
+        "accountUrl": {{ routes.account_url | json }},
+        "loginUrl": {{ routes.account_login_url | append: '?return_url=' | append: request.path | json }},
+        "currency": {{ cart.currency.iso_code | default: shop.currency | json }},
+        "locale": {{ request.locale.iso_code | default: 'en-US' | json }},
+        "country": {{ localization.country.iso_code | default: 'US' | json }},
+        "welcome": {{ section.settings.welcome | json }},
+        "alertDefault": {{ section.settings.alert_default | json }},
+        "alertRecent": {{ section.settings.alert_recent | json }},
+        "alertUpcoming": {{ section.settings.alert_upcoming | json }},
+        "recentDays": {{ section.settings.recent_days | json }},
+        "frequencies": [{% assign freqs = section.settings.frequencies | split: ',' %}{% for f in freqs %}{% assign fn = f | strip | plus: 0 %}{% if fn > 0 %}{% unless forloop.first %},{% endunless %}{{ fn }}{% endif %}{% endfor %}],
+        "upsellHeading": {{ section.settings.upsell_heading | json }},
+        "browseLabel": {{ section.settings.browse_label | json }},
+        "browseUrl": {{ section.settings.browse_url | default: section.settings.upsell_collection.url | default: '' | json }},
+        "upsell": [
+          {%- if section.settings.upsell_collection != blank -%}
+            {%- for product in section.settings.upsell_collection.products limit: section.settings.upsell_limit -%}
+              {%- assign v = product.selected_or_first_available_variant -%}
+              {
+                "title": {{ product.title | json }},
+                "variantTitle": {{ v.title | json }},
+                "productId": {{ product.id | json }},
+                "variantId": {{ v.id | json }},
+                "price": {{ v.price | divided_by: 100.0 | json }},
+                "compare": {{ v.compare_at_price | default: 0 | divided_by: 100.0 | json }},
+                "available": {{ product.available | json }},
+                "image": {{ product.featured_image | image_url: width: 400 | json }},
+                "url": {{ product.url | json }}
+              }{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          {%- elsif token == blank or request.design_mode or section.settings.demo_mode -%}
+            {"title": "Advanced Collagen Peptides", "productId": 1, "variantId": 1, "price": 26.99, "compare": 29.99, "image": {{ demo_assets[1] | asset_url | json }}},
+            {"title": "Ascent Black Hoodie", "productId": 2, "variantId": 2, "price": 49.99, "image": {{ demo_assets[2] | asset_url | json }}, "pad": true},
+            {"title": "Ascent Blender Bottle, 28 oz.", "productId": 3, "variantId": 3, "price": 9.99, "image": {{ demo_assets[3] | asset_url | json }}},
+            {"title": "Chocolate Micellar Casein", "productId": 4, "variantId": 4, "price": 40.49, "compare": 44.99, "image": {{ demo_assets[4] | asset_url | json }}, "pad": true},
+            {"title": "Chocolate Protein Powder", "productId": 5, "variantId": 5, "price": 22.48, "compare": 24.98, "image": {{ demo_assets[0] | asset_url | json }}}
+          {%- endif -%}
+        ],
+        "edu": {
+          "enabled": {{ section.settings.show_edu | json }},
+          "video": {% if section.settings.edu_video != blank %}{{ section.settings.edu_video.sources | where: 'mime_type', 'video/mp4' | map: 'url' | first | default: section.settings.edu_video.sources.first.url | json }}{% else %}null{% endif %},
+          "videoUrl": {{ section.settings.edu_video_url | default: '' | json }},
+          "poster": {% if section.settings.edu_poster != blank %}{{ section.settings.edu_poster | image_url: width: 1480 | json }}{% elsif section.settings.edu_video != blank %}{{ section.settings.edu_video.preview_image | image_url: width: 1480 | json }}{% else %}{{ 'ap-portal-edu-video.jpg' | asset_url | json }}{% endif %},
+          "eyebrow": {{ section.settings.edu_eyebrow | json }},
+          "headline": {{ section.settings.edu_headline | json }},
+          "linkLabel": {{ section.settings.edu_link_label | json }},
+          "linkUrl": {{ section.settings.edu_link_url | default: '' | json }}
+        },
+        "historyEdu": {
+          "enabled": {{ section.settings.show_history_edu | json }},
+          "image": {% if section.settings.history_image != blank %}{{ section.settings.history_image | image_url: width: 720 | json }}{% else %}{{ 'ap-portal-edu-image.jpg' | asset_url | json }}{% endif %},
+          "eyebrow": {{ section.settings.history_eyebrow | json }},
+          "headline": {{ section.settings.history_headline | json }},
+          "linkLabel": {{ section.settings.history_link_label | json }},
+          "linkUrl": {{ section.settings.history_link_url | default: '' | json }}
+        },
+        "tips": {
+          "subscriptions": {% if section.settings.subs_tip != blank %}{"eyebrow": {{ section.settings.subs_tip_eyebrow | json }}, "text": {{ section.settings.subs_tip | json }}}{% else %}null{% endif %}
+        },
+        "knowledge": {
+          "enabled": {{ section.settings.show_kc | json }},
+          "title": {{ section.settings.kc_title | json }},
+          "intro": {{ section.settings.kc_intro | json }},
+          "allLabel": {{ section.settings.kc_all_label | json }},
+          "allUrl": {{ section.settings.kc_all_url | default: '' | json }},
+          "articles": [
+            {%- assign articles = section.blocks | where: 'type', 'article' -%}
+            {%- for block in articles -%}
+              {
+                "title": {{ block.settings.title | json }},
+                "text": {{ block.settings.text | json }},
+                "label": {{ block.settings.link_label | json }},
+                "url": {{ block.settings.link_url | default: '' | json }},
+                "image": {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 640 | json }}{% elsif block.settings.fallback_image != blank %}{{ block.settings.fallback_image | asset_url | json }}{% else %}null{% endif %}
+              }{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]
+        },
+        "faqTitle": {{ section.settings.faq_title | json }},
+        "faq": [
+          {%- assign faqs = section.blocks | where: 'type', 'faq' -%}
+          {%- for block in faqs -%}
+            {"q": {{ block.settings.question | json }}, "a": {{ block.settings.answer | json }}}{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ],
+        "assets": {
+          "whey": {{ 'ap-portal-prod-whey.png' | asset_url | json }},
+          "creatine": {{ 'ap-portal-prod-creatine.png' | asset_url | json }},
+          "hydration": {{ 'ap-portal-prod-hydration.jpg' | asset_url | json }},
+          "casein": {{ 'ap-portal-prod-casein.png' | asset_url | json }}
+        }
+      }
+    </script>
+    <div data-ap-root aria-live="polite">
+      <noscript><p style="text-align:center;padding:40px">Please enable JavaScript to manage your subscription.</p></noscript>
+    </div>
+  </ap-portal>
+</div>
+
+{% for block in section.blocks %}
+  <span hidden {{ block.shopify_attributes }}></span>
+{% endfor %}
+
+<script src="{{ 'ap-portal-icons.js' | asset_url }}" defer></script>
+{%- if token != blank -%}
+  <script src="https://static.rechargecdn.com/assets/storefront/recharge-client-2.7.0.min.js" defer></script>
+{%- endif -%}
+<script src="{{ 'ap-portal.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Subscriptions portal",
+  "tag": "section",
+  "class": "ap-portal-section",
+  "settings": [
+    { "type": "header", "content": "Recharge connection" },
+    {
+      "type": "text",
+      "id": "recharge_token",
+      "label": "Recharge Storefront API token",
+      "info": "Recharge admin › Apps & integrations › API tokens › Create storefront token (starts with strfnt_). Browser-safe. Leave blank to show sample data."
+    },
+    { "type": "checkbox", "id": "demo_mode", "label": "Always show sample data", "default": false },
+    { "type": "checkbox", "id": "hide_demo_bar", "label": "Hide the sample-data notice", "default": false },
+    { "type": "header", "content": "Dashboard" },
+    { "type": "text", "id": "welcome", "label": "Greeting", "default": "Welcome back, [name]!", "info": "[name] is replaced by the customer's first name." },
+    { "type": "text", "id": "alert_default", "label": "Default notice", "default": "Your next order is set to arrive in time to replace on schedule." },
+    { "type": "text", "id": "alert_recent", "label": "Recent order notice", "default": "We’re working on your recent order and will dispatch it as soon as it’s ready." },
+    { "type": "range", "id": "recent_days", "label": "Show recent order notice for", "min": 1, "max": 14, "step": 1, "unit": "d", "default": 5 },
+    { "type": "text", "id": "alert_upcoming", "label": "Upcoming orders notice", "default": "Your next order ships on the scheduled date. Reschedule or skip it anytime before then." },
+    { "type": "text", "id": "frequencies", "label": "Fallback frequencies (days)", "default": "30,45,60", "info": "Used when a product has no Recharge plans to choose from." },
+    { "type": "header", "content": "Add items to your subscription" },
+    { "type": "text", "id": "upsell_heading", "label": "Heading", "default": "Add items to your subscription" },
+    { "type": "collection", "id": "upsell_collection", "label": "Products collection" },
+    { "type": "range", "id": "upsell_limit", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 8 },
+    { "type": "text", "id": "browse_label", "label": "Button label", "default": "Browse all" },
+    { "type": "url", "id": "browse_url", "label": "Button link", "info": "Defaults to the collection." },
+    { "type": "header", "content": "Education video" },
+    { "type": "checkbox", "id": "show_edu", "label": "Show", "default": true },
+    { "type": "video", "id": "edu_video", "label": "Video (Shopify-hosted)" },
+    { "type": "url", "id": "edu_video_url", "label": "Or external video link" },
+    { "type": "image_picker", "id": "edu_poster", "label": "Poster image" },
+    { "type": "text", "id": "edu_eyebrow", "label": "Eyebrow", "default": "Did you know?" },
+    { "type": "text", "id": "edu_headline", "label": "Headline", "default": "Meet your daily protein needs to support stronger muscles, better recovery, and lasting progress." },
+    { "type": "text", "id": "edu_link_label", "label": "Link label", "default": "Learn more" },
+    { "type": "url", "id": "edu_link_url", "label": "Link" },
+    { "type": "header", "content": "Knowledge Center (sidebar)" },
+    { "type": "checkbox", "id": "show_kc", "label": "Show", "default": true },
+    { "type": "text", "id": "kc_title", "label": "Heading", "default": "Knowledge Center" },
+    { "type": "text", "id": "kc_all_label", "label": "View all label", "default": "View all articles" },
+    { "type": "url", "id": "kc_all_url", "label": "View all link" },
+    { "type": "textarea", "id": "kc_intro", "label": "Intro", "default": "Protein, creatine and the Ascent difference, explained by the people who make it." },
+    { "type": "header", "content": "Subscriptions tab" },
+    { "type": "text", "id": "subs_tip_eyebrow", "label": "Tip eyebrow", "default": "Did you know?" },
+    { "type": "textarea", "id": "subs_tip", "label": "Tip text", "default": "You can skip, reschedule or swap your next delivery anytime, right from your subscription." },
+    { "type": "header", "content": "Order history tab" },
+    { "type": "checkbox", "id": "show_history_edu", "label": "Show education block", "default": true },
+    { "type": "image_picker", "id": "history_image", "label": "Image" },
+    { "type": "text", "id": "history_eyebrow", "label": "Eyebrow", "default": "Did you know?" },
+    { "type": "textarea", "id": "history_headline", "label": "Headline", "default": "Protein quality varies between brands. Ascent is Informed Sport certified, so every batch is tested for banned substances." },
+    { "type": "text", "id": "history_link_label", "label": "Link label", "default": "Learn more" },
+    { "type": "url", "id": "history_link_url", "label": "Link" },
+    { "type": "text", "id": "faq_title", "label": "FAQ heading", "default": "Frequently Asked Questions" }
+  ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "Knowledge article",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback_image", "label": "Fallback theme asset", "info": "Used when no image is selected." },
+        { "type": "textarea", "id": "title", "label": "Title", "default": "Article title" },
+        { "type": "text", "id": "text", "label": "Text" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "View article" },
+        { "type": "url", "id": "link_url", "label": "Link" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Subscriptions portal" }]
+}
+{% endschema %}

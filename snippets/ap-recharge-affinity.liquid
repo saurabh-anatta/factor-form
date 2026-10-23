@@ -1,0 +1,31 @@
+{% doc %}
+  Bridges Recharge's own (Affinity) portal pages and the theme-hosted portal
+  in sections/ap-portal.liquid. Render once in layout/theme.liquid.
+
+  1. On Recharge app-proxy pages (/tools/recurring/*) it loads the Ascent
+     colour overrides (assets/ap-recharge-affinity.css).
+  2. If a page with handle "subscriptions" exists, Recharge's portal landing
+     page (/tools/recurring/portal/<hash>/ or /overview), which is the target
+     of Recharge emails, redirects there. Flows the portal sends to Recharge
+     on purpose (payment update, cancellation) set a 30-minute bypass flag
+     first, and ?ap_native=1 also bypasses the redirect.
+{% enddoc %}
+{%- assign ap_portal_page = pages['subscriptions'] -%}
+<script>
+  (function () {
+    var p = location.pathname;
+    if (p.indexOf('/tools/recurring') !== 0) return;
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = {{ 'ap-recharge-affinity.css' | asset_url | json }};
+    document.head.appendChild(l);
+    {%- if ap_portal_page != empty and ap_portal_page.url != blank %}
+    try {
+      if (/[?&]ap_native=1/.test(location.search)) { sessionStorage.setItem('ap_native', String(Date.now())); return; }
+      var t = Number(sessionStorage.getItem('ap_native') || 0);
+      if (Date.now() - t < 30 * 60 * 1000) return;
+    } catch (e) {}
+    if (/^\/tools\/recurring\/portal\/[^/]+\/?(overview\/?)?$/.test(p)) location.replace({{ ap_portal_page.url | json }});
+    {%- endif %}
+  })();
+</script>
